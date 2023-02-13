@@ -25,6 +25,11 @@ namespace TestBoard.Controllers
             return View();
         }
 
+        public IActionResult Tawooly()
+        {
+            return View();
+        }
+
         public IActionResult Create(BoardDB data)
         {
             {
