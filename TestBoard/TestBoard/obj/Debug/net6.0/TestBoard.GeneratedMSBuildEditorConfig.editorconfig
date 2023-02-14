@@ -56,24 +56,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/tawoo/Desktop/tawooly_dev_feature1/TestBoard/TestBoard/Views/BoardDBs/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9hcmREQnNcQ3JlYXRlLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/tawoo/Desktop/tawooly_dev_feature1/TestBoard/TestBoard/Views/BoardDBs/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9hcmREQnNcRGVsZXRlLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/tawoo/Desktop/tawooly_dev_feature1/TestBoard/TestBoard/Views/BoardDBs/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9hcmREQnNcRGV0YWlscy5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/tawoo/Desktop/tawooly_dev_feature1/TestBoard/TestBoard/Views/BoardDBs/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9hcmREQnNcRWRpdC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/tawoo/Desktop/tawooly_dev_feature1/TestBoard/TestBoard/Views/BoardDBs/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9hcmREQnNcSW5kZXguY3NodG1s
+[C:/Users/tawoo/Desktop/tawooly_dev_feature1/TestBoard/TestBoard/Views/Home/Board.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxCb2FyZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/tawoo/Desktop/tawooly_dev_feature1/TestBoard/TestBoard/Views/Home/Create.cshtml]
@@ -84,12 +68,40 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/tawoo/Desktop/tawooly_dev_feature1/TestBoard/TestBoard/Views/Home/Introduction.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbnRyb2R1Y3Rpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/tawoo/Desktop/tawooly_dev_feature1/TestBoard/TestBoard/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/tawoo/Desktop/tawooly_dev_feature1/TestBoard/TestBoard/Views/Home/Tawooly.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxUYXdvb2x5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/tawoo/Desktop/tawooly_dev_feature1/TestBoard/TestBoard/Views/Home/ToDoList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxUb0RvTGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/tawoo/Desktop/tawooly_dev_feature1/TestBoard/TestBoard/Views/Managements/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlbWVudHNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/tawoo/Desktop/tawooly_dev_feature1/TestBoard/TestBoard/Views/Managements/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlbWVudHNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/tawoo/Desktop/tawooly_dev_feature1/TestBoard/TestBoard/Views/Managements/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlbWVudHNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/tawoo/Desktop/tawooly_dev_feature1/TestBoard/TestBoard/Views/Managements/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlbWVudHNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/tawoo/Desktop/tawooly_dev_feature1/TestBoard/TestBoard/Views/Managements/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlbWVudHNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/tawoo/Desktop/tawooly_dev_feature1/TestBoard/TestBoard/Views/Shared/Error.cshtml]

@@ -5,90 +5,93 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using TestBoard.Data;
+using Managements.Data;
 using TestBoard.Models;
+
+
+
 
 namespace TestBoard.Controllers
 {
-    public class BoardDBsController : Controller
+    public class ManagementsController : Controller
     {
         private readonly TestBoardContext _context;
 
-        public BoardDBsController(TestBoardContext context)
+        public ManagementsController(TestBoardContext context)
         {
             _context = context;
         }
 
-        // GET: BoardDBs
+        // GET: Managements
         public async Task<IActionResult> Index()
         {
-              return View(await _context.BoardDB.ToListAsync());
+              return View(await _context.Management.ToListAsync());
         }
 
-        // GET: BoardDBs/Details/5
+        // GET: Managements/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.BoardDB == null)
             {
                 return NotFound();
             }
 
-            var boardDB = await _context.BoardDB
+
+            Management management = await _context.Management
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (boardDB == null)
+            if (management == null)
             {
                 return NotFound();
             }
 
-            return View(boardDB);
+            return View(management);
         }
 
-        // GET: BoardDBs/Create
+        // GET: Managements/Create
         public IActionResult Create()
         {
             return View();
         }
-
-        // POST: BoardDBs/Create
+        // POST: Managements/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Text,Date")] BoardDB boardDB)
+        public async Task<IActionResult> Create([Bind("Id,Name,Gender,Phone,Date")] Management management)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(boardDB);
+                _context.Add(management);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(boardDB);
+            return View(management);
         }
 
-        // GET: BoardDBs/Edit/5
+        // GET: Managements/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.BoardDB == null)
+            if (id == null || _context.Management == null)
             {
                 return NotFound();
             }
 
-            var boardDB = await _context.BoardDB.FindAsync(id);
-            if (boardDB == null)
+            var management = await _context.Management.FindAsync(id);
+            if (management == null)
             {
                 return NotFound();
             }
-            return View(boardDB);
+            return View(management);
         }
 
-        // POST: BoardDBs/Edit/5
+        // POST: Managements/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Text,Date")] BoardDB boardDB)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Gender,Phone,Date")] Management management)
         {
-            if (id != boardDB.Id)
+            if (id != management.Id)
             {
                 return NotFound();
             }
@@ -97,12 +100,12 @@ namespace TestBoard.Controllers
             {
                 try
                 {
-                    _context.Update(boardDB);
+                    _context.Update(management);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BoardDBExists(boardDB.Id))
+                    if (!ManagementExists(management.Id))
                     {
                         return NotFound();
                     }
@@ -113,49 +116,49 @@ namespace TestBoard.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(boardDB);
+            return View(management);
         }
 
-        // GET: BoardDBs/Delete/5
+        // GET: Managements/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.BoardDB == null)
+            if (id == null || _context.Management == null)
             {
                 return NotFound();
             }
 
-            var boardDB = await _context.BoardDB
+            var management = await _context.Management
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (boardDB == null)
+            if (management == null)
             {
                 return NotFound();
             }
 
-            return View(boardDB);
+            return View(management);
         }
 
-        // POST: BoardDBs/Delete/5
+        // POST: Managements/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.BoardDB == null)
+            if (_context.Management == null)
             {
-                return Problem("Entity set 'TestBoardContext.BoardDB'  is null.");
+                return Problem("Entity set 'TestBoardContext.Management'  is null.");
             }
-            var boardDB = await _context.BoardDB.FindAsync(id);
-            if (boardDB != null)
+            var management = await _context.Management.FindAsync(id);
+            if (management != null)
             {
-                _context.BoardDB.Remove(boardDB);
+                _context.Management.Remove(management);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool BoardDBExists(int id)
+        private bool ManagementExists(int id)
         {
-          return _context.BoardDB.Any(e => e.Id == id);
+          return _context.Management.Any(e => e.Id == id);
         }
     }
 }
