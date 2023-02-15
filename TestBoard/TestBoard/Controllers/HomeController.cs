@@ -25,27 +25,31 @@ namespace TestBoard.Controllers
             return View();
         }
 
+
         public IActionResult Tawooly()
         {
             return View();
         }
 
-        public IActionResult Create(BoardDB data)
+        public IActionResult Introduction()
         {
-            {
-                return View();
-            }
-
-            [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-            IActionResult Error()
-            {
-                return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-            }
+            return View();
         }
 
-        public class BoardDB
+        public IActionResult Board()
         {
-            public virtual DbSet<BoardDB> Boards { get; set; }
+            return View();
         }
+
+        public IActionResult Management()
+        {
+            return View();
+        }
+
+        public IActionResult ToDoList()
+        {
+            return View();
+        }
+
     }
 }

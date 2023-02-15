@@ -11,6 +11,7 @@
  *
  * Date: 2020-05-04T22:49Z
  */
+
 ( function( global, factory ) {
 
 	"use strict";
@@ -10870,3 +10871,23 @@ if ( typeof noGlobal === "undefined" ) {
 
 return jQuery;
 } );
+
+
+
+(function () {
+	 ('.js-menu_item_link').each(function () {
+		 (this).on('click', function () {
+			 ("+.submenu", this).slideToggle();
+			return false;
+		});
+	});
+});
+
+(function () {
+	('.js-menu_item_link').each(function () {
+		(this).on('click', function () {
+			("+.submenu", this).slideToggle();
+			return false;
+		});
+	});
+});

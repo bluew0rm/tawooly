@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using TestBoard.Models;
 
-namespace TestBoard.Data
+namespace Managements.Data
 {
     public class TestBoardContext : DbContext
     {
@@ -14,6 +14,6 @@ namespace TestBoard.Data
         {
         }
 
-        public DbSet<TestBoard.Models.BoardDB> BoardDB { get; set; } = default!;
+        public DbSet<TestBoard.Models.Management> Management { get; set; } = default!;
     }
 }

@@ -10516,11 +10516,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\tawoo\\Desktop\\tawooly\\TestBoard\\TestBoard\\TestBoard.csproj",
+      "projectUniqueName": "C:\\Users\\tawoo\\Desktop\\tawooly_dev_feature1\\TestBoard\\TestBoard\\TestBoard.csproj",
       "projectName": "TestBoard",
-      "projectPath": "C:\\Users\\tawoo\\Desktop\\tawooly\\TestBoard\\TestBoard\\TestBoard.csproj",
+      "projectPath": "C:\\Users\\tawoo\\Desktop\\tawooly_dev_feature1\\TestBoard\\TestBoard\\TestBoard.csproj",
       "packagesPath": "C:\\Users\\tawoo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\tawoo\\Desktop\\tawooly\\TestBoard\\TestBoard\\obj\\",
+      "outputPath": "C:\\Users\\tawoo\\Desktop\\tawooly_dev_feature1\\TestBoard\\TestBoard\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
