@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Km/jCQ3CmnQeBSFeTU7Hu3flPiseTRLrO5mVYN4OHZBFaNCKp0Yt4aL2nM3B+Oq+StYcaTzik2WDvbkEx6iQRg==",
+  "dgSpecHash": "nxg6ecJCl/XcNpV5PxZ6lm674o9G+ELKZJzNKtULBHyxvD/YdHsiw0PjLIrlX923fN3/fEuj/u2KDH76k+8aBw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\tawoo\\Desktop\\tawooly_dev_feature1\\TestBoard\\TestBoard\\TestBoard.csproj",
+  "projectFilePath": "C:\\Users\\tawoo\\Desktop\\tawooly_github\\TestBoard\\TestBoard\\TestBoard.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\tawoo\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\tawoo\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
