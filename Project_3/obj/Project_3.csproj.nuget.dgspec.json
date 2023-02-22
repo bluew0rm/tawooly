@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\tawoo\\Desktop\\tawooly_github\\Project_2\\Project_2.csproj": {}
+    "C:\\Users\\tawoo\\source\\repos\\Project_3\\Project_3.csproj": {}
   },
   "projects": {
-    "C:\\Users\\tawoo\\Desktop\\tawooly_github\\Project_2\\Project_2.csproj": {
+    "C:\\Users\\tawoo\\source\\repos\\Project_3\\Project_3.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\tawoo\\Desktop\\tawooly_github\\Project_2\\Project_2.csproj",
-        "projectName": "Project_2",
-        "projectPath": "C:\\Users\\tawoo\\Desktop\\tawooly_github\\Project_2\\Project_2.csproj",
+        "projectUniqueName": "C:\\Users\\tawoo\\source\\repos\\Project_3\\Project_3.csproj",
+        "projectName": "Project_3",
+        "projectPath": "C:\\Users\\tawoo\\source\\repos\\Project_3\\Project_3.csproj",
         "packagesPath": "C:\\Users\\tawoo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\tawoo\\Desktop\\tawooly_github\\Project_2\\obj\\",
+        "outputPath": "C:\\Users\\tawoo\\source\\repos\\Project_3\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
