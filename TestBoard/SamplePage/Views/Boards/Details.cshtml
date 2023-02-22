@@ -1,0 +1,49 @@
+﻿@model SamplePage.Models.Board
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Board</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TITLE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TITLE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KATEGORIES)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KATEGORIES)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WRITER)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WRITER)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
