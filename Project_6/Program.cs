@@ -69,3 +69,21 @@ foreach (employee items in numbers)
 {
     Console.WriteLine("名前：{0} / 年齢：{1} / 誕生日：{2}", items.name, items.age, items.birth);
 }
+
+
+
+Console.WriteLine();
+
+HashSet<int> evenNum = new HashSet<int>(); 
+HashSet<int> oddNum = new HashSet<int>(); 
+
+for(int i = 0;i<5; i++)
+{
+    evenNum.Add(i*2);
+    oddNum.Add((i*2)+1);
+}
+
+
+
+Console.WriteLine("奇数：" + string.Join(",", evenNum));
+Console.WriteLine("偶数：" + string.Join(",", oddNum));
