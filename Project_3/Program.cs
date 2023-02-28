@@ -195,7 +195,7 @@ foreach (string list4 in aaa)
     Console.WriteLine("List Bが出力されます : " + list4);
 }
 
-static List<string> cba(List<string> abc)
+List<string> cba(List<string> abc)
 {
     return abc;
 }
