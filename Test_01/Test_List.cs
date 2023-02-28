@@ -97,5 +97,48 @@ namespace Test_01
             }
         }
 
+        //-------------------------------------------------------------------------------------------------------
+        //-------------------------------------------------------------------------------------------------------
+        //①파더 객체가 100개 들어간 리스트 생성
+        List<Father> fatherList = new List<Father>();
+        public void FatherSet()
+        {
+            
+            for (int i = 0; i < 100; i++)
+            {
+                var father = "father" + (i + 1);
+                //インスタンスを作成
+                fatherList.Add(new Father(father));
+
+                /*var fatherName = fatherObjectList[i]._name;
+                Console.WriteLine("fatherListの"+i+"番目の要素は、"+fatherName);*/
+            }
+
+            foreach (Father result in fatherList)
+            {
+                Console.WriteLine("fatherListの要素は「" + result._name + "」");
+            }
+            Console.WriteLine();
+        }
+        
+        //②리스트에서 파더 이름에 5가 들어가는 엘리먼트 삭제
+        public void PrintFatherRemouveInclude(string x)
+        {
+            fatherList.RemoveAll(item => item._name.Contains(x) == true);
+            foreach (Father result in fatherList)
+            {
+                Console.WriteLine("fatherList、「5」が含まれている要素名は削除しました。「" + result._name + "」");
+            }
+            Console.WriteLine();
+        }
+
+        public void PrintFatherName()
+        {
+            foreach (Father result in fatherList)
+            {
+                Console.WriteLine("現在のfatherListの要素名は「" + result._name + "」です。");
+            }
+            Console.WriteLine();
+        }
     }
 }

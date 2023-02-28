@@ -158,7 +158,7 @@ Console.WriteLine();
 element.PrintElemetsStartsWith("1");
 Console.WriteLine();
 
-
+//엘리먼트의 값이 1로 끝나는 엘리먼트만 출력
 element.PrintElemetsLastsWith("1");
 Console.WriteLine();
 
@@ -169,3 +169,16 @@ Console.WriteLine();
 
 //⑦전부 삭제 후 엘리먼트 출력
 element.ListClear();
+Console.WriteLine();
+
+//--------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------
+//①파더 객체가 100개 들어간 리스트 생성
+element.FatherSet();
+
+
+//②리스트에서 파더 이름에 5가 들어가는 엘리먼트 삭제
+element.PrintFatherRemouveInclude("5");
+
+//③리스트의 모든 파더 이름을 출력
+element.PrintFatherName();

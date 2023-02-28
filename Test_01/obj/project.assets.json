@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\tawoo\\source\\repos\\Test_01\\Test_01.csproj",
+      "projectUniqueName": "C:\\Users\\tawoo\\Desktop\\tawooly_github\\Test_01\\Test_01.csproj",
       "projectName": "Test_01",
-      "projectPath": "C:\\Users\\tawoo\\source\\repos\\Test_01\\Test_01.csproj",
+      "projectPath": "C:\\Users\\tawoo\\Desktop\\tawooly_github\\Test_01\\Test_01.csproj",
       "packagesPath": "C:\\Users\\tawoo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\tawoo\\source\\repos\\Test_01\\obj\\",
+      "outputPath": "C:\\Users\\tawoo\\Desktop\\tawooly_github\\Test_01\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
