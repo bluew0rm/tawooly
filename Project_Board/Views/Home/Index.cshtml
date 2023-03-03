@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<h2>@ViewData["DB"]</h2>
+<h2>@ViewData["DB接続"].ToString()</h2>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Job</th>
+        </tr>
+    </thead>
+    <tbody>
+        @*mylist.Cast<object>().ToArray()*@
+
+
+        @{
+            var data = ViewData["DB接続"] as IList<Project_Board.Models.Members>;
+            var data2 = data.OrderBy(x => x.Id).ToList();
+        }}
+
+
+
+        @*@foreach (var item in ViewData["DB接続"].Cast<object>().ToArray())@*@
+
+        @foreach (var item in data2)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>@item.Age</td>
+                <td>@item.Gender</td>
+                <td>@item.Job</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+@*<form asp-controller="Home" asp-action="Index" method="get">
+        <p>
+
+            <select asp-for="Member" asp-items="Model.Member">
+                <option value="">全て</option>
+            </select>
+
+            タイトル: <input type="text" asp-for="SearchString" />
+            <input type="submit" value="検索" />
+        </p>
+    </form>
+    @{
+    //var membersList = new Project_Board.Models.MembersList();
+    }
+@**@
+
+
+
+
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Getting started</h2>
+        <p>
+            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+            enables a clean separation of concerns and gives you full control over markup
+            for enjoyable, agile development.
+        </p>
+        <p><a class="btn btn-default" href="~/Models/Template/Members.aspx">Members &raquo;</a></p>
+    </div>
+</div>
