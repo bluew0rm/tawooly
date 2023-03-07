@@ -19,7 +19,7 @@ namespace Project_Board.Controllers
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult Failure()
         {
             ViewBag.Message = "Your contact page.";
 

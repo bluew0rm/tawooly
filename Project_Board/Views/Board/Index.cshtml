@@ -1,1 +1,46 @@
 ﻿
+@{
+    ViewBag.Title = "Post Board";
+}
+@*会員情報*@
+
+
+
+@*<h2>@ViewData["DB接続"]</h2>*@
+<h2>@ViewData["DB接続不可"]</h2>
+
+
+
+<h1 style="text-align:center ; margin: 90px 0 0 0">掲示板</h1>
+
+<style>
+    .boardTh{
+        text-align:center;
+    }
+</style>
+
+
+<table class="table" style="margin: 80px 0 0 0;">
+    <thead style="text-align: center">
+        <tr>
+            <th>CATEGORY</th>
+            <th>TITLE</th>
+            <th>WRITER</th>
+            <th>UPDATE</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Category</td>
+                <td>@item.Title</td>
+                <td>@item.Writer</td>
+                <td>@item.Update</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>@Html.ActionLink("書き込む", "Create", "Board")</div>
+

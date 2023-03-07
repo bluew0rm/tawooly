@@ -140,14 +140,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Board\Boards.cs" />
     <Compile Include="Models\Login\Members.cs" />
-    <Compile Include="Models\Template\Members.aspx.cs">
-      <DependentUpon>Members.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Models\Template\Members.aspx.designer.cs">
-      <DependentUpon>Members.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -163,7 +157,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\Template\Members.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Data\MembersDataSet.xsc">
@@ -200,23 +193,23 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Failure.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Login\AddGet.cshtml" />
-    <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Board\Index.cshtml" />
-    <Content Include="Views\Board\Add.cshtml" />
+    <Content Include="Views\Board\Create.cshtml" />
     <Content Include="Views\Board\Update.cshtml" />
     <Content Include="Views\Board\Delete.cshtml" />
     <Content Include="Views\Login\AddPost.cshtml" />
     <Content Include="Views\Login\Join.cshtml" />
-    <Content Include="Views\Login\FindId.cshtml" />
-    <Content Include="Views\Login\FindPw.cshtml" />
+    <Content Include="Views\Login\FindInputId.cshtml" />
+    <Content Include="Views\Login\FindInputPw.cshtml" />
+    <Content Include="Views\Login\SuccessFindId.cshtml" />
+    <Content Include="Views\Login\SuccessFindPw.cshtml" />
+    <Content Include="Views\Board\Detail.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\Board\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

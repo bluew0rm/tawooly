@@ -133,7 +133,6 @@ namespace Project_Board.Controllers
                     {
                         if (reader.HasRows)
                         {
-                            ViewData["ログイン成功"] = "ログインに成功しました。ホームに戻ります。";
                             return View();
                         }
                         else
@@ -142,8 +141,100 @@ namespace Project_Board.Controllers
                         }
                     }
                 }
-                return View();
+                return RedirectToAction("Failure", "Home");
             }
+        }
+
+        public ActionResult FindInputId()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SuccessFindId()
+        {
+            try
+            {
+                conn.Open();
+
+                string queryStr = "SELECT * FROM Members WHERE [Name] = @param1 AND [Age] = @param2 AND [Job] = @param3;";
+
+                using (SqlCommand cmd = new SqlCommand(queryStr, conn))
+                {
+                    if (ModelState.IsValid)
+                    {
+                        var _findName = Request.Form["_findByName"];
+                        var _findByAge = Request.Form["_findByAge"];
+                        var _findByJob = Request.Form["_findByJob"];
+
+                        cmd.Parameters.Add(new SqlParameter("@param1", _findName));
+                        cmd.Parameters.Add(new SqlParameter("@param2", _findByAge));
+                        cmd.Parameters.Add(new SqlParameter("@param3", _findByJob));
+
+                        var result = cmd.ExecuteNonQuery();
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                membersModel.Add(new Members(int.Parse(reader[0].ToString()), reader[1].ToString(), int.Parse(reader[2].ToString()), reader[3].ToString(), reader[4].ToString(), reader[5].ToString()));
+                            }
+                            return View(membersModel);
+                        }
+                    }
+
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                
+            }
+            return RedirectToAction("Failure", "Home");
+        }
+
+        public ActionResult FindInputPw()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SuccessFindPw()
+        {
+            try
+            {
+                conn.Open();
+
+                string queryStr = "SELECT * FROM Members WHERE [Id] = @param1;" ;
+
+                using (SqlCommand cmd = new SqlCommand(queryStr, conn))
+                {
+                    if (ModelState.IsValid)
+                    {
+                        var _findId = Request.Form["_findById"];
+
+                        cmd.Parameters.Add(new SqlParameter("@param1", _findId));
+
+                        var result = cmd.ExecuteNonQuery();
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                membersModel.Add(new Members(int.Parse(reader[0].ToString()), reader[1].ToString(), int.Parse(reader[2].ToString()), reader[3].ToString(), reader[4].ToString(), reader[5].ToString()));
+                            }
+                            return View(membersModel);
+                        }
+                    }
+
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return RedirectToAction("Failure", "Home");
         }
     }
 }

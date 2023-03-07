@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Project_Board.Models;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -10,31 +14,41 @@ namespace Project_Board.Controllers
 {
     public class BoardController : Controller
     {
-        // GET api/<controller>
-        public IEnumerable<string> Get()
+        protected static string connstring 
+            = ConfigurationManager.ConnectionStrings["MemberConnectionString"].ConnectionString;
+        
+        List<Boards> boardsModel = new List<Boards>();
+
+        SqlConnection conn = new SqlConnection(connstring);
+        
+        public ActionResult Index()
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                conn.Open();
+                string queryStr = "SELECT * FROM PostBoard";
+
+                SqlCommand cmd = new SqlCommand(queryStr, conn);
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while(reader.Read())
+                    {
+                        boardsModel.Add(new Boards(int.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString(), reader[3].ToString(), reader[4].ToString(), Convert.ToDateTime(reader[5])));
+                    }
+                    return View(boardsModel);
+                }
+            }
+            catch(Exception ex)
+            {
+                ViewData["DB接続不可"] = "接続不可";
+            }
+            return View();
         }
 
-        // GET api/<controller>/5
-        public string Get(int id)
+        public ActionResult Create()
         {
-            return "value";
-        }
-
-        // POST api/<controller>
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<controller>/5
-        public void Delete(int id)
-        {
+            return View();
         }
     }
 }
