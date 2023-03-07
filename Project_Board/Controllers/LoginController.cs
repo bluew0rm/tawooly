@@ -15,7 +15,7 @@ namespace Project_Board.Controllers
 {
     public class LoginController : Controller
     {
-        protected static string Connstring 
+        protected static string Connstring
             = ConfigurationManager.ConnectionStrings["MemberConnectionString"].ConnectionString;
 
         List<Members> membersModel = new List<Members>();
@@ -32,7 +32,7 @@ namespace Project_Board.Controllers
 
                 SqlCommand cmd = new SqlCommand(queryStr, conn);
 
-                using(SqlDataReader reader = cmd.ExecuteReader())
+                using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     //ViewData["DB接続"] = "接続完了";
                     //ViewData["DB"] = memversModel;
@@ -44,7 +44,7 @@ namespace Project_Board.Controllers
                 }
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ViewData["DB接続不可"] = "接続不可";
             }
@@ -58,7 +58,7 @@ namespace Project_Board.Controllers
         }
 
         [HttpPost]
-        
+
         public ActionResult AddPost()
         {
             try
@@ -111,6 +111,39 @@ namespace Project_Board.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Login()
+        {
+            conn.Open(); //DB接続
+            string querystr = "SELECT * FROM Members WHERE [Id] = @param1 OR [Password] = @param2;";
 
+            using (SqlCommand cmd = new SqlCommand(querystr, conn))
+            {
+                if (ModelState.IsValid)
+                {
+                    var loginId = Request.Form["_loginId"];
+                    var loginPw = Request.Form["_loginPw"];
+
+                    cmd.Parameters.Add(new SqlParameter("@param1", loginId));
+                    cmd.Parameters.Add(new SqlParameter("@param2", loginPw));
+
+                    var result = cmd.ExecuteNonQuery();
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            ViewData["ログイン成功"] = "ログインに成功しました。ホームに戻ります。";
+                            return View();
+                        }
+                        else
+                        {
+                            ViewData["ログイン失敗"] = "ログインに失敗しました。もう一度お試しください。";
+                        }
+                    }
+                }
+                return View();
+            }
+        }
     }
 }

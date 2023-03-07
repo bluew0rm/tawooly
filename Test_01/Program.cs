@@ -182,3 +182,5 @@ element.PrintFatherRemouveInclude("5");
 
 //③리스트의 모든 파더 이름을 출력
 element.PrintFatherName();
+
+element.Exfor();

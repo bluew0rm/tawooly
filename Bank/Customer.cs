@@ -17,6 +17,11 @@ namespace Bank
 
         //public override string ToString() { return _name + _id; }
 
+        public static string GetConnectionString()
+        {
+            return "Server=(local);Integrated Security=SSPI;" +
+                "Initial Catalog=AdventureWorks";
+        }
 
     }
 }

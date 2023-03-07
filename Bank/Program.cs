@@ -1,7 +1,9 @@
 ﻿
 using Bank;
+using System.Data;
+using System.Data.SqlClient;
 
-var bankAccount = new BankAccount();
+/*var bankAccount = new BankAccount();
 
 
 bankAccount.balance = 10000;
@@ -21,5 +23,4 @@ customer.PrintAllCustomer();
 
 //customer.AddNewCustomer(77, "Tawooly");
 
-customer.PrintCustomerById(88);
-
+customer.PrintCustomerById(88);*/

@@ -116,7 +116,7 @@ namespace Test_01
 
             foreach (Father result in fatherList)
             {
-                Console.WriteLine("fatherListの要素は「" + result._name + "」");
+                Console.WriteLine("fatherListの要素は「" + result.Name + "」");
             }
             Console.WriteLine();
         }
@@ -124,21 +124,48 @@ namespace Test_01
         //②리스트에서 파더 이름에 5가 들어가는 엘리먼트 삭제
         public void PrintFatherRemouveInclude(string x)
         {
-            fatherList.RemoveAll(item => item._name.Contains(x) == true);
+            fatherList.RemoveAll(item => item.Name.Contains(x) == true);
             foreach (Father result in fatherList)
             {
-                Console.WriteLine("fatherList、「5」が含まれている要素名は削除しました。「" + result._name + "」");
+                Console.WriteLine("fatherList、「5」が含まれている要素名は削除しました。「" + result.Name + "」");
             }
             Console.WriteLine();
+
         }
 
         public void PrintFatherName()
         {
             foreach (Father result in fatherList)
             {
-                Console.WriteLine("現在のfatherListの要素名は「" + result._name + "」です。");
+                Console.WriteLine("現在のfatherListの要素名は「" + result.Name + "」です。");
             }
             Console.WriteLine();
+        }
+
+        public void Exfor()
+        {
+            for(int i = 0; i < fatherList.Count; i++)
+            {
+                Console.WriteLine(fatherList[i]);
+            }
+
+            foreach (var item in fatherList)
+            {
+                Console.WriteLine(item);
+            }
+
+            fatherList
+                .Where(x => x.Name.StartsWith("1"))
+                .ToList()
+                .ForEach(x => Console.WriteLine(x.Name));
+
+
+
+            var dic = fatherList.ToDictionary(k => k.Name, v => v);
+
+            fatherList.ForEach(x => Console.WriteLine(x.Name));
+
+
         }
     }
 }
