@@ -7,16 +7,16 @@ namespace Project_Board.Models
     {
         private int _id;
         private string _title;
-        private string _category;
+        //private string _category;
         private string _text;
         private string _writer;
-        private DateTime _update;
+        private string _update;
 
-        public Boards(int id, string title, string category, string text, string writer, DateTime update)
+        public Boards(int id, string title, /*string category*/ string text, string writer, string update)
         {
             _id = id;
             _title = title;
-            _category = category;
+            //_category = category;
             _text = text;
             _writer = writer;
             _update = update;
@@ -24,9 +24,9 @@ namespace Project_Board.Models
 
         public int Id { get { return _id; } }
         public string Title { get { return _title; } }
-        public string category { get { return _category; } }
+        //public string category { get { return _category; } }
         public string Text { get { return _text; } }
         public string Writer { get { return _writer; } }
-        public DateTime Update { get { return _update; } }
+        public string Update { get { return _update; } }
     }
 }

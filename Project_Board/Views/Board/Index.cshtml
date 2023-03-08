@@ -11,36 +11,195 @@
 
 
 
-<h1 style="text-align:center ; margin: 90px 0 0 0">掲示板</h1>
+<h1 style="text-align:center; margin: 90px 0 0 0">掲示板</h1>
 
 <style>
-    .boardTh{
-        text-align:center;
+    th {
+        border: solid 3px;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        padding: 10px 0 25px 0;
+        border-collapse: collapse;
+        text-align: center;
+        border-color: #0000AA;
+        font-size: 20px;
+    }
+
+    .thTitle {
+        width: 600px;
+    }
+
+    .thId {
+        width: 60px;
+    }
+
+    .thWriter {
+        width: 250px;
+    }
+
+    .thDate {
+        width: 250px;
+    }
+
+    td {
+        text-align: center;
+        font-size: 17px;
+        padding: 15px 0 10px 0;
+    }
+
+    .boardTh {
+        text-align: center;
+    }
+
+    .open {
+        cursor: pointer; /* マウスオーバーでカーソルの形状を変えることで、クリックできる要素だとわかりやすいように */
+        margin: 40px auto auto 86%;
+        color: #0000AA;
+        font-weight: 600;
+    }
+
+    #pop-up {
+        display: none; /* label でコントロールするので input は非表示に */
+    }
+
+    .overlay {
+        display: none; /* input にチェックが入るまでは非表示に */
+    }
+
+    #pop-up:checked + .overlay {
+        display: block;
+        z-index: 9999;
+        background-color: #00000070;
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        top: 0;
+        left: 0;
+    }
+
+    .window {
+        width: 1200px;
+        max-width: 1200px;
+        height: 700px;
+        overflow-y: scroll;
+        background-color: #ffffff;
+        border-radius: 6px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(182,182,182,0.9);
+    }
+
+    .text {
+        font-size: 18px;
+        margin: 0;
+    }
+
+    .close {
+        cursor: pointer;
+        position: absolute;
+        top: 4px;
+        right: 10px;
+        font-size: 20px;
+    }
+
+    li {
+        list-style: none;
+        align-items: center;
+    }
+
+    .titleinput {
+        resize: none;
+        width: 405px;
+        max-width: 405px;
+        height: 40px;
+        text-align: left;
+        top: 2px;
+        font-size: 22px;
+        margin-bottom: 10px;
+    }
+
+    .textinput {
+        resize: none;
+        width: 800px;
+        max-width: 800px;
+        height: 500px;
+        text-align: left;
+        top: 2px;
+        overflow-y: scroll;
+    }
+
+    .deletetext {
+        border-style: none;
+        width: 30px;
+        text-align: center;
     }
 </style>
 
 
-<table class="table" style="margin: 80px 0 0 0;">
-    <thead style="text-align: center">
-        <tr>
-            <th>CATEGORY</th>
-            <th>TITLE</th>
-            <th>WRITER</th>
-            <th>UPDATE</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+<form class="form-horizontal" method="post" action="https://localhost:44342/Board/Delete">
+    <table style="margin: 80px 0 0 0;">
+        <thead>
             <tr>
-                <td>@item.Category</td>
-                <td>@item.Title</td>
-                <td>@item.Writer</td>
-                <td>@item.Update</td>
+                <th class="thId">Id</th>
+                <th class="thWriter">WRITER</th>
+                <th class="thTitle">TITLE</th>
+                <th class="thDate">UPDATE</th>
+                <th class="thDate"><button type="submit" href="https://localhost:44342/Board/Index">全削除</button></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><input class="deletetext" type="text" name="_delete" value="@item.Id"></td>
+                    <td>@item.Writer</td>
+                    <td>@item.Title</td>
+                    <td>@item.Update</td>
 
-<div>@Html.ActionLink("書き込む", "Create", "Board")</div>
+                    <td>
+                        <button type="submit" href="https://localhost:44342/Board/Index">削除</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
+
+
+
+<label class="open" for="pop-up">テキストを書き込む</label>
+<input type="checkbox" id="pop-up">
+<div class="overlay">
+    <div class="window">
+        <form class="form-horizontal" method="post" action="https://localhost:44342/Board/Create">
+            <label class="close" for="pop-up">×</label>
+
+            <div style="margin: 15px auto auto 43px;">
+
+                <div style="display: flex;">
+                    <textarea class="titleinput" name="_title" placeholder="タイトル"></textarea>
+
+                    <p style=" font-size:21px; color: white; margin: 5px 0 auto 30px;">作者：</p>
+                    <input type="text" style="height: 40px; width: 150px; " name="_writer" />
+
+                    <input type="date" style="height: 40px; width: 150px; " name="_date" />
+                </div>
+
+                <textarea class="textinput" name="_text" placeholder="内容を入力してください。"></textarea>
+
+                <div style="margin: 20px auto auto 340px; ">
+                    <a class="btn btn-warning" href="https://localhost:44342/Board/Index">戻る</a>
+                    <button type="submit" class="btn btn-primary" href="https://localhost:44342/Board/Index">登録</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
 
