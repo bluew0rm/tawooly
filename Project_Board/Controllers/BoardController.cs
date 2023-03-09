@@ -87,15 +87,11 @@ namespace Project_Board.Controllers
                 conn.Open();
                 using (var connection = conn.CreateCommand())
                 {
-                    string queryStrInsert = "DELETE FROM PostBoard WHERE [Id] = @param1";
-                    using (SqlCommand cmdIn = new SqlCommand(queryStrInsert, conn))
+                    string queryStrDELETE = "DELETE FROM PostBoard";
+                    using (SqlCommand cmdIn = new SqlCommand(queryStrDELETE, conn))
                     {
                         if (ModelState.IsValid)
                         {
-                            var id = Request.Form["_delete"];
-
-                            cmdIn.Parameters.Add(new SqlParameter("@param1", id));
-
                             var excution = cmdIn.ExecuteNonQuery();
                         }
                         return Redirect("Index");

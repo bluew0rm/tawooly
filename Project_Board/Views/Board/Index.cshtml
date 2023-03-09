@@ -157,14 +157,10 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td><input class="deletetext" type="text" name="_delete" value="@item.Id"></td>
+                    <td>@item.Id</td>
                     <td>@item.Writer</td>
                     <td>@item.Title</td>
                     <td>@item.Update</td>
-
-                    <td>
-                        <button type="submit" href="https://localhost:44342/Board/Index">削除</button>
-                    </td>
                 </tr>
             }
         </tbody>
