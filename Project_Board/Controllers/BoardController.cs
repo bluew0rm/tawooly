@@ -7,7 +7,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web.Http;
 using System.Web.Mvc;
 
 namespace Project_Board.Controllers
@@ -46,6 +45,35 @@ namespace Project_Board.Controllers
             return View();
         }
 
+        /*[HttpPost]
+        public ActionResult Detail()
+        {
+            try
+            {
+                conn.Open();
+                using (var connection = conn.CreateCommand())
+                {
+                    string queryStrDetail = "SELECT * FROM PostBoard WHERE [Id] = @param1";
+                    using (SqlCommand cmdDetail = new SqlCommand(queryStrDetail, conn))
+                    {
+                        if (ModelState.IsValid)
+                        {
+                            var id = Request.Form["_id"];
+
+                            cmdDetail.Parameters.Add(new SqlParameter("@param1", id));
+
+                            var excution = cmdDetail.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewData["DB接続不可"] = "接続不可";
+            }
+            return View();
+        }*/
+
         public ActionResult Create()
         {
             try
@@ -70,7 +98,7 @@ namespace Project_Board.Controllers
 
                             var excution = cmdIn.ExecuteNonQuery();
                         }
-                        return View();
+                        return Redirect("Index");
                     }
                 }
             }
@@ -80,7 +108,7 @@ namespace Project_Board.Controllers
             }
             return View();
         }
-        public ActionResult Delete()
+        public ActionResult AllDelete()
         {
             try
             {
@@ -92,6 +120,36 @@ namespace Project_Board.Controllers
                     {
                         if (ModelState.IsValid)
                         {
+                            var excution = cmdIn.ExecuteNonQuery();
+                        }
+                        return Redirect("Index");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewData["DB接続不可"] = "接続不可";
+            }
+            return Redirect("Index");
+        }
+
+        [HttpPost]
+        public ActionResult singleDelete()
+        {
+            try
+            {
+                conn.Open();
+                using (var connection = conn.CreateCommand())
+                {
+                    string queryStrDELETE = "DELETE FROM PostBoard WHERE [Id] = @param1;";
+                    using (SqlCommand cmdIn = new SqlCommand(queryStrDELETE, conn))
+                    {
+                        if (ModelState.IsValid)
+                        {
+                            var ID = Request.Form["_id"];
+
+                            cmdIn.Parameters.Add(new SqlParameter("@param1", ID));
+
                             var excution = cmdIn.ExecuteNonQuery();
                         }
                         return Redirect("Index");

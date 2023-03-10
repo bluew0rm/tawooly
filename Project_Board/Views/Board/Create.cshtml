@@ -1,1 +1,99 @@
-﻿
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        td, th {
+            padding: 10px 20px;
+            text-align:center;
+        }
+/*
+        table tr:not(){
+            cursor:grab; transition:all .25s ease-in-out;
+        }
+
+        table tr:not(:first-child) :hover{background-color:aqua;}
+*/
+        .selector {
+            cursor: grab;
+            transition: all .25s ease-in-out;
+        }
+
+        .selector:hover {
+            color:red;
+            font-weight:600;
+        }
+    </style>
+
+    
+</head>
+<body style="margin: 50px auto  ">
+    ID : <input type="text" name="firstName" id="firstName" />
+   @*Last Name :  <input type="text" name="lastName" id="lastName" />
+    age :        <input type="text" name="age" id="age" />*@
+
+    <table id="table" border="1" style="margin:10px">
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>age</th>
+            <th>delete</th>
+        </tr>
+        <tr>
+            <td>first Name 1</td>
+            <td>Last Name 1</td>
+            <td>age 1</td>
+            <td class="selector">
+                <button id="id1" type="submit" name="_id" onclick="getId(this.id)">delete</button>
+                @*<input id="id1" type="button" value="delete" onclick="getId(this.id)" />*@
+            </td>
+        </tr>
+
+        <tr>
+            <td>first Name 2</td>
+            <td>Last Name 2</td>
+            <td>age 2</td>
+            <td class="selector">
+                <button id="id2" type="submit"  name="_id" onclick="getId(this.id)">delete</button>
+                @*<input id="id2" type="button" value="delete" onclick="getId(this.id)" />*@
+            </td>
+        </tr>
+
+        <tr>
+            <td>first Name 3</td>
+            <td>Last Name 3</td>
+            <td>age 3</td>
+            <td class="selector">
+                <button id="id3" type="submit" name="_id" onclick="getId(this.id)">delete</button>
+                @*<input id="id3" type="button" value="delete" onclick="getId(this.id)" />*@
+            </td>
+        </tr>
+
+    </table>
+
+
+    <button onclick="selectRow();">Edit</button>
+
+    <script>
+        var table = document.getElementById("table"), rIndex;
+
+        for (var i = 0; i < table.rows.length; i++) {
+            table.rows[i].onclick = function () {
+                rIndex = this.rowIndex;
+                console.log(rIndex);
+
+                document.getElementById("firstName").value = this.cells[0].innerHTML;
+                document.getElementById("lastName").value = this.cells[1].innerHTML;
+                document.getElementById("age").value = this.cells[2].innerHTML;
+            };
+        }
+
+        function getId(id) {
+            console.log(id);
+        }
+    </script>
+
+</body>
+</html>

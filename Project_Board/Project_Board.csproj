@@ -200,7 +200,6 @@
     <Content Include="Views\Board\Index.cshtml" />
     <Content Include="Views\Board\Create.cshtml" />
     <Content Include="Views\Board\Update.cshtml" />
-    <Content Include="Views\Board\Delete.cshtml" />
     <Content Include="Views\Login\AddPost.cshtml" />
     <Content Include="Views\Login\Join.cshtml" />
     <Content Include="Views\Login\FindInputId.cshtml" />
