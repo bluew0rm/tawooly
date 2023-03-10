@@ -3,10 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Mvc;
 
 namespace Project_Board.Controllers
@@ -45,35 +41,6 @@ namespace Project_Board.Controllers
             return View();
         }
 
-        /*[HttpPost]
-        public ActionResult Detail()
-        {
-            try
-            {
-                conn.Open();
-                using (var connection = conn.CreateCommand())
-                {
-                    string queryStrDetail = "SELECT * FROM PostBoard WHERE [Id] = @param1";
-                    using (SqlCommand cmdDetail = new SqlCommand(queryStrDetail, conn))
-                    {
-                        if (ModelState.IsValid)
-                        {
-                            var id = Request.Form["_id"];
-
-                            cmdDetail.Parameters.Add(new SqlParameter("@param1", id));
-
-                            var excution = cmdDetail.ExecuteNonQuery();
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                ViewData["DB接続不可"] = "接続不可";
-            }
-            return View();
-        }*/
-
         public ActionResult Create()
         {
             try
@@ -108,6 +75,7 @@ namespace Project_Board.Controllers
             }
             return View();
         }
+        
         public ActionResult AllDelete()
         {
             try
@@ -134,7 +102,7 @@ namespace Project_Board.Controllers
         }
 
         [HttpPost]
-        public ActionResult singleDelete()
+        public ActionResult SingleDelete()
         {
             try
             {
@@ -162,5 +130,45 @@ namespace Project_Board.Controllers
             }
             return Redirect("Index");
         }
+
+        [HttpPost]
+        public ActionResult Detail()
+        {
+            try
+            {
+                conn.Open();
+                using (var connection = conn.CreateCommand())
+                {
+                    string queryStrDetail = "SELECT * FROM PostBoard WHERE [Id] = @param1";
+                    using (SqlCommand cmdDetail = new SqlCommand(queryStrDetail, conn))
+                    {
+                        if (ModelState.IsValid)
+                        {
+                            var id = Request.Form["_id"];
+
+                            cmdDetail.Parameters.Add(new SqlParameter("@param1", id));
+
+                            var excution = cmdDetail.ExecuteNonQuery();
+
+                            using (SqlDataReader reader = cmdDetail.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    boardsModel.Add(new Boards(int.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString(), reader[3].ToString(), reader[4].ToString()));
+                                }
+                                return View(boardsModel);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewData["DB接続不可"] = "接続不可";
+            }
+            return View();
+        }
+
+
     }
 }

@@ -42,7 +42,7 @@
         width: 250px;
     }
 
-    .thdelete {
+    .thDelete {
         width: 200px;
     }
 
@@ -145,25 +145,46 @@
         text-align: center;
     }
 
-    .deletebox {
+    .selectBox {
         text-align: left;
-        width: 0.5px;
+        width: 1px;
+        /*width: 100px;*/
         visibility: hidden;
+    }
+
+    .selector {
+        cursor: grab;
+        transition: all .25s ease-in-out;
+    }
+
+    .selector:hover {
+        color: #0000AA;
+        font-weight: 600;
     }
 
 </style>
 
-<form class="form-horizontal" method="post" onsubmit="deleteAlert();">
+
+
+<form class="form-horizontal" method="post">
     <table id="boardTable" style="margin: 80px 0 0 0;">
         <thead>
             <tr>
-                <th class="thId">Id</th>
-                <th class="thWriter">WRITER</th>
-                <th class="thTitle">TITLE</th>
-                <th class="thDate">UPDATE</th>
-                <th class="thdelete">
-                    <button id="button" type="submit" onclick="Actions('https://localhost:44342/Board/AllDelete')">全削除</button>
-                    <input id="itemId" class="deletebox" type="text" name="_id" />
+                <th class="thId">
+                    Id
+                    <input id="itemId" class="selectBox" type="text" name="_id" />
+                </th>
+                <th class="thWriter">
+                    WRITER
+                </th>
+                <th class="thTitle">
+                    TITLE
+                </th>
+                <th class="thDate">
+                    UPDATE
+                </th>
+                <th class="thDelete">
+                    <button id="button" type="submit" onclick="deleteAlert(); Actions('https://localhost:44342/Board/AllDelete')">全削除</button>
                 </th>
             </tr>
         </thead>
@@ -172,11 +193,15 @@
             {
                 <tr>
                     <td>@item.Id</td>
+
                     <td>@item.Writer</td>
-                    <td>@item.Title</td>
+
+                    <td class="selector" onclick="getAll(itemId); Actions('https://localhost:44342/Board/Detail')">@item.Title</td>
+
                     <td>@item.Update</td>
+
                     <td>
-                        <button type="submit" onclick="getId(itemId); Actions('https://localhost:44342/Board/singleDelete')" >delete</button>
+                        <button type="submit" onclick="deleteAlert(); getId(itemId); Actions('https://localhost:44342/Board/SingleDelete')" >delete</button>
                     </td>
                 </tr>
             }
@@ -206,6 +231,21 @@
                 console.log(rIndex);
 
                 document.getElementById("itemId").value = this.cells[0].innerHTML;
+            };
+        }
+    }
+
+    function getAll() {
+        var table = document.getElementById("boardTable"), rIndex;
+
+        for (var i = 0; i < table.rows.length; i++) {
+            table.rows[i].onclick = function () {
+                rIndex = this.rowIndex;
+                console.log(rIndex);
+
+                document.getElementById("itemId").value = this.cells[0].innerHTML;
+
+                document.querySelector("form").submit();
             };
         }
     }
