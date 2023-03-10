@@ -169,6 +169,42 @@ namespace Project_Board.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Update()
+        {
+            try
+            {
+                conn.Open();
+                using (var connection = conn.CreateCommand())
+                {
+                    string queryStrDetail = "UPDATE PostBoard SET [Title] = @param2, [Writer] = @param3, [Update] = @param4, [Text] = @param5 WHERE [Id] = @param1";
+                    using (SqlCommand cmdDetail = new SqlCommand(queryStrDetail, conn))
+                    {
+                        if (ModelState.IsValid)
+                        {
+                            var id = Request.Form["_id"];
+                            var title = Request.Form["_title"];
+                            var Writer = Request.Form["_Writer"];
+                            var Update = Request.Form["_Update"];
+                            var Text = Request.Form["_Text"];
 
+                            cmdDetail.Parameters.Add(new SqlParameter("@param1", id));
+                            cmdDetail.Parameters.Add(new SqlParameter("@param2", title));
+                            cmdDetail.Parameters.Add(new SqlParameter("@param3", Writer));
+                            cmdDetail.Parameters.Add(new SqlParameter("@param4", Update));
+                            cmdDetail.Parameters.Add(new SqlParameter("@param5", Text));
+
+                            var excution = cmdDetail.ExecuteNonQuery();
+                            return Redirect("Index");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewData["DB接続不可"] = "接続不可";
+            }
+            return View();
+        }
     }
 }
