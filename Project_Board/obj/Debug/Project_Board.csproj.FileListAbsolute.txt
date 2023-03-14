@@ -179,3 +179,7 @@ C:\Users\tawoo\Desktop\tawooly_github\Project_Board\bin\System.Web.Http.WebHost.
 C:\Users\tawoo\Desktop\tawooly_github\Project_Board\bin\ja\System.Net.Http.Formatting.resources.dll
 C:\Users\tawoo\Desktop\tawooly_github\Project_Board\bin\ja\System.Web.Http.resources.dll
 C:\Users\tawoo\Desktop\tawooly_github\Project_Board\bin\ja\System.Web.Http.WebHost.resources.dll
+C:\Users\tawoo\Desktop\tawooly_github\Project_Board\bin\PagedList.dll
+C:\Users\tawoo\Desktop\tawooly_github\Project_Board\bin\PagedList.Mvc.dll
+C:\Users\tawoo\Desktop\tawooly_github\Project_Board\bin\PagedList.xml
+C:\Users\tawoo\Desktop\tawooly_github\Project_Board\bin\PagedList.Mvc.xml

@@ -18,7 +18,7 @@
         text-align: left;
         margin:auto 30px 0 35%;
         width: 100px;
-        /*visibility: hidden;*/
+        visibility: hidden;
     }
     .titleinput {
         resize: none;
@@ -41,7 +41,7 @@
         margin: 20px auto auto auto;
         overflow-y: scroll;
     }
-
+/**/
     .writer {
         font-size: 21px;
         color: black;
@@ -58,7 +58,7 @@
 
 <form method="post" action="https://localhost:44342/Board/Update" onsubmit="deleteAlert();">
     <div style="margin: 20px auto auto 15%;">
-        @foreach (var item in Model)
+        @foreach (var item in Model.Row)
         {
             <input class="selectBox" type="text" name="_id" value="@item.Id" />
 

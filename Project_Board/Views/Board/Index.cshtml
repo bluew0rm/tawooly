@@ -58,7 +58,7 @@
 
     .open {
         cursor: pointer; /* マウスオーバーでカーソルの形状を変えることで、クリックできる要素だとわかりやすいように */
-        margin: 40px auto auto 86%;
+        margin: 0 auto auto 86%;
         color: #0000AA;
         font-weight: 600;
     }
@@ -157,57 +157,95 @@
         transition: all .25s ease-in-out;
     }
 
-    .selector:hover {
-        color: #0000AA;
-        font-weight: 600;
+        .selector:hover {
+            color: #0000AA;
+            font-weight: 600;
+        }
+
+    .searchText {
+        width: 200px;
+        height: 30px;
+        bottom: 0;
     }
 
+    .searchButton {
+        width: 50px;
+        height: 30px;
+        top: 0;
+    }
 </style>
 
 
 
 <form class="form-horizontal" method="post">
-    <table id="boardTable" style="margin: 80px 0 0 0;">
-        <thead>
-            <tr>
-                <th class="thId">
-                    Id
-                    <input id="itemId" class="selectBox" type="text" name="_id" />
-                </th>
-                <th class="thWriter">
-                    WRITER
-                </th>
-                <th class="thTitle">
-                    TITLE
-                </th>
-                <th class="thDate">
-                    UPDATE
-                </th>
-                <th class="thDelete">
-                    <button id="button" type="submit" onclick="deleteAlert(); Actions('https://localhost:44342/Board/AllDelete')">全削除</button>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+    
+        <div style="text-align: right; margin: 40px auto 0 auto; height: 100px; ">
+            <input id="searchTitle" type="text" class="searchText" name="_searchTitle" placeholder="検索" />
+            <button type="submit" class="searchButton" onclick="getAll(searchTitle); Actions('https://localhost:44342/Board/Search')">検索</button>
+        </div>
+        <label class="open" for="pop-up">テキストを書き込む</label>
+
+        <table id="boardTable" style="margin: 80px 0 0 0;">
+            <thead>
                 <tr>
-                    <td>@item.Id</td>
-
-                    <td>@item.Writer</td>
-
-                    <td class="selector" onclick="getAll(itemId); Actions('https://localhost:44342/Board/Detail')">@item.Title</td>
-
-                    <td>@item.Update</td>
-
-                    <td>
-                        <button type="submit" onclick="deleteAlert(); getId(itemId); Actions('https://localhost:44342/Board/SingleDelete')" >delete</button>
-                    </td>
+                    <th class="thId">
+                        Id
+                        <input id="itemId" class="selectBox" type="text" name="_id" />
+                    </th>
+                    <th class="thWriter">
+                        WRITER
+                    </th>
+                    <th class="thTitle">
+                        TITLE
+                    </th>
+                    <th class="thDate">
+                        UPDATE
+                    </th>
+                    <th class="thDelete">
+                        <button id="button" type="submit" onclick="deleteAlert(); Actions('https://localhost:44342/Board/AllDelete')">全削除</button>
+                    </th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model.Rows)
+                {
+                    <tr>
+                        <td>@item["Id"]</td>
+
+                        <td>@item["Writer"]</td>
+
+                        <td class="selector" onclick="getAll(itemId); Actions('https://localhost:44342/Board/Detail')">@item["Title"]</td>
+
+                        <td>@item["Update"]</td>
+
+                        <td>
+                            <button type="submit" onclick="deleteAlert(); getId(itemId); Actions('https://localhost:44342/Board/SingleDelete')">delete</button>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+        </table>
 </form>
+
+<div class="container" onclick="pagint()" >
+    <div >
+        <span id="js-pagination-result-total" ></span>件中
+        <span id="js-pagination-result-range-text" ></span>
+    </div>
+    <div >
+        <button id="js-button-prev"  >
+            前へ
+        </button>
+        <button id="js-button-next"  >
+            次へ
+        </button>
+    </div>
+    <div >
+        <nav id="js-pagination-result-range" ></nav>
+        現在のページ: <span id="js-pagination-current" ></span>
+    </div>
+</div>
 
 <script>
     function Actions(url) {
@@ -249,12 +287,90 @@
             };
         }
     }
-    
+
+    function getTitle() {
+        var table = document.getElementById("boardTable"), rIndex;
+
+        for (var i = 0; i < table.rows.length; i++) {
+            table.rows[i].onclick = function () {
+                rIndex = this.rowIndex;
+                console.log(rIndex);
+
+                document.getElementById("itemId").value = this.cells[0].innerHTML;
+
+                document.querySelector("form").submit();
+            };
+        }
+    }
+
+    function pagint() {// 前へ_DOM指定
+        const prevButton = document.getElementById("js-button-prev");
+        // 次へ_DOM指定
+        const nextButton = document.getElementById("js-button-next");
+
+        // 総数
+        const globalTotalItem = 100;
+        // 1ページに表示したい件数
+        const PER_PAGE = 10;
+        // 初期ページ
+        var initialPage = 0;
+        // 現在のページ
+        var currentPage = 0;
+
+        // 配列を任意の数だけ作成
+        const range = (start, end) => {
+            const array = [...Array(end - start + 1)].map((_, i) => {
+                return start + i;
+            });
+            return array;
+        };
+
+        // 閲覧中の情報の件数の範囲を表示
+        const rangeCurrentPage = () => {
+            if (!globalTotalItem) return;
+            const start = currentPage * PER_PAGE + 1;
+            const text =
+                (currentPage + 1) * PER_PAGE < globalTotalItem
+                    ? `${start}件〜${(currentPage + 1) * PER_PAGE}件目を表示`
+                    : `${start}件〜${globalTotalItem}件目を表示`;
+            return text;
+        };
+
+        // 前へボタン_アクション
+        prevButton.addEventListener("click", () => {
+            if (initialPage >= currentPage) return;
+            currentPage = currentPage - 1;
+            render();
+        });
+        // 次へボタン_アクション
+        nextButton.addEventListener("click", () => {
+            if (PER_PAGE * (currentPage + 1) >= globalTotalItem) return;
+            currentPage = currentPage + 1;
+            render();
+        });
+
+        // レンダリング
+        const render = () => {
+            document.getElementById(
+                "js-pagination-result-total"
+            ).innerHTML = globalTotalItem;
+            document.getElementById("js-pagination-result-range").innerHTML = range(
+                1,
+                Math.ceil(globalTotalItem / PER_PAGE)
+            );
+            document.getElementById(
+                "js-pagination-result-range-text"
+            ).innerHTML = rangeCurrentPage();
+            document.getElementById("js-pagination-current").innerHTML = currentPage + 1;
+        };
+
+        render();
+    }
 </script>
 
 
 
-<label class="open" for="pop-up">テキストを書き込む</label>
+
 <input type="checkbox" id="pop-up">
 <div class="overlay">
     <div class="window">
