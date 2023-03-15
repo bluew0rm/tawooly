@@ -132,6 +132,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adepters\Core\BoardAdapter.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -146,11 +147,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Board\Boards.cs" />
+    <Compile Include="Models\Board\BoardItem.cs" />
     <Compile Include="Models\Login\Members.cs" />
+    <Compile Include="Models\Paging\Paging.cs" />
+    <Compile Include="Models\Search\SearchBoardItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\Adepter\FormData.cs" />
-    <Compile Include="Service\Adepter\CallData.cs" />
+    <Compile Include="Adepters\PostBoardAdapter.cs" />
+    <Compile Include="Services\BoardService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Member.mdf" />
@@ -207,7 +210,6 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Login\AddGet.cshtml" />
     <Content Include="Views\Board\Index.cshtml" />
-    <Content Include="Views\Board\Update.cshtml" />
     <Content Include="Views\Login\AddPost.cshtml" />
     <Content Include="Views\Login\Join.cshtml" />
     <Content Include="Views\Login\FindInputId.cshtml" />

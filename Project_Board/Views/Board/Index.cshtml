@@ -148,7 +148,6 @@
     .selectBox {
         text-align: left;
         width: 1px;
-        /*width: 100px;*/
         visibility: hidden;
     }
 
@@ -172,6 +171,10 @@
         width: 50px;
         height: 30px;
         top: 0;
+    }
+
+    .pagingButton{
+        margin:20px 10px;
     }
 </style>
 
@@ -215,12 +218,12 @@
 
                         <td>@item["Writer"]</td>
 
-                        <td class="selector" onclick="getAll(itemId); Actions('https://localhost:44342/Board/Detail')">@item["Title"]</td>
+                        <td class="selector" onclick="getAll(); Actions('https://localhost:44342/Board/Detail')">@item["Title"]</td>
 
                         <td>@item["Update"]</td>
 
                         <td>
-                            <button type="submit" onclick="deleteAlert(); getId(itemId); Actions('https://localhost:44342/Board/SingleDelete')">delete</button>
+                            <button type="submit" onclick="deleteAlert(); getId(); Actions('https://localhost:44342/Board/SingleDelete')">delete</button>
                         </td>
                     </tr>
                 }
@@ -228,22 +231,25 @@
         </table>
 </form>
 
-<div class="container" onclick="pagint()" >
+
+
+<div class="container" style="margin:50px auto; text-align:center" onclick="pagint()" >
     <div >
         <span id="js-pagination-result-total" ></span>件中
         <span id="js-pagination-result-range-text" ></span>
     </div>
     <div >
-        <button id="js-button-prev"  >
+        <button id="js-button-prev" class="pagingButton">
             前へ
         </button>
-        <button id="js-button-next"  >
+        <button id="js-button-next" class="pagingButton">
             次へ
         </button>
     </div>
     <div >
-        <nav id="js-pagination-result-range" ></nav>
-        現在のページ: <span id="js-pagination-current" ></span>
+        <nav id="js-pagination-result-range" style="margin:auto auto 30px auto"></nav>
+        
+        現在のページ : <span id="js-pagination-current" ></span>
     </div>
 </div>
 
@@ -303,7 +309,7 @@
         }
     }
 
-    function pagint() {// 前へ_DOM指定
+    /*function pagint() {// 前へ_DOM指定
         const prevButton = document.getElementById("js-button-prev");
         // 次へ_DOM指定
         const nextButton = document.getElementById("js-button-next");
@@ -355,7 +361,7 @@
                 "js-pagination-result-total"
             ).innerHTML = globalTotalItem;
             document.getElementById("js-pagination-result-range").innerHTML = range(
-                1,
+                1, 
                 Math.ceil(globalTotalItem / PER_PAGE)
             );
             document.getElementById(
@@ -365,6 +371,10 @@
         };
 
         render();
+    }*/
+
+    function pagint() {
+
     }
 </script>
 
