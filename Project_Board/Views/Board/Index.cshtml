@@ -215,15 +215,16 @@
                 {
                     <tr>
                         <td>@item["Id"]</td>
-
                         <td>@item["Writer"]</td>
-
                         <td class="selector" onclick="getAll(); Actions('https://localhost:44342/Board/Detail')">@item["Title"]</td>
-
                         <td>@item["Update"]</td>
 
+                        @*<td>@item.Id</td>
+                        <td>@item.Writer</td>
+                        <td class="selector" onclick="getAll(); Actions('https://localhost:44342/Board/Detail')">@item.Title</td>
+                        <td>@item.Update</td>*@
                         <td>
-                            <button type="submit" onclick="deleteAlert(); getId(); Actions('https://localhost:44342/Board/SingleDelete')">delete</button>
+                            <button type="submit" onclick="deleteAlert(); getId(); Actions('https://localhost:44342/Board/Delete')">delete</button>
                         </td>
                     </tr>
                 }

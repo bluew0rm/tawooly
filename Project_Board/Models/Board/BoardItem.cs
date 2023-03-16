@@ -27,6 +27,14 @@ namespace Project_Board.Models
             _update = update;
         }
 
+        public BoardItem(string title, string writer, string update, string text)
+        {
+            _title = title;
+            _text = text;
+            _writer = writer;
+            _update = update;
+        }
+
         public int Id { get { return _id; } }
         public string Title { get { return _title; } }
         public string Text { get { return _text; } }

@@ -57,7 +57,9 @@
 
 
 <form method="post" action="https://localhost:44342/Board/Update" onsubmit="deleteAlert();">
+
     <div style="margin: 20px auto auto 15%;">
+
         @foreach (var item in Model.Rows)
         {
             <input class="selectBox" type="text" name="_id" value="@item["Id"]" />
@@ -78,6 +80,7 @@
                 <button type="submit">修正</button>
             </div>
         }
+
     </div>
 </form>
 

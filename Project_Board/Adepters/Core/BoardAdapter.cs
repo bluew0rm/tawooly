@@ -21,6 +21,5 @@ namespace Project_Board.Adepters.Core
                 return _connection;
             }
         }
-
     }
 }

@@ -1,13 +1,8 @@
 ﻿using Project_Board.Models;
-using Project_Board.Service.Adepter;
+using Project_Board.Models.Search;
 using Project_Board.Services;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
-using System.Data.SqlClient;
 using System.Web.Mvc;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Project_Board.Controllers
 {
@@ -18,26 +13,31 @@ namespace Project_Board.Controllers
        
         DataTable itemTable = new DataTable();
 
+        //SelectAll ok
         public ActionResult Index()
         {
-            service.GetAllData();
+            var result = service.GetAllData();
 
-            return View();
+            return View(result);
         }
 
+        //Create
         [HttpPost]
         public ActionResult Create()
         {
             var title = Request.Form["_title"];
-            var text = Request.Form["_text"];
             var writer = Request.Form["_writer"];
-            var date = Request.Form["_date"];
+            var update = Request.Form["_date"];
+            var text = Request.Form["_text"];
+            
+            var item = new BoardItem(title, text, writer, update);
 
-            service.Create(title, text, writer, date);
+            service.Create(item);
 
             return Redirect("Index");
         }
 
+        //AllDelete  ok 
         [HttpPost]
         public ActionResult AllDelete()
         {
@@ -46,32 +46,37 @@ namespace Project_Board.Controllers
             return Redirect("Index");
         }
 
+        //Delete  ok
         [HttpPost]
-        public ActionResult SingleDelete()
+        public ActionResult Delete()
         {
             var id = Request.Form["_id"];
-            service.SingleDelete(id);
+
+            service.GetDeleteById(id);
 
             return Redirect("Index");
         }
 
+        //Detail  ok
         [HttpPost]
         public ActionResult Detail()
         {
             var id = this.Request.Form["_id"];
 
-            service.GetDetailById(id);
+            var result = service.GetDetailById(id);
 
-            return View(itemTable);
+            return View(result);
         }
 
+        //Update  ok
         [HttpPost]
         public ActionResult Update()
         {
-            var title = Request.Form["_title"];
-            var writer = Request.Form["_Writer"];
-            var update = Request.Form["_Update"];
-            var text = Request.Form["_Text"];
+            var id = this.Request.Form["_id"];
+            var title = this.Request.Form["_title"];
+            var writer = this.Request.Form["_Writer"];
+            var update = this.Request.Form["_Update"];
+            var text = this.Request.Form["_Text"];
 
             var item = new BoardItem(int.Parse(id.ToString()), title, writer, update, text);
 
@@ -80,22 +85,26 @@ namespace Project_Board.Controllers
             return Redirect("Index");
         }
 
-            var id = Request.Form["_id"];
+        //Search
         [HttpPost]
         public ActionResult Search()
         {
-            string title = Request.Form["_searchTitle"];
-            boardAdepter.Search(title, itemTable);
+            var title = Request.Form["_searchTitle"];
 
-            return View(itemTable);
+
+            var item = new SearchBoardItem(title);
+
+            var result = service.Search(item);
+
+            return View(result);
         }
 
-        [HttpPost]
+        /*[HttpPost]
         public ActionResult Pageing()
         {
             service.Get(itemTable);
 
             return Redirect("Index");
-        }
+        }*/
     }
 }

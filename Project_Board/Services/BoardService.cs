@@ -1,6 +1,11 @@
 ﻿using Project_Board.Models;
+using Project_Board.Models.Search;
 using Project_Board.Service.Adepter;
 using System.Data;
+using System.IO;
+using System.Web.DynamicData;
+using System.Web.Http.Results;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Project_Board.Services
 {
@@ -10,31 +15,67 @@ namespace Project_Board.Services
 
         private PostBoardAdapter Adapter { get { if (_postBoardAdapter == null) { _postBoardAdapter = new PostBoardAdapter(); } return _postBoardAdapter; } }
 
-
-        public BoardItem GetAllData()
+        //SelectAll ok
+        public DataTable GetAllData()
         {
-            var dataTable = Adapter.GetDataByAll();
+            DataTable dataTable = Adapter.GetDataByAll();
 
-            var result = new BoardItem(dataTable); 
-            
-            return result;
+            return dataTable;
         }
 
+        //Update  ok
+        public DataTable Update(BoardItem item)
+        {
+            var dataTable = Adapter.Update(item);
 
-        public BoardItem GetDetailById(string id)
+            //var result = new BoardItem(dataTable);
+
+            return dataTable;
+        }
+
+        //Create ok
+        public DataTable Create(BoardItem item)
+        {
+            var dataTable = Adapter.Create(item);
+
+            return dataTable;
+        }
+        
+        //AllDelete  ok
+        public DataTable AllDelete()
+        {
+            var dataTable = Adapter.AllDelete();
+
+            return dataTable;
+        }
+
+        //Delete ok
+        public DataTable GetDeleteById(string id)
+        {
+            var dataTable = Adapter.Delete(id);
+
+            //var result = new BoardItem(dataTable);
+
+            return dataTable;
+        }
+
+        //Detail  ok
+        public DataTable GetDetailById(string id)
         {
             var dataTable = Adapter.GetDataById(id);
 
-            var result = new BoardItem(dataTable);
+            //var result = new BoardItem(dataTable);
 
-            return result;
+            return dataTable;
         }
 
-        public void Update(BoardItem item)
+        //Search
+        public DataTable Search(SearchBoardItem searchItem)
         {
-            Adapter.Update(item);
-        }
+            var dataTable = Adapter.Search(searchItem);
 
+            return dataTable;
+        }
 
     }
 }
