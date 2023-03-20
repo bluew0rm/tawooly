@@ -1,6 +1,6 @@
 ﻿using Project_Board.Models;
-using Project_Board.Models.Search;
 using Project_Board.Service.Adepter;
+using System;
 using System.Data;
 using System.IO;
 using System.Web.DynamicData;
@@ -70,9 +70,11 @@ namespace Project_Board.Services
         }
 
         //Search
-        public DataTable Search(SearchBoardItem searchItem)
+        public DataTable Search(BoardItem item)
         {
-            var dataTable = Adapter.Search(searchItem);
+            
+
+            var dataTable = Adapter.Search(item);
 
             return dataTable;
         }

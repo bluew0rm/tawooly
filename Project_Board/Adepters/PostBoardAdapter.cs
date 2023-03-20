@@ -3,12 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using Project_Board.Models.Paging;
-using Project_Board.Models.Search;
 using Project_Board.Adepters.Core;
-using static System.Net.Mime.MediaTypeNames;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace Project_Board.Service.Adepter
 {
@@ -51,14 +46,15 @@ namespace Project_Board.Service.Adepter
                 using (var command = Connection.CreateCommand())
                 {
                     Connection.Open();
+                    var createQuary = command.CommandText;
                     // SQLの設定
-                    command.CommandText = "INSERT INTO PostBoard VALUES(@param1, @param2, @param3, @param4)";
-
+                    command.CommandText = "INSERT INTO PostBoard VALUES(@param1, @param2, @param3, @param4, @param5, @param6)";
+                    
                     // SQLの実行
                     command.Parameters.AddWithValue("@param1", item.Title);
                     command.Parameters.AddWithValue("@param2", item.Writer);
-                    command.Parameters.AddWithValue("@param3", item.Update);
-                    command.Parameters.AddWithValue("@param4", item.Text);
+                    command.Parameters.AddWithValue("@param5", item.Date);
+                    command.Parameters.AddWithValue("@param6", item.Text);
 
                     //command.ExecuteNonQuery();
 
@@ -158,7 +154,7 @@ namespace Project_Board.Service.Adepter
                     command.Parameters.AddWithValue("@param1", item.Id);
                     command.Parameters.AddWithValue("@param2", item.Title);
                     command.Parameters.AddWithValue("@param3", item.Writer);
-                    command.Parameters.AddWithValue("@param4", item.Update);
+                    command.Parameters.AddWithValue("@param4", item.Date);
                     command.Parameters.AddWithValue("@param5", item.Text);
 
                     var adapter = new SqlDataAdapter(command);
@@ -172,17 +168,28 @@ namespace Project_Board.Service.Adepter
         }
 
         //Search
-        public DataTable Search(SearchBoardItem searchBoardItem)
+        public DataTable Search(BoardItem item)
         {
             DataTable table = new DataTable();
             using (var command = Connection.CreateCommand())
             {
+                int id = item.Id;
+                string writer = item.Writer;
+                string title = item.Title;
+                DateTime formDate = item.Date;
+                DateTime toDate = item.Date;
+
                 try
                 {
                     Connection.Open();
-                    command.CommandText = @"SELECT * FROM PostBoard WHERE Title LIKE N'%' + @title + N'%'";
+                    command.CommandText = @"SELECT * FROM PostBoard WHERE Id = @param1 AND Writer = @param2 AND Title LIKE N'%' + @param3 + N'%' AND Date = @param4 AND Date = @param5 ";
 
-                    command.Parameters.AddWithValue("@title", searchBoardItem.Title);
+                    command.Parameters.AddWithValue("@param1", id);
+                    command.Parameters.AddWithValue("@param2", writer);
+                    command.Parameters.AddWithValue("@param3", title);
+                    command.Parameters.AddWithValue("@param4", formDate);
+                    command.Parameters.AddWithValue("@param5", toDate);
+
                     // SQLの実行
                     var adapter = new SqlDataAdapter(command);
                     adapter.Fill(table);

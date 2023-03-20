@@ -39,7 +39,7 @@
     }
 
     .thDate {
-        width: 250px;
+        width: 300px;
     }
 
     .thDelete {
@@ -173,26 +173,31 @@
         top: 0;
     }
 
-    .pagingButton{
-        margin:20px 10px;
+    .pagingButton {
+        margin: 20px 10px;
     }
 </style>
 
 
+@using (Html.BeginForm("Search", "BoardApi", FormMethod.Post))
+{
+    <form style="width: 1500px; margin: auto auto auto 220px" @*method="post" action="~api/BoardApi"*@>
 
-<form class="form-horizontal" method="post">
-    
-        <div style="text-align: right; margin: 40px auto 0 auto; height: 100px; ">
-            <input id="searchTitle" type="text" class="searchText" name="_searchTitle" placeholder="検索" />
-            <button type="submit" class="searchButton" onclick="getAll(searchTitle); Actions('https://localhost:44342/Board/Search')">検索</button>
+        <div style="text-align: center; margin: 70px auto 0 auto; height: 100px; width: 100%;">
+            <input id="searchId" type="text" class="searchText" placeholder="ID" />
+            <input id="searchwriter" type="text" class="searchText" placeholder="作者" />
+            <input id="searchtitle" type="text" class="searchText" placeholder="タイトル" />
+            <input id="searchFromDate" type="date" class="searchText" /> ～
+            <input id="searchToDate" type="date" class="searchText" />
+            <button type="submit" class="searchButton" onclick="searchJson(); Actions('https://localhost:44342/api/BoardApi/Search')">検索</button>
         </div>
         <label class="open" for="pop-up">テキストを書き込む</label>
 
-        <table id="boardTable" style="margin: 80px 0 0 0;">
+        <table id="boardTable" style="margin: 60px 0 0 0; width:100%;">
             <thead>
                 <tr>
                     <th class="thId">
-                        Id
+                        ID
                         <input id="itemId" class="selectBox" type="text" name="_id" />
                     </th>
                     <th class="thWriter">
@@ -217,197 +222,229 @@
                         <td>@item["Id"]</td>
                         <td>@item["Writer"]</td>
                         <td class="selector" onclick="getAll(); Actions('https://localhost:44342/Board/Detail')">@item["Title"]</td>
-                        <td>@item["Update"]</td>
+                        <td>@item["Date"]</td>
 
                         @*<td>@item.Id</td>
-                        <td>@item.Writer</td>
-                        <td class="selector" onclick="getAll(); Actions('https://localhost:44342/Board/Detail')">@item.Title</td>
-                        <td>@item.Update</td>*@
+                            <td>@item.Writer</td>
+                            <td class="selector" onclick="getAll(); Actions('https://localhost:44342/Board/Detail')">@item.Title</td>
+                            <td>@item.Update</td>*@
                         <td>
                             <button type="submit" onclick="deleteAlert(); getId(); Actions('https://localhost:44342/Board/Delete')">delete</button>
                         </td>
                     </tr>
                 }
-                </tbody>
+            </tbody>
         </table>
-</form>
+    </form>
+}
 
 
 
-<div class="container" style="margin:50px auto; text-align:center" onclick="pagint()" >
-    <div >
-        <span id="js-pagination-result-total" ></span>件中
-        <span id="js-pagination-result-range-text" ></span>
+    <div class="container" style="margin:50px auto; text-align:center" onclick="pagint()">
+        <div>
+            <span id="js-pagination-result-total"></span>件中
+            <span id="js-pagination-result-range-text"></span>
+        </div>
+        <div>
+            <button id="js-button-prev" class="pagingButton">
+                前へ
+            </button>
+            <button id="js-button-next" class="pagingButton">
+                次へ
+            </button>
+        </div>
+        <div>
+            <nav id="js-pagination-result-range" style="margin:auto auto 30px auto"></nav>
+
+            現在のページ : <span id="js-pagination-current"></span>
+        </div>
     </div>
-    <div >
-        <button id="js-button-prev" class="pagingButton">
-            前へ
-        </button>
-        <button id="js-button-next" class="pagingButton">
-            次へ
-        </button>
-    </div>
-    <div >
-        <nav id="js-pagination-result-range" style="margin:auto auto 30px auto"></nav>
-        
-        現在のページ : <span id="js-pagination-current" ></span>
-    </div>
-</div>
 
-<script>
-    function Actions(url) {
-        var f = document.querySelector("form");
-        var a = f.setAttribute("action", url);
-        document.querySelector("form").submit();
-    }
-
-    function deleteAlert() {
-        var deleteAlert = window.confirm('このテキストを削除しますか？');
-
-        if (!deleteAlert) { return false; }
-    }
-
-    function getId() {
-        var table = document.getElementById("boardTable"), rIndex;
-
-        for (var i = 0; i < table.rows.length; i++) {
-            table.rows[i].onclick = function () {
-                rIndex = this.rowIndex;
-                console.log(rIndex);
-
-                document.getElementById("itemId").value = this.cells[0].innerHTML;
-            };
+    <script>
+        function Actions(url) {
+            var f = document.querySelector("form");
+            var a = f.setAttribute("action", url);
+            document.querySelector("form").submit();
         }
-    }
 
-    function getAll() {
-        var table = document.getElementById("boardTable"), rIndex;
+        function deleteAlert() {
+            var deleteAlert = window.confirm('このテキストを削除しますか？');
 
-        for (var i = 0; i < table.rows.length; i++) {
-            table.rows[i].onclick = function () {
-                rIndex = this.rowIndex;
-                console.log(rIndex);
-
-                document.getElementById("itemId").value = this.cells[0].innerHTML;
-
-                document.querySelector("form").submit();
-            };
+            if (!deleteAlert) { return false; }
         }
-    }
 
-    function getTitle() {
-        var table = document.getElementById("boardTable"), rIndex;
+        function getId() {
+            var table = document.getElementById("boardTable"), rIndex;
 
-        for (var i = 0; i < table.rows.length; i++) {
-            table.rows[i].onclick = function () {
-                rIndex = this.rowIndex;
-                console.log(rIndex);
+            for (var i = 0; i < table.rows.length; i++) {
+                table.rows[i].onclick = function () {
+                    rIndex = this.rowIndex;
+                    console.log(rIndex);
 
-                document.getElementById("itemId").value = this.cells[0].innerHTML;
-
-                document.querySelector("form").submit();
-            };
+                    document.getElementById("itemId").value = this.cells[0].innerHTML;
+                };
+            }
         }
-    }
 
-    /*function pagint() {// 前へ_DOM指定
-        const prevButton = document.getElementById("js-button-prev");
-        // 次へ_DOM指定
-        const nextButton = document.getElementById("js-button-next");
+        function getAll() {
+            var table = document.getElementById("boardTable"), rIndex;
 
-        // 総数
-        const globalTotalItem = 100;
-        // 1ページに表示したい件数
-        const PER_PAGE = 10;
-        // 初期ページ
-        var initialPage = 0;
-        // 現在のページ
-        var currentPage = 0;
+            for (var i = 0; i < table.rows.length; i++) {
+                table.rows[i].onclick = function () {
+                    rIndex = this.rowIndex;
+                    console.log(rIndex);
 
-        // 配列を任意の数だけ作成
-        const range = (start, end) => {
-            const array = [...Array(end - start + 1)].map((_, i) => {
-                return start + i;
+                    document.getElementById("itemId").value = this.cells[0].innerHTML;
+
+                    document.querySelector("form").submit();
+                };
+            }
+        }
+
+        function getTitle() {
+            var table = document.getElementById("boardTable"), rIndex;
+
+            for (var i = 0; i < table.rows.length; i++) {
+                table.rows[i].onclick = function () {
+                    rIndex = this.rowIndex;
+                    console.log(rIndex);
+
+                    document.getElementById("itemId").value = this.cells[0].innerHTML;
+
+                    document.querySelector("form").submit();
+                };
+            }
+        }
+
+        /*function pagint() {// 前へ_DOM指定
+            const prevButton = document.getElementById("js-button-prev");
+            // 次へ_DOM指定
+            const nextButton = document.getElementById("js-button-next");
+
+            // 総数
+            const globalTotalItem = 100;
+            // 1ページに表示したい件数
+            const PER_PAGE = 10;
+            // 初期ページ
+            var initialPage = 0;
+            // 現在のページ
+            var currentPage = 0;
+
+            // 配列を任意の数だけ作成
+            const range = (start, end) => {
+                const array = [...Array(end - start + 1)].map((_, i) => {
+                    return start + i;
+                });
+                return array;
+            };
+
+            // 閲覧中の情報の件数の範囲を表示
+            const rangeCurrentPage = () => {
+                if (!globalTotalItem) return;
+                const start = currentPage * PER_PAGE + 1;
+                const text =
+                    (currentPage + 1) * PER_PAGE < globalTotalItem
+                        ? `${start}件〜${(currentPage + 1) * PER_PAGE}件目を表示`
+                        : `${start}件〜${globalTotalItem}件目を表示`;
+                return text;
+            };
+
+            // 前へボタン_アクション
+            prevButton.addEventListener("click", () => {
+                if (initialPage >= currentPage) return;
+                currentPage = currentPage - 1;
+                render();
             });
-            return array;
-        };
+            // 次へボタン_アクション
+            nextButton.addEventListener("click", () => {
+                if (PER_PAGE * (currentPage + 1) >= globalTotalItem) return;
+                currentPage = currentPage + 1;
+                render();
+            });
 
-        // 閲覧中の情報の件数の範囲を表示
-        const rangeCurrentPage = () => {
-            if (!globalTotalItem) return;
-            const start = currentPage * PER_PAGE + 1;
-            const text =
-                (currentPage + 1) * PER_PAGE < globalTotalItem
-                    ? `${start}件〜${(currentPage + 1) * PER_PAGE}件目を表示`
-                    : `${start}件〜${globalTotalItem}件目を表示`;
-            return text;
-        };
+            // レンダリング
+            const render = () => {
+                document.getElementById(
+                    "js-pagination-result-total"
+                ).innerHTML = globalTotalItem;
+                document.getElementById("js-pagination-result-range").innerHTML = range(
+                    1,
+                    Math.ceil(globalTotalItem / PER_PAGE)
+                );
+                document.getElementById(
+                    "js-pagination-result-range-text"
+                ).innerHTML = rangeCurrentPage();
+                document.getElementById("js-pagination-current").innerHTML = currentPage + 1;
+            };
 
-        // 前へボタン_アクション
-        prevButton.addEventListener("click", () => {
-            if (initialPage >= currentPage) return;
-            currentPage = currentPage - 1;
             render();
-        });
-        // 次へボタン_アクション
-        nextButton.addEventListener("click", () => {
-            if (PER_PAGE * (currentPage + 1) >= globalTotalItem) return;
-            currentPage = currentPage + 1;
-            render();
-        });
+        }*/
 
-        // レンダリング
-        const render = () => {
-            document.getElementById(
-                "js-pagination-result-total"
-            ).innerHTML = globalTotalItem;
-            document.getElementById("js-pagination-result-range").innerHTML = range(
-                1, 
-                Math.ceil(globalTotalItem / PER_PAGE)
-            );
-            document.getElementById(
-                "js-pagination-result-range-text"
-            ).innerHTML = rangeCurrentPage();
-            document.getElementById("js-pagination-current").innerHTML = currentPage + 1;
-        };
+        function pagint() {
 
-        render();
-    }*/
+        }
 
-    function pagint() {
+        function searchJson() {
+            var id = document.getElementById("searchId");
+            var writer = document.getElementById("searchwriter");
+            var title = document.getElementById("searchtitle");
+            var fromDate = document.getElementById("searchFromDate");
+            var toDate = document.getElementById("searchToDate");
 
-    }
-</script>
+            {
+                Id: id.value;
+                Writer: writer.value;
+                Title: title.value;
+                Date: fromDate.value;
+                Date: toDate;
+            }
+        }
+
+        function createJson() {
+            var Title = document.getElementById("createTitle");
+            var Writer = document.getElementById("createWriter");
+            var Date = document.getElementById("createDate");
+            var Text = document.getElementById("createText");
+
+            {
+                Title: title.value;
+                Writer: writer.value;
+                Date: Date.value;
+                Text: Text;
+            }
+        }
+
+
+    </script>
 
 
 
 
-<input type="checkbox" id="pop-up">
-<div class="overlay">
-    <div class="window">
-        <form class="form-horizontal" method="post" action="https://localhost:44342/Board/Create">
-            <label class="close" for="pop-up">×</label>
+    <input type="checkbox" id="pop-up">
+    <div class="overlay">
+        <div class="window">
+            <form class="form-horizontal" method="post" action="https://localhost:44342/Board/Create">
+                <label class="close" for="pop-up">×</label>
 
-            <div style="margin: 15px auto auto 43px;">
+                <div style="margin: 15px auto auto 43px;">
 
-                <div style="display: flex;">
-                    <textarea class="titleinput" name="_title" placeholder="タイトル"></textarea>
+                    <div style="display: flex; margin: auto auto 0 10%;">
+                        <textarea id="createTitle" class="titleinput" placeholder="タイトル"></textarea>
 
-                    <p style=" font-size:21px; color: white; margin: 5px 0 auto 30px;">作者：</p>
-                    <input type="text" style="height: 40px; width: 150px; " name="_writer" />
+                        <p style=" font-size:21px; color: white; margin: 5px 0 auto 30px;">作者：</p>
+                        <input id="createWriter" type="text" style="height: 40px; width: 150px; " />
+                        <input id="createDate" type="date" style="height: 40px; width: 150px; " />
+                    </div>
 
-                    <input type="date" style="height: 40px; width: 150px; " name="_date" />
+                    <textarea id="createText" class="textinput" placeholder="内容を入力してください。"></textarea>
+
+                    <div style="margin: 20px auto auto 340px; ">
+                        <a class="btn btn-warning" href="https://localhost:44342/Board/Create">戻る</a>
+                        <button type="submit" class="btn btn-primary" onclick="createJson(); Actions('https://localhost:44342/Board/Create')">登録</button>
+                    </div>
                 </div>
 
-                <textarea class="textinput" name="_text" placeholder="内容を入力してください。"></textarea>
-
-                <div style="margin: 20px auto auto 340px; ">
-                    <a class="btn btn-warning" href="https://localhost:44342/Board/Index">戻る</a>
-                    <button type="submit" class="btn btn-primary" href="https://localhost:44342/Board/Index">登録</button>
-                </div>
-            </div>
-
-        </form>
+            </form>
+        </div>
     </div>
-</div>
 

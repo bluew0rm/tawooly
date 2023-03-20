@@ -136,6 +136,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BoardApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\BoardController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -150,7 +151,6 @@
     <Compile Include="Models\Board\BoardItem.cs" />
     <Compile Include="Models\Login\Members.cs" />
     <Compile Include="Models\Paging\Paging.cs" />
-    <Compile Include="Models\Search\SearchBoardItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Adepters\PostBoardAdapter.cs" />
     <Compile Include="Services\BoardService.cs" />
@@ -217,7 +217,6 @@
     <Content Include="Views\Login\SuccessFindId.cshtml" />
     <Content Include="Views\Login\SuccessFindPw.cshtml" />
     <Content Include="Views\Board\Detail.cshtml" />
-    <Content Include="Views\Board\Search.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

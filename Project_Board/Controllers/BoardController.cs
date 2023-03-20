@@ -1,8 +1,12 @@
-﻿using Project_Board.Models;
-using Project_Board.Models.Search;
+﻿using Microsoft.Ajax.Utilities;
+using Project_Board.Controllers.APIController;
+using Project_Board.Models;
 using Project_Board.Services;
 using System.Data;
+using System;
 using System.Web.Mvc;
+using System.Web.WebPages;
+using System.Web.Http;
 
 namespace Project_Board.Controllers
 {
@@ -12,6 +16,7 @@ namespace Project_Board.Controllers
         private BoardService service { get {  if (_boardService == null) { _boardService = new BoardService(); } return _boardService; } }
        
         DataTable itemTable = new DataTable();
+        BoardApiController post = new BoardApiController();
 
         //SelectAll ok
         public ActionResult Index()
@@ -22,23 +27,14 @@ namespace Project_Board.Controllers
         }
 
         //Create
-        [HttpPost]
-        public ActionResult Create()
+        public ActionResult Create([FromBody] BoardItem item)
         {
-            var title = Request.Form["_title"];
-            var writer = Request.Form["_writer"];
-            var update = Request.Form["_date"];
-            var text = Request.Form["_text"];
-            
-            var item = new BoardItem(title, text, writer, update);
-
             service.Create(item);
-
             return Redirect("Index");
         }
 
         //AllDelete  ok 
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         public ActionResult AllDelete()
         {
             service.AllDelete();
@@ -47,7 +43,7 @@ namespace Project_Board.Controllers
         }
 
         //Delete  ok
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         public ActionResult Delete()
         {
             var id = Request.Form["_id"];
@@ -58,7 +54,7 @@ namespace Project_Board.Controllers
         }
 
         //Detail  ok
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         public ActionResult Detail()
         {
             var id = this.Request.Form["_id"];
@@ -69,35 +65,22 @@ namespace Project_Board.Controllers
         }
 
         //Update  ok
-        [HttpPost]
-        public ActionResult Update()
+        [System.Web.Mvc.HttpPost]
+        public ActionResult Update(BoardItem item)
         {
-            var id = this.Request.Form["_id"];
-            var title = this.Request.Form["_title"];
-            var writer = this.Request.Form["_Writer"];
-            var update = this.Request.Form["_Update"];
-            var text = this.Request.Form["_Text"];
-
-            var item = new BoardItem(int.Parse(id.ToString()), title, writer, update, text);
-
             service.Update(item);
 
-            return Redirect("Index");
+            return View("Index");
         }
 
         //Search
-        [HttpPost]
-        public ActionResult Search()
+        /*[System.Web.Mvc.HttpPost]
+        public ActionResult Search(BoardItem item)
         {
-            var title = Request.Form["_searchTitle"];
+            var result = post.Search(item);
 
-
-            var item = new SearchBoardItem(title);
-
-            var result = service.Search(item);
-
-            return View(result);
-        }
+            return Redirect("Index");
+        }*/
 
         /*[HttpPost]
         public ActionResult Pageing()

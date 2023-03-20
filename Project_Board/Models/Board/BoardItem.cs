@@ -10,7 +10,7 @@ namespace Project_Board.Models
         private string _title;
         private string _text;
         private string _writer;
-        private string _update;
+        private DateTime _date;
 
         public BoardItem() { }
         public BoardItem(DataTable dataTable)
@@ -18,27 +18,27 @@ namespace Project_Board.Models
 
         }
 
-        public BoardItem(int id, string title, string text, string writer, string update)
+        public BoardItem(int id, string title, string writer, DateTime date, string text)
         {
             _id = id;
             _title = title;
             _text = text;
             _writer = writer;
-            _update = update;
+            _date = date;
         }
 
-        public BoardItem(string title, string writer, string update, string text)
+        public BoardItem(string title, string writer, DateTime date, string text)
         {
             _title = title;
             _text = text;
             _writer = writer;
-            _update = update;
+            _date = date;
         }
 
         public int Id { get { return _id; } }
         public string Title { get { return _title; } }
         public string Text { get { return _text; } }
         public string Writer { get { return _writer; } }
-        public string Update { get { return _update; } }
+        public DateTime Date { get { return _date; } }
     }
 }
