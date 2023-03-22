@@ -6,39 +6,52 @@ namespace Project_Board.Models
 
     public class BoardItem
     {
-        private int _id;
-        private string _title;
-        private string _text;
-        private string _writer;
-        private DateTime _date;
+        private DataRow row;
 
         public BoardItem() { }
         public BoardItem(DataTable dataTable)
-        { 
-
-        }
-
-        public BoardItem(int id, string title, string writer, DateTime date, string text)
         {
-            _id = id;
-            _title = title;
-            _text = text;
-            _writer = writer;
-            _date = date;
+
         }
 
-        public BoardItem(string title, string writer, DateTime date, string text)
+
+
+        //"Id": id.value,
+        //"Title": title.value,
+        //"Writer": writer.value,
+        //"FromDate": fromDate.value,
+        //"ToDate": toDate
+
+        public BoardItem(int id, string title, string writer, DateTime updatedDate, string text)
         {
-            _title = title;
-            _text = text;
-            _writer = writer;
-            _date = date;
+            Id = id;
+            Title = title;
+            Text = text;
+            Writer = writer;
+            UpdatedDate = updatedDate;
         }
 
-        public int Id { get { return _id; } }
-        public string Title { get { return _title; } }
-        public string Text { get { return _text; } }
-        public string Writer { get { return _writer; } }
-        public DateTime Date { get { return _date; } }
+        public BoardItem(string title, string writer, DateTime updatedDate, string text)
+        {
+            Title = title;
+            Text = text;
+            Writer = writer;
+            UpdatedDate = updatedDate;
+        }
+
+        public BoardItem(DataRow row)
+        {
+            Id = int.Parse(row[0].ToString());
+            Title = row[1].ToString();
+            Text = row[2].ToString();
+            Writer = row[3].ToString();
+            UpdatedDate = DateTime.Parse(row[4].ToString());
+        }
+
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Text { get; set; }
+        public string Writer { get; set; }
+        public DateTime UpdatedDate { get; set; }
     }
 }

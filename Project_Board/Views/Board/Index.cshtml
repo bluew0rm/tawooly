@@ -12,7 +12,7 @@
 
 
 <h1 style="text-align:center; margin: 90px 0 0 0">掲示板</h1>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <style>
     th {
         border: solid 3px;
@@ -156,10 +156,10 @@
         transition: all .25s ease-in-out;
     }
 
-        .selector:hover {
-            color: #0000AA;
-            font-weight: 600;
-        }
+    .selector:hover {
+        color: #0000AA;
+        font-weight: 600;
+    }
 
     .searchText {
         width: 200px;
@@ -181,61 +181,61 @@
 
 @*@using (Html.BeginForm("Search", "BoardApi", FormMethod.Post))
 {*@
-    <form style="width: 1500px; margin: auto auto auto 220px" method="post">
+<form style="width: 1500px; margin: auto auto auto 220px" id="search_form">
+    <h3 id="message" />
+    <div style="text-align: center; margin: 70px auto 0 auto; height: 100px; width: 100%;">
+        <input id="searchId" type="text" class="searchText" placeholder="ID" />
+        <input id="searchwriter" type="text" class="searchText" placeholder="作者" />
+        <input id="searchtitle" type="text" class="searchText" placeholder="タイトル" />
+        <input id="searchFromDate" type="date" class="searchText" /> ～
+        <input id="searchToDate" type="date" class="searchText" />
+        @*<button type="submit" class="searchButton" onclick="searchJson(); Actions('https://localhost:44342/api/BoardApi/Datas')">検索</button>*@
+        <input type="button" class="searchButton" onclick="searchJson2()" value="検索"></input>
+    </div>
+    <label class="open" for="pop-up">テキストを書き込む</label>
 
-        <div style="text-align: center; margin: 70px auto 0 auto; height: 100px; width: 100%;">
-            <input id="searchId" type="text" class="searchText" placeholder="ID" />
-            <input id="searchwriter" type="text" class="searchText" placeholder="作者" />
-            <input id="searchtitle" type="text" class="searchText" placeholder="タイトル" />
-            <input id="searchFromDate" type="date" class="searchText" /> ～
-            <input id="searchToDate" type="date" class="searchText" />
-            <button type="submit" class="searchButton" onclick="searchJson(); Actions('https://localhost:44342/api/BoardApi/Datas')">検索</button>
-        </div>
-        <label class="open" for="pop-up">テキストを書き込む</label>
+    <table id="boardTable" style="margin: 60px 0 0 0; width:100%;">
+        <thead>
+            <tr>
+                <th class="thId">
+                    ID
+                    <input id="itemId" class="selectBox" type="text" name="_id" />
+                </th>
+                <th class="thWriter">
+                    WRITER
+                </th>
+                <th class="thTitle">
+                    TITLE
+                </th>
+                <th class="thDate">
+                    UPDATE
+                </th>
+                <th class="thDelete">
+                    <button id="button" type="submit" onclick="deleteAlert(); Actions('https://localhost:44342/Board/AllDelete')">全削除</button>
+                </th>
+            </tr>
+        </thead>
 
-        <table id="boardTable" style="margin: 60px 0 0 0; width:100%;">
-            <thead>
+        <tbody>@foreach (var item in Model.Rows)
+            {
                 <tr>
-                    <th class="thId">
-                        ID
-                        <input id="itemId" class="selectBox" type="text" name="_id" />
-                    </th>
-                    <th class="thWriter">
-                        WRITER
-                    </th>
-                    <th class="thTitle">
-                        TITLE
-                    </th>
-                    <th class="thDate">
-                        UPDATE
-                    </th>
-                    <th class="thDelete">
-                        <button id="button" type="submit" onclick="deleteAlert(); Actions('https://localhost:44342/Board/AllDelete')">全削除</button>
-                    </th>
+                    <td>@item["Id"]</td>
+                    <td>@item["Writer"]</td>
+                    <td class="selector" onclick="getAll(); Actions('https://localhost:44342/Board/Detail')">@item["Title"]</td>
+                    <td>@item["Date"]</td>
+
+                    @*<td>@item.Id</td>
+                        <td>@item.Writer</td>
+                        <td class="selector" onclick="getAll(); Actions('https://localhost:44342/Board/Detail')">@item.Title</td>
+                        <td>@item.Update</td>*@
+                    <td>
+                        <button type="submit" onclick="deleteAlert(); getId(); Actions('https://localhost:44342/Board/Delete')">delete</button>
+                    </td>
                 </tr>
-            </thead>
-
-            <tbody>
-                @foreach (var item in Model.Rows)
-                {
-                    <tr>
-                        <td>@item["Id"]</td>
-                        <td>@item["Writer"]</td>
-                        <td class="selector" onclick="getAll(); Actions('https://localhost:44342/Board/Detail')">@item["Title"]</td>
-                        <td>@item["Date"]</td>
-
-                        @*<td>@item.Id</td>
-                            <td>@item.Writer</td>
-                            <td class="selector" onclick="getAll(); Actions('https://localhost:44342/Board/Detail')">@item.Title</td>
-                            <td>@item.Update</td>*@
-                        <td>
-                            <button type="submit" onclick="deleteAlert(); getId(); Actions('https://localhost:44342/Board/Delete')">delete</button>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </form>
+            }
+        </tbody>
+    </table>
+</form>
 
 
 
@@ -260,12 +260,6 @@
     </div>
 
     <script>
-        function Actions(url) {
-            var f = document.querySelector("form");
-            f.setAttribute("action", url);
-            document.querySelector("form").submit();
-        }
-
         function deleteAlert() {
             var deleteAlert = window.confirm('このテキストを削除しますか？');
 
@@ -314,90 +308,46 @@
                 };
             }
         }
-
-        /*function pagint() {// 前へ_DOM指定
-            const prevButton = document.getElementById("js-button-prev");
-            // 次へ_DOM指定
-            const nextButton = document.getElementById("js-button-next");
-
-            // 総数
-            const globalTotalItem = 100;
-            // 1ページに表示したい件数
-            const PER_PAGE = 10;
-            // 初期ページ
-            var initialPage = 0;
-            // 現在のページ
-            var currentPage = 0;
-
-            // 配列を任意の数だけ作成
-            const range = (start, end) => {
-                const array = [...Array(end - start + 1)].map((_, i) => {
-                    return start + i;
-                });
-                return array;
-            };
-
-            // 閲覧中の情報の件数の範囲を表示
-            const rangeCurrentPage = () => {
-                if (!globalTotalItem) return;
-                const start = currentPage * PER_PAGE + 1;
-                const text =
-                    (currentPage + 1) * PER_PAGE < globalTotalItem
-                        ? `${start}件〜${(currentPage + 1) * PER_PAGE}件目を表示`
-                        : `${start}件〜${globalTotalItem}件目を表示`;
-                return text;
-            };
-
-            // 前へボタン_アクション
-            prevButton.addEventListener("click", () => {
-                if (initialPage >= currentPage) return;
-                currentPage = currentPage - 1;
-                render();
-            });
-            // 次へボタン_アクション
-            nextButton.addEventListener("click", () => {
-                if (PER_PAGE * (currentPage + 1) >= globalTotalItem) return;
-                currentPage = currentPage + 1;
-                render();
-            });
-
-            // レンダリング
-            const render = () => {
-                document.getElementById(
-                    "js-pagination-result-total"
-                ).innerHTML = globalTotalItem;
-                document.getElementById("js-pagination-result-range").innerHTML = range(
-                    1,
-                    Math.ceil(globalTotalItem / PER_PAGE)
-                );
-                document.getElementById(
-                    "js-pagination-result-range-text"
-                ).innerHTML = rangeCurrentPage();
-                document.getElementById("js-pagination-current").innerHTML = currentPage + 1;
-            };
-
-            render();
-        }*/
-
         function pagint() {
 
         }
 
-        function searchJson() {
+
+        function searchJson2() {
+
+
             var id = document.getElementById("searchId");
             var writer = document.getElementById("searchwriter");
             var title = document.getElementById("searchtitle");
             var fromDate = document.getElementById("searchFromDate");
             var toDate = document.getElementById("searchToDate");
 
-            {
-                Id: id.value;
-                Writer: writer.value;
-                Title: title.value;
-                Date: fromDate.value;
-                Date: toDate;
+            var requestData = {
+
+                "Id": id.value,
+                "Writer": writer.value,
+                "Title": title.value,
+                "FromDate": fromDate.value,
+                "ToDate": toDate.value
+
             }
+
+            $.ajax("/Board/Search", {
+                method: "POST",
+                data: requestData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(function (r) {
+                console.log("done");
+                alert(r);
+
+            }, function (e) {
+                alert("error: " + e);
+            });
+
         }
+
 
         function createJson() {
             var Title = document.getElementById("createTitle");

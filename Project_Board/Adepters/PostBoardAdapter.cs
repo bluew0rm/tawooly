@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using Project_Board.Adepters.Core;
+using Project_Board.Models.Search;
 
 namespace Project_Board.Service.Adepter
 {
@@ -53,7 +54,7 @@ namespace Project_Board.Service.Adepter
                     // SQLの実行
                     command.Parameters.AddWithValue("@param1", item.Title);
                     command.Parameters.AddWithValue("@param2", item.Writer);
-                    command.Parameters.AddWithValue("@param3", item.Date);
+                    command.Parameters.AddWithValue("@param3", item.UpdatedDate);
                     command.Parameters.AddWithValue("@param4", item.Text);
 
                     //command.ExecuteNonQuery();
@@ -154,7 +155,7 @@ namespace Project_Board.Service.Adepter
                     command.Parameters.AddWithValue("@param1", item.Id);
                     command.Parameters.AddWithValue("@param2", item.Title);
                     command.Parameters.AddWithValue("@param3", item.Writer);
-                    command.Parameters.AddWithValue("@param4", item.Date);
+                    command.Parameters.AddWithValue("@param4", item.UpdatedDate);
                     command.Parameters.AddWithValue("@param5", item.Text);
 
                     var adapter = new SqlDataAdapter(command);
@@ -168,21 +169,30 @@ namespace Project_Board.Service.Adepter
         }
 
         //Search
-        public DataTable Search(BoardItem item)
+        //public DataTable Search(BoardItem item)
+        public DataTable Search(SearchCondition searchCondition)
         {
             DataTable table = new DataTable();
             using (var command = Connection.CreateCommand())
             {
-                int id = item.Id;
-                string writer = item.Writer;
-                string title = item.Title;
-                DateTime formDate = item.Date;
-                DateTime toDate = item.Date;
+                int id = searchCondition.Id;
+                string writer = searchCondition.Writer ?? "";
+                string title = searchCondition.Title ?? "";
+                DateTime formDate = searchCondition.FromDate == DateTime.MinValue ? Convert.ToDateTime("1/1/1753 12:00:00 PM") : searchCondition.FromDate;
+                DateTime toDate = searchCondition.ToDate == DateTime.MinValue ? DateTime.MaxValue : searchCondition.ToDate;
 
                 try
                 {
                     Connection.Open();
-                    command.CommandText = @"SELECT * FROM PostBoard WHERE Id = @param1 AND Writer = @param2 AND Title LIKE N'%' + @param3 + N'%' AND Date = @param4 AND Date = @param5 ";
+                    command.CommandText = @"SELECT
+	                                            * 
+                                            FROM
+	                                            PostBoard
+                                            WHERE
+	                                            (@param1 = 0 OR Id = @param1) AND 
+	                                            (@param2 = '' OR Writer = @param2) AND 
+	                                            (@param3 = '' OR (Title LIKE N'%' + @param3 + N'%')) AND 
+	                                            ((@param4= '' OR @param5 = '') OR (Date  BETWEEN @param4 AND @param5))";
 
                     command.Parameters.AddWithValue("@param1", id);
                     command.Parameters.AddWithValue("@param2", writer);

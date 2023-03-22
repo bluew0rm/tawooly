@@ -7,7 +7,7 @@ namespace Project_Board
         public static void RegisterRoutes(HttpConfiguration configuration)
         {
             configuration.Routes.MapHttpRoute(
-                name: "DefaultApi",
+                name: "DefaultApi", 
                 routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
                 );

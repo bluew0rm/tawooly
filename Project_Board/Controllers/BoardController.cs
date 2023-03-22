@@ -7,6 +7,8 @@ using System;
 using System.Web.Mvc;
 using System.Web.WebPages;
 using System.Web.Http;
+using Project_Board.Models.Paging;
+using Project_Board.Models.Search;
 
 namespace Project_Board.Controllers
 {
@@ -18,12 +20,12 @@ namespace Project_Board.Controllers
         DataTable itemTable = new DataTable();
         BoardApiController post = new BoardApiController();
 
+
         //SelectAll ok
         public ActionResult Index()
         {
             var result = service.GetAllData();
-
-            return View(result);
+            return View(new DataTable());
         }
 
         //Create
@@ -74,13 +76,14 @@ namespace Project_Board.Controllers
         }
 
         //Search
-        /*[System.Web.Mvc.HttpPost]
-        public ActionResult Search(BoardItem item)
+        public string Search([FromBody]SearchCondition searchCondition)
         {
-            var result = post.Search(item);
+            return service.Search(searchCondition);
 
-            return Redirect("Index");
-        }*/
+
+            //return View(models);
+            //return "aa";
+        }
 
         /*[HttpPost]
         public ActionResult Pageing()

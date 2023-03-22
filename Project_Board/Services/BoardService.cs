@@ -1,6 +1,9 @@
-﻿using Project_Board.Models;
+﻿using Newtonsoft.Json;
+using Project_Board.Models;
+using Project_Board.Models.Search;
 using Project_Board.Service.Adepter;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Web.DynamicData;
@@ -40,7 +43,7 @@ namespace Project_Board.Services
 
             return dataTable;
         }
-        
+
         //AllDelete  ok
         public DataTable AllDelete()
         {
@@ -70,13 +73,44 @@ namespace Project_Board.Services
         }
 
         //Search
-        public DataTable Search(BoardItem item)
+        /*public DataTable Search(BoardItem item)
         {
             
             var dataTable = Adapter.Search(item);
 
             return dataTable;
+        }*/
+
+        public string Search(SearchCondition searchCondition)
+        {
+
+            var dataTable = Adapter.Search(searchCondition);
+
+            // dataTable -> List<BoardItem>
+            var data = new List<BoardItem>();
+            foreach (DataRow row in dataTable.Rows)
+            {
+                data.Add(new BoardItem(row));
+            }
+
+            string json = JsonConvert.SerializeObject(data);
+
+            return json;
         }
 
+        //public List<BoardItem> Search(SearchCondition searchCondition)
+        //{
+
+        //    var dataTable = Adapter.Search(searchCondition);
+        //    var a = dataTable.Rows;
+        //    var result = new List<BoardItem>();
+        //    foreach(DataRow row in a)
+        //    {
+        //        result.Add(new BoardItem(row));
+        //    }
+
+
+        //    return result;
+        //}
     }
 }
