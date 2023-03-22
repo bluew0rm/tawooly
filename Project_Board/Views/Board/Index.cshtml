@@ -179,9 +179,9 @@
 </style>
 
 
-@using (Html.BeginForm("Search", "BoardApi", FormMethod.Post))
-{
-    <form style="width: 1500px; margin: auto auto auto 220px" @*method="post" action="~api/BoardApi"*@>
+@*@using (Html.BeginForm("Search", "BoardApi", FormMethod.Post))
+{*@
+    <form style="width: 1500px; margin: auto auto auto 220px" method="post">
 
         <div style="text-align: center; margin: 70px auto 0 auto; height: 100px; width: 100%;">
             <input id="searchId" type="text" class="searchText" placeholder="ID" />
@@ -189,7 +189,7 @@
             <input id="searchtitle" type="text" class="searchText" placeholder="タイトル" />
             <input id="searchFromDate" type="date" class="searchText" /> ～
             <input id="searchToDate" type="date" class="searchText" />
-            <button type="submit" class="searchButton" onclick="searchJson(); Actions('https://localhost:44342/api/BoardApi/Search')">検索</button>
+            <button type="submit" class="searchButton" onclick="searchJson(); Actions('https://localhost:44342/api/BoardApi/Datas')">検索</button>
         </div>
         <label class="open" for="pop-up">テキストを書き込む</label>
 
@@ -236,7 +236,6 @@
             </tbody>
         </table>
     </form>
-}
 
 
 
@@ -263,7 +262,7 @@
     <script>
         function Actions(url) {
             var f = document.querySelector("form");
-            var a = f.setAttribute("action", url);
+            f.setAttribute("action", url);
             document.querySelector("form").submit();
         }
 

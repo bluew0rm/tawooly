@@ -48,13 +48,13 @@ namespace Project_Board.Service.Adepter
                     Connection.Open();
                     var createQuary = command.CommandText;
                     // SQLの設定
-                    command.CommandText = "INSERT INTO PostBoard VALUES(@param1, @param2, @param3, @param4, @param5, @param6)";
+                    command.CommandText = "INSERT INTO PostBoard VALUES(@param1, @param2, @param3, @param4)";
                     
                     // SQLの実行
                     command.Parameters.AddWithValue("@param1", item.Title);
                     command.Parameters.AddWithValue("@param2", item.Writer);
-                    command.Parameters.AddWithValue("@param5", item.Date);
-                    command.Parameters.AddWithValue("@param6", item.Text);
+                    command.Parameters.AddWithValue("@param3", item.Date);
+                    command.Parameters.AddWithValue("@param4", item.Text);
 
                     //command.ExecuteNonQuery();
 

@@ -73,7 +73,6 @@ namespace Project_Board.Services
         public DataTable Search(BoardItem item)
         {
             
-
             var dataTable = Adapter.Search(item);
 
             return dataTable;
