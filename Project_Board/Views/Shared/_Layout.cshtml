@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - 掲示板</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        footer {
+            position: sticky;
+            width: 100%;
+            bottom: 0;
+            color: #0000AA;
+            background-color: white;
+        }
+        p {
+            text-align:center;
+        }
+        .bar {
+            position: fixed;
+            top: 0;
+            display: flex;
+            align-items: center;
+            background-color: #0000AA;
+            width: 100%;
+            height: 80px;
+        }
+        .header {
+            margin: 10px 30px 0 100px;
+            display: flex;
+            text-align: center;
+            font-size: 30px;
+            color: #ffffea;
+        }
+        .box {
+            /*display: inline;*/
+            color: #D9E5FF;
+            text-decoration: none;
+            float: left;
+            list-style: none;
+        }
+        .menu-btn {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            height: 50px;
+            width: 70px;
+            justify-content: center;
+            align-items: center;
+            z-index: 90;
+            background-color: white;
+            border-radius: 10px;
+        }
+        #menu-btn-check:checked ~ .menu-btn span {
+            background-color: rgba(255, 255, 255, 0); /*メニューオープン時は真ん中の線を透明にする*/
+        }
+        #menu-btn-check:checked ~ .menu-btn span::before {
+                bottom: 0;
+                /*transform: rotate(45deg);*/
+
+        }
+        #menu-btn-check:checked ~ .menu-btn span::after {
+                top: 0;
+                /*transform: rotate(-45deg);*/
+        }
+        #menu-btn-check:checked ~ .menu-content {
+            left: 78%;            /*メニューを画面内へ*/
+        }
+        #menu-btn-check {
+            display: none;
+        }
+        .menu-content {
+            width: 800px;
+            height: 300px;
+            margin: 80px auto auto auto;
+            position: fixed;
+            top: 0;
+            left: 100%;
+            z-index: 80;
+            background-color: #0000AA;
+            transition: 1.0s;
+            border-radius: 5px;
+        }
+        .menu-content ul {
+                padding: 70px 30px 0 30px;
+
+        }
+        .menu-content ul li {
+            text-align: center;
+            /*border-bottom: solid 1px #ffffff;*/
+            list-style: none;
+        }
+        .menu-content ul li a {
+            text-align: center;
+            display: block;
+            width: 100%;
+            font-size: 15px;
+            box-sizing: border-box;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 20px 20px 10px 0;
+            position: relative;
+        }
+        .menu-content ul li a::before {
+            border-top: solid 2px #ffffff;
+            border-right: solid 2px #ffffff;
+            transform: rotate(45deg);
+            position: absolute;
+            right: 11px;
+            top: 16px;
+
+        }
+    </style>
+
+</head>
+<body>
+    <div class="bar">
+        <div class="header">
+            <p>C#専門 掲示板</p>
+        </div>
+        <div class="hamburger-menu">
+            <input type="checkbox" id="menu-btn-check">
+            <label for="menu-btn-check" class="menu-btn"><span style="color: #0000AA; font-size: 15px;">メニュー</span></label>
+
+            <div class="menu-content">
+                <ul class="box">
+                    <li>@Html.ActionLink("ホーム", "Index", "Home")</li>
+                </ul>
+                <ul class="box">
+                    <li>@Html.ActionLink("掲示板", "Index", "Board")</li>
+                    <li>@Html.ActionLink("書き込み", "Create", "Board")</li>
+                </ul>
+                <ul class="box">
+                    <li>@Html.ActionLink("会員情報", "Index", "Login")</li>
+                    <li>@Html.ActionLink("会員登録", "AddGet", "Login")</li>
+                    <li>@Html.ActionLink("ログイン", "Join", "Login")</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <div>
+        @RenderBody()
+        <footer>
+            <hr />
+            <p>&copy; @DateTime.Now.Year - Chung Tawooly</p>
+            <hr />
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

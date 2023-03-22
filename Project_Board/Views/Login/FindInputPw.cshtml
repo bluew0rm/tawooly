@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "Add Member";
+}
+@*会員登録*@
+
+<h2>@ViewData["DB接続不可"]</h2>
+
+<style>
+    .bigBox {
+        margin: 70px auto;
+        display: flex;
+    }
+
+    .box1 {
+        margin: auto 40px auto 350px;
+    }
+
+    .box2 {
+        margin: auto auto auto 40px;
+    }
+
+    .box1text {
+        text-align: right;
+        font-size: large;
+        font-weight: 900;
+        margin: 40px 0;
+    }
+
+    .box2text {
+        text-align: right;
+        margin: 32px 0;
+        width: 400px;
+    }
+</style>
+
+<h2 style="font-size: 50px; font-weight: 500; margin: 90px 0; text-align: center; ">IDを探す</h2>
+
+<form class="form-horizontal" method="post" action="https://localhost:44342/Login/SuccessFindPw">
+
+    <div class="bigBox">
+        <div class="box1">
+            <div class="box1text">User ID</div>
+        </div>
+
+        <div class="box2">
+            <div class="box2text"><input type="text" class="form-control" name="_findById" placeholder="名前を入力してください。" /></div>
+        </div>
+    </div>
+    <div class="form-group" style="text-align: center; font-size: 40px;">
+        <a class="btn btn-warning" href="https://localhost:44342/">戻る</a>
+        <button type="submit" class="btn btn-primary">OK</button>
+    </div>
+</form>

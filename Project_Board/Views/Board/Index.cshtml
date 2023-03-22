@@ -1,0 +1,449 @@
+﻿
+@{
+    ViewBag.Title = "Post Board";
+}
+@*会員情報*@
+
+
+
+@*<h2>@ViewData["DB接続"]</h2>*@
+<h2>@ViewData["DB接続不可"]</h2>
+
+
+
+<h1 style="text-align:center; margin: 90px 0 0 0">掲示板</h1>
+
+<style>
+    th {
+        border: solid 3px;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        padding: 10px 0 25px 0;
+        border-collapse: collapse;
+        text-align: center;
+        border-color: #0000AA;
+        font-size: 20px;
+    }
+
+    .thTitle {
+        width: 600px;
+    }
+
+    .thId {
+        width: 60px;
+    }
+
+    .thWriter {
+        width: 250px;
+    }
+
+    .thDate {
+        width: 300px;
+    }
+
+    .thDelete {
+        width: 200px;
+    }
+
+    td {
+        text-align: center;
+        font-size: 17px;
+        padding: 15px 0 10px 0;
+    }
+
+    .boardTh {
+        text-align: center;
+    }
+
+    .open {
+        cursor: pointer; /* マウスオーバーでカーソルの形状を変えることで、クリックできる要素だとわかりやすいように */
+        margin: 0 auto auto 86%;
+        color: #0000AA;
+        font-weight: 600;
+    }
+
+    #pop-up {
+        display: none; /* label でコントロールするので input は非表示に */
+    }
+
+    .overlay {
+        display: none; /* input にチェックが入るまでは非表示に */
+    }
+
+    #pop-up:checked + .overlay {
+        display: block;
+        z-index: 9999;
+        background-color: #00000070;
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        top: 0;
+        left: 0;
+    }
+
+    .window {
+        width: 1200px;
+        max-width: 1200px;
+        height: 700px;
+        overflow-y: scroll;
+        background-color: #ffffff;
+        border-radius: 6px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(182,182,182,0.9);
+    }
+
+    .text {
+        font-size: 18px;
+        margin: 0;
+    }
+
+    .close {
+        cursor: pointer;
+        position: absolute;
+        top: 4px;
+        right: 10px;
+        font-size: 20px;
+    }
+
+    li {
+        list-style: none;
+        align-items: center;
+    }
+
+    .titleinput {
+        resize: none;
+        width: 405px;
+        max-width: 405px;
+        height: 40px;
+        text-align: left;
+        top: 2px;
+        font-size: 22px;
+        margin-bottom: 10px;
+    }
+
+    .textinput {
+        resize: none;
+        width: 800px;
+        max-width: 800px;
+        height: 500px;
+        text-align: left;
+        top: 2px;
+        overflow-y: scroll;
+    }
+
+    .detailtext {
+        /*visibility: hidden;*/
+        border-style: none;
+        width: 30px;
+        text-align: center;
+    }
+
+    .selectBox {
+        text-align: left;
+        width: 1px;
+        visibility: hidden;
+    }
+
+    .selector {
+        cursor: grab;
+        transition: all .25s ease-in-out;
+    }
+
+        .selector:hover {
+            color: #0000AA;
+            font-weight: 600;
+        }
+
+    .searchText {
+        width: 200px;
+        height: 30px;
+        bottom: 0;
+    }
+
+    .searchButton {
+        width: 50px;
+        height: 30px;
+        top: 0;
+    }
+
+    .pagingButton {
+        margin: 20px 10px;
+    }
+</style>
+
+
+@*@using (Html.BeginForm("Search", "BoardApi", FormMethod.Post))
+{*@
+    <form style="width: 1500px; margin: auto auto auto 220px" method="post">
+
+        <div style="text-align: center; margin: 70px auto 0 auto; height: 100px; width: 100%;">
+            <input id="searchId" type="text" class="searchText" placeholder="ID" />
+            <input id="searchwriter" type="text" class="searchText" placeholder="作者" />
+            <input id="searchtitle" type="text" class="searchText" placeholder="タイトル" />
+            <input id="searchFromDate" type="date" class="searchText" /> ～
+            <input id="searchToDate" type="date" class="searchText" />
+            <button type="submit" class="searchButton" onclick="searchJson(); Actions('https://localhost:44342/api/BoardApi/Datas')">検索</button>
+        </div>
+        <label class="open" for="pop-up">テキストを書き込む</label>
+
+        <table id="boardTable" style="margin: 60px 0 0 0; width:100%;">
+            <thead>
+                <tr>
+                    <th class="thId">
+                        ID
+                        <input id="itemId" class="selectBox" type="text" name="_id" />
+                    </th>
+                    <th class="thWriter">
+                        WRITER
+                    </th>
+                    <th class="thTitle">
+                        TITLE
+                    </th>
+                    <th class="thDate">
+                        UPDATE
+                    </th>
+                    <th class="thDelete">
+                        <button id="button" type="submit" onclick="deleteAlert(); Actions('https://localhost:44342/Board/AllDelete')">全削除</button>
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model.Rows)
+                {
+                    <tr>
+                        <td>@item["Id"]</td>
+                        <td>@item["Writer"]</td>
+                        <td class="selector" onclick="getAll(); Actions('https://localhost:44342/Board/Detail')">@item["Title"]</td>
+                        <td>@item["Date"]</td>
+
+                        @*<td>@item.Id</td>
+                            <td>@item.Writer</td>
+                            <td class="selector" onclick="getAll(); Actions('https://localhost:44342/Board/Detail')">@item.Title</td>
+                            <td>@item.Update</td>*@
+                        <td>
+                            <button type="submit" onclick="deleteAlert(); getId(); Actions('https://localhost:44342/Board/Delete')">delete</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+
+
+
+    <div class="container" style="margin:50px auto; text-align:center" onclick="pagint()">
+        <div>
+            <span id="js-pagination-result-total"></span>件中
+            <span id="js-pagination-result-range-text"></span>
+        </div>
+        <div>
+            <button id="js-button-prev" class="pagingButton">
+                前へ
+            </button>
+            <button id="js-button-next" class="pagingButton">
+                次へ
+            </button>
+        </div>
+        <div>
+            <nav id="js-pagination-result-range" style="margin:auto auto 30px auto"></nav>
+
+            現在のページ : <span id="js-pagination-current"></span>
+        </div>
+    </div>
+
+    <script>
+        function Actions(url) {
+            var f = document.querySelector("form");
+            f.setAttribute("action", url);
+            document.querySelector("form").submit();
+        }
+
+        function deleteAlert() {
+            var deleteAlert = window.confirm('このテキストを削除しますか？');
+
+            if (!deleteAlert) { return false; }
+        }
+
+        function getId() {
+            var table = document.getElementById("boardTable"), rIndex;
+
+            for (var i = 0; i < table.rows.length; i++) {
+                table.rows[i].onclick = function () {
+                    rIndex = this.rowIndex;
+                    console.log(rIndex);
+
+                    document.getElementById("itemId").value = this.cells[0].innerHTML;
+                };
+            }
+        }
+
+        function getAll() {
+            var table = document.getElementById("boardTable"), rIndex;
+
+            for (var i = 0; i < table.rows.length; i++) {
+                table.rows[i].onclick = function () {
+                    rIndex = this.rowIndex;
+                    console.log(rIndex);
+
+                    document.getElementById("itemId").value = this.cells[0].innerHTML;
+
+                    document.querySelector("form").submit();
+                };
+            }
+        }
+
+        function getTitle() {
+            var table = document.getElementById("boardTable"), rIndex;
+
+            for (var i = 0; i < table.rows.length; i++) {
+                table.rows[i].onclick = function () {
+                    rIndex = this.rowIndex;
+                    console.log(rIndex);
+
+                    document.getElementById("itemId").value = this.cells[0].innerHTML;
+
+                    document.querySelector("form").submit();
+                };
+            }
+        }
+
+        /*function pagint() {// 前へ_DOM指定
+            const prevButton = document.getElementById("js-button-prev");
+            // 次へ_DOM指定
+            const nextButton = document.getElementById("js-button-next");
+
+            // 総数
+            const globalTotalItem = 100;
+            // 1ページに表示したい件数
+            const PER_PAGE = 10;
+            // 初期ページ
+            var initialPage = 0;
+            // 現在のページ
+            var currentPage = 0;
+
+            // 配列を任意の数だけ作成
+            const range = (start, end) => {
+                const array = [...Array(end - start + 1)].map((_, i) => {
+                    return start + i;
+                });
+                return array;
+            };
+
+            // 閲覧中の情報の件数の範囲を表示
+            const rangeCurrentPage = () => {
+                if (!globalTotalItem) return;
+                const start = currentPage * PER_PAGE + 1;
+                const text =
+                    (currentPage + 1) * PER_PAGE < globalTotalItem
+                        ? `${start}件〜${(currentPage + 1) * PER_PAGE}件目を表示`
+                        : `${start}件〜${globalTotalItem}件目を表示`;
+                return text;
+            };
+
+            // 前へボタン_アクション
+            prevButton.addEventListener("click", () => {
+                if (initialPage >= currentPage) return;
+                currentPage = currentPage - 1;
+                render();
+            });
+            // 次へボタン_アクション
+            nextButton.addEventListener("click", () => {
+                if (PER_PAGE * (currentPage + 1) >= globalTotalItem) return;
+                currentPage = currentPage + 1;
+                render();
+            });
+
+            // レンダリング
+            const render = () => {
+                document.getElementById(
+                    "js-pagination-result-total"
+                ).innerHTML = globalTotalItem;
+                document.getElementById("js-pagination-result-range").innerHTML = range(
+                    1,
+                    Math.ceil(globalTotalItem / PER_PAGE)
+                );
+                document.getElementById(
+                    "js-pagination-result-range-text"
+                ).innerHTML = rangeCurrentPage();
+                document.getElementById("js-pagination-current").innerHTML = currentPage + 1;
+            };
+
+            render();
+        }*/
+
+        function pagint() {
+
+        }
+
+        function searchJson() {
+            var id = document.getElementById("searchId");
+            var writer = document.getElementById("searchwriter");
+            var title = document.getElementById("searchtitle");
+            var fromDate = document.getElementById("searchFromDate");
+            var toDate = document.getElementById("searchToDate");
+
+            {
+                Id: id.value;
+                Writer: writer.value;
+                Title: title.value;
+                Date: fromDate.value;
+                Date: toDate;
+            }
+        }
+
+        function createJson() {
+            var Title = document.getElementById("createTitle");
+            var Writer = document.getElementById("createWriter");
+            var Date = document.getElementById("createDate");
+            var Text = document.getElementById("createText");
+
+            {
+                Title: title.value;
+                Writer: writer.value;
+                Date: Date.value;
+                Text: Text;
+            }
+        }
+
+
+    </script>
+
+
+
+
+    <input type="checkbox" id="pop-up">
+    <div class="overlay">
+        <div class="window">
+            <form class="form-horizontal" method="post" action="https://localhost:44342/Board/Create">
+                <label class="close" for="pop-up">×</label>
+
+                <div style="margin: 15px auto auto 43px;">
+
+                    <div style="display: flex; margin: auto auto 0 10%;">
+                        <textarea id="createTitle" class="titleinput" placeholder="タイトル"></textarea>
+
+                        <p style=" font-size:21px; color: white; margin: 5px 0 auto 30px;">作者：</p>
+                        <input id="createWriter" type="text" style="height: 40px; width: 150px; " />
+                        <input id="createDate" type="date" style="height: 40px; width: 150px; " />
+                    </div>
+
+                    <textarea id="createText" class="textinput" placeholder="内容を入力してください。"></textarea>
+
+                    <div style="margin: 20px auto auto 340px; ">
+                        <a class="btn btn-warning" href="https://localhost:44342/Board/Create">戻る</a>
+                        <button type="submit" class="btn btn-primary" onclick="createJson(); Actions('https://localhost:44342/Board/Create')">登録</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
