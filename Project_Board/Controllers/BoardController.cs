@@ -78,11 +78,7 @@ namespace Project_Board.Controllers
         //Search
         public string Search([FromBody]SearchCondition searchCondition)
         {
-            return service.Search(searchCondition);
-
-
-            //return View(models);
-            //return "aa";
+            return service.Search(searchCondition); //string json
         }
 
         /*[HttpPost]

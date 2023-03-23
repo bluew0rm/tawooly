@@ -215,24 +215,16 @@
                 </th>
             </tr>
         </thead>
-
-        <tbody>@foreach (var item in Model.Rows)
-            {
+        <tbody>
                 <tr>
-                    <td>@item["Id"]</td>
-                    <td>@item["Writer"]</td>
-                    <td class="selector" onclick="getAll(); Actions('https://localhost:44342/Board/Detail')">@item["Title"]</td>
-                    <td>@item["Date"]</td>
-
-                    @*<td>@item.Id</td>
-                        <td>@item.Writer</td>
-                        <td class="selector" onclick="getAll(); Actions('https://localhost:44342/Board/Detail')">@item.Title</td>
-                        <td>@item.Update</td>*@
+                    <td id="id"> </td>
+                    <td id="writer"> </td>
+                    <td id="title" class="selector" onclick="getAll(); Actions('https://localhost:44342/Board/Detail')"> </td>
+                    <td id="date"> </td>
                     <td>
                         <button type="submit" onclick="deleteAlert(); getId(); Actions('https://localhost:44342/Board/Delete')">delete</button>
                     </td>
                 </tr>
-            }
         </tbody>
     </table>
 </form>
@@ -339,13 +331,23 @@
                     'Accept': 'application/json'
                 }
             }).then(function (r) {
-                console.log("done");
-                alert(r);
 
-            }, function (e) {
+                var json = JSON.parse(r); //文字列をJSONオブジェクトに変換
+
+                var jsonid = document.getElementById("id");
+                var jsonwriter = document.getElementById("writer");
+                var jsontitle = document.getElementById("title");
+                var jsondate = document.getElementById("date");
+
+                jsonid.textContent = json[0].Id;
+                jsonwriter.textContent = json[0].Writer;
+                jsontitle.textContent = json[0].Title;
+                jsondate.textContent = json[0].UpdatedDate;
+
+            },function (e) {
                 alert("error: " + e);
             });
-
+  
         }
 
 

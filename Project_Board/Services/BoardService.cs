@@ -83,7 +83,6 @@ namespace Project_Board.Services
 
         public string Search(SearchCondition searchCondition)
         {
-
             var dataTable = Adapter.Search(searchCondition);
 
             // dataTable -> List<BoardItem>
