@@ -75,7 +75,7 @@ namespace Project_Board.Service.Adepter
         }
 
         //AllDelete  ok
-        public DataTable AllDelete()
+        public DataTable DeleteAll()
         {
             DataTable table = new DataTable();
             try

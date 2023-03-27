@@ -15,11 +15,10 @@ namespace Project_Board.Controllers
     public class BoardController : Controller
     {
         private BoardService _boardService;
-        private BoardService service { get {  if (_boardService == null) { _boardService = new BoardService(); } return _boardService; } }
-       
+        private BoardService service { get { if (_boardService == null) { _boardService = new BoardService(); } return _boardService; } }
+
         DataTable itemTable = new DataTable();
         BoardApiController post = new BoardApiController();
-
 
         //SelectAll ok
         public ActionResult Index()
@@ -34,11 +33,11 @@ namespace Project_Board.Controllers
             return service.Create(item); //string json
         }
 
-        //AllDelete  ok 
+        //DeleteAll  ok 
         [System.Web.Mvc.HttpPost]
-        public ActionResult AllDelete()
+        public ActionResult DeleteAll()
         {
-            service.AllDelete();
+            service.DeleteAll();
 
             return Redirect("Index");
         }
@@ -49,7 +48,7 @@ namespace Project_Board.Controllers
         {
             var id = Request.Form["_id"];
 
-            service.GetDeleteById(id);
+            service.DeleteById(id);
 
             return Redirect("Index");
         }
@@ -75,7 +74,7 @@ namespace Project_Board.Controllers
         }
 
         //Search
-        public string Search([FromBody]SearchCondition searchCondition)
+        public string Search([FromBody] SearchCondition searchCondition)
         {
             return service.Search(searchCondition); //string json
         }

@@ -84,31 +84,13 @@ function searchJson2() {
         var jsontitle = document.getElementById("title");
         var jsondate = document.getElementById("date");
 
-        var table = document.getElementById("boardTable");
+        var tableBody = document.getElementById("tableBody");
 
-        //引数1 : 表の1行目に追加
-        var trId = table.insertRow(0);
-
-        //thセルの追加
-        var thId = document.createElement("th");
-
-        var headCellId = trId.insertCell(0);
-        var headCellWriter = trId.insertCell(1);
-        var headCellTitle = trId.insertCell(2);
-        var headCellDate = trId.insertCell(3);
-        var headCellAllDelete = trId.insertCell(4);
-
-        headCellId.textContent = "ID";
-        headCellWriter.textContent = "Writer";
-        headCellTitle.textContent = "Title";
-        headCellDate.textContent = "UpdatedDate";
-        headCellAllDelete.textContent = "AllDelete";
-
-        trId.appendChild(thId);
+        $("#tableBody tr").remove();
 
         for (var i = 0; i < json.length; i++)
         {
-            var trId = table.insertRow(i+1); 
+            var trId = tableBody.insertRow(i); 
 
             //tdセルの追加
             var tdId = document.createElement("td");
@@ -136,6 +118,8 @@ function searchJson2() {
 
             cellDate.textContent = yyyymmdd;
         }
+
+
 
     }, function (e) {
         alert("error: " + e);

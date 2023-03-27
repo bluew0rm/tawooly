@@ -2,13 +2,8 @@
 using Project_Board.Models;
 using Project_Board.Models.Search;
 using Project_Board.Service.Adepter;
-using System;
 using System.Collections.Generic;
 using System.Data;
-using System.IO;
-using System.Web.DynamicData;
-using System.Web.Http.Results;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Project_Board.Services
 {
@@ -72,15 +67,15 @@ namespace Project_Board.Services
         }
 
         //AllDelete  ok
-        public DataTable AllDelete()
+        public DataTable DeleteAll()
         {
-            var dataTable = Adapter.AllDelete();
+            var dataTable = Adapter.DeleteAll();
 
             return dataTable;
         }
 
         //Delete ok
-        public DataTable GetDeleteById(string id)
+        public DataTable DeleteById(string id)
         {
             var dataTable = Adapter.Delete(id);
 
