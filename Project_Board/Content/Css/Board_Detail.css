@@ -1,0 +1,69 @@
+﻿.titleH1 {
+    text-align: center;
+    margin: 70px 0 0 0
+}
+
+.selectBox {
+    text-align: left;
+    margin: auto 30px 0 35%;
+    width: 100px;
+    visibility: hidden;
+}
+
+.titleinput {
+    resize: none;
+    width: 400px;
+    max-width: 405px;
+    height: 40px;
+    text-align: left;
+    top: 2px;
+    font-size: 22px;
+    margin-bottom: 10px;
+    padding: 3px 0 3px 10px;
+}
+
+.textinput {
+    resize: none;
+    width: 800px;
+    max-width: 800px;
+    height: 500px;
+    text-align: left;
+    margin: 20px auto auto auto;
+    overflow-y: scroll;
+}
+
+.writer {
+    font-size: 21px;
+    color: black;
+    margin: 5px 0 auto 20px;
+}
+
+.title {
+    font-size: 21px;
+    color: black;
+    margin: 5px 0 auto 0;
+}
+
+.formDiv {
+    margin : 20px auto auto 15%;
+}
+
+.inputDiv {
+    display: flex;
+}
+
+.inputWriter {
+    padding: 2px 0 2px 10px;
+    height: 40px;
+    width: 100px;
+}
+
+.inputDate {
+    padding: 2px 0 2px 10px;
+    height: 40px;
+    width: 110px;
+}
+
+.buttonDiv {
+    margin: 20px auto auto 340px;
+}

@@ -141,11 +141,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\BoardController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
-    <Compile Include="Data\MembersDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MembersDataSet.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -162,28 +157,27 @@
     <Content Include="App_Data\Member_log.ldf">
       <DependentUpon>Member.mdf</DependentUpon>
     </Content>
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\PagedList.css" />
+    <Content Include="Content\Bootstrap\bootstrap-theme.css" />
+    <Content Include="Content\Bootstrap\bootstrap-theme.min.css" />
+    <Content Include="Content\Bootstrap\bootstrap.css" />
+    <Content Include="Content\Bootstrap\bootstrap.min.css" />
+    <Content Include="Content\Css\Login_Add.css" />
+    <Content Include="Content\Css\Login_FindInput.css" />
+    <Content Include="Content\Css\Login_FindImfor.css" />
+    <Content Include="Content\Css\Login_Index.css" />
+    <Content Include="Content\Css\Layout.css" />
+    <Content Include="Content\Css\Board_Index.css" />
+    <Content Include="Content\Css\Board_Detail.css" />
+    <Content Include="Content\JavaScript\Board_Detail.js" />
+    <Content Include="Content\JavaScript\Board_Search.js" />
+    <Content Include="Content\JavaScript\Board_Index.js" />
+    <Content Include="Content\Css\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\Css\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Data\MembersDataSet.xsc">
-      <DependentUpon>MembersDataSet.xsd</DependentUpon>
-    </Content>
-    <None Include="Data\MembersDataSet.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>MembersDataSet.Designer.cs</LastGenOutput>
-    </None>
-    <Content Include="Data\MembersDataSet.xss">
-      <DependentUpon>MembersDataSet.xsd</DependentUpon>
-    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -221,16 +215,18 @@
     <Content Include="Views\Board\Detail.cshtml" />
     <Content Include="Views\Board\Search.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\Bootstrap\bootstrap.min.css.map" />
+    <Content Include="Content\Bootstrap\bootstrap.css.map" />
+    <Content Include="Content\Bootstrap\bootstrap-theme.min.css.map" />
+    <Content Include="Content\Bootstrap\bootstrap-theme.css.map" />
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />

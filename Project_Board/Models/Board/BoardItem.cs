@@ -22,7 +22,7 @@ namespace Project_Board.Models
         //"FromDate": fromDate.value,
         //"ToDate": toDate
 
-        public BoardItem(int id, string title, string writer, DateTime updatedDate, string text)
+        public BoardItem(int id, string title, string text, string writer, DateTime updatedDate)
         {
             Id = id;
             Title = title;
@@ -31,7 +31,7 @@ namespace Project_Board.Models
             UpdatedDate = updatedDate;
         }
 
-        public BoardItem(string title, string writer, DateTime updatedDate, string text)
+        public BoardItem(string title, string text, string writer, DateTime updatedDate)
         {
             Title = title;
             Text = text;

@@ -2,54 +2,12 @@
 @{
     ViewBag.Title = "Login";
 }
-@*ログイン*@
 
 <h2>@ViewData["DB接続不可"]</h2>
 
-<style>
-    .bigBox {
-        margin: 70px auto 0 auto;
-        display: flex;
-    }
+<link rel="stylesheet" type="text/css" href="~/Content/Css/Login_Index.css"/>
 
-    .box1 {
-        margin: auto 40px auto 295px;
-    }
-
-    .box2 {
-        margin: auto auto auto 40px;
-    }
-
-    .smallBox {
-        margin: 0 auto 150px auto;
-        display: flex;
-    }
-
-    .box3 {
-        margin: 0 5px auto 42%;
-        font-weight: 800;
-    }
-
-    .box4 {
-        margin: 0 35% auto 5px;
-        font-weight:800;
-    }
-
-    .box1text {
-        text-align: right;
-        font-size: large;
-        font-weight: 900;
-        margin: 40px 0;
-    }
-
-    .box2text {
-        text-align: right;
-        margin: 32px 0;
-        width: 400px;
-    }
-</style>
-
-<h2 style="font-size: 50px; font-weight: 500; margin: 100px 0; text-align: center; ">会員登録</h2>
+<h2 class="titleH2">会員登録</h2>
 
 <form class="form-horizontal" method="post" action="https://localhost:44342/Login/Login">
 
@@ -67,11 +25,11 @@
 
     <div class="smallBox">
         <div class="box3"><a href="https://localhost:44342/Login/FindInputId">IDを探す</a></div>
-        <p style="font-weight: 800;"> / </p>
+        <p class="font-weight800"> / </p>
         <div class="box4"><a href="https://localhost:44342/Login/FindInputPw">パスワード探す</a></div>
     </div>
 
-    <div class="form-group" style="text-align: center; font-size: 40px;">
+    <div class="form-group">
         <a class="btn btn-warning" href="https://localhost:44342/">戻る</a>
         <button type="submit" class="btn btn-primary">ログイン</button>
     </div>

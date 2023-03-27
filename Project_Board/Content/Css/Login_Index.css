@@ -1,0 +1,61 @@
+﻿.titleH1 {
+    text-align: center;
+    margin: 90px 0 0 0;
+}
+
+.titleH2 {
+    font-size: 50px;
+    font-weight: 500;
+    margin: 100px 0;
+    text-align: center;
+}
+
+.table {
+    margin: 80px 0 0 0;
+    text-align: center;
+}
+
+.bigBox {
+    margin: 70px auto 0 auto;
+    display: flex;
+}
+
+.box1 {
+    margin: auto 40px auto 295px;
+}
+
+.box2 {
+    margin: auto auto auto 40px;
+}
+
+.smallBox {
+    margin: 0 auto 150px auto;
+    display: flex;
+}
+
+.box3 {
+    margin: 0 5px auto 42%;
+    font-weight: 800;
+}
+
+.box4 {
+    margin: 0 35% auto 5px;
+    font-weight: 800;
+}
+
+.box1text {
+    text-align: right;
+    font-size: large;
+    font-weight: 900;
+    margin: 40px 0;
+}
+
+.box2text {
+    text-align: right;
+    margin: 32px 0;
+    width: 400px;
+}
+
+.font-weight800 {
+    font-weight: 800;
+}

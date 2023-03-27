@@ -29,10 +29,9 @@ namespace Project_Board.Controllers
         }
 
         //Create
-        public ActionResult Create([FromBody] BoardItem item)
+        public string Create([FromBody] BoardItem item)
         {
-            service.Create(item);
-            return Redirect("Index");
+            return service.Create(item); //string json
         }
 
         //AllDelete  ok 

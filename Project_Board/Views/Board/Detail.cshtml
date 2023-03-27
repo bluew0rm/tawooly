@@ -11,71 +11,30 @@
 
 
 
-<h1 style="text-align:center ; margin: 70px 0 0 0">詳細ページ</h1>
-
-<style>
-    .selectBox {
-        text-align: left;
-        margin:auto 30px 0 35%;
-        width: 100px;
-        visibility: hidden;
-    }
-    .titleinput {
-        resize: none;
-        width: 400px;
-        max-width: 405px;
-        height: 40px;
-        text-align: left;
-        top: 2px;
-        font-size: 22px;
-        margin-bottom: 10px;
-        padding: 3px 0 3px 10px;
-    }
-
-    .textinput {
-        resize: none;
-        width: 800px;
-        max-width: 800px;
-        height: 500px;
-        text-align: left;
-        margin: 20px auto auto auto;
-        overflow-y: scroll;
-    }
-
-    .writer {
-        font-size: 21px;
-        color: black;
-        margin: 5px 0 auto 20px;
-    }
-    .title {
-        font-size: 21px;
-        color: black;
-        margin: 5px 0 auto 0;
-    }
-
-</style>
+<h1 class="titleH1">詳細ページ</h1>
+<link rel="stylesheet" type="text/css" href="~/Content/Css/Board_Detail.css"/>
 
 
 <form method="post" action="https://localhost:44342/Board/Update" onsubmit="deleteAlert();">
 
-    <div style="margin: 20px auto auto 15%;">
+    <div class="formDiv">
 
         @foreach (var item in Model.Rows)
         {
             <input class="selectBox" type="text" name="_id" value="@item["Id"]" />
 
-            <div style="display: flex;">
+            <div class="inputDiv">
                 <p class="title">タイトル：</p>
                 <textarea class="titleinput" name="_title">@item["Title"]</textarea>
 
                 <p class="writer">作者：</p>
-                <input type="text" style="padding:2px 0 2px 10px; height: 40px; width: 100px; " name="_writer" value="@item["Writer"]" />
-                <input type="date" style="padding: 2px 0 2px 10px; height: 40px; width: 110px; " name="_update" value="@item["Date"]" />
+                <input type="text" class="inputWriter" name="_writer" value="@item["Writer"]" />
+                <input type="date" class="inputDate" name="_update" value="@item["Date"]" />
             </div>
 
             <textarea class="textinput" name="_text">@item["Text"]</textarea>
 
-            <div style="margin: 20px auto auto 340px; ">
+            <div class="buttonDiv">
                 <button type="submit">修正</button>
             </div>
         }
@@ -83,10 +42,4 @@
     </div>
 </form>
 
-<script>
-    function deleteAlert() {
-        var deleteAlert = window.confirm('修正しました。');
-
-        if (!deleteAlert) { return false; }
-    }
-</script>
+<script src="~/Content/JavaScript/Board_Detail.js"></script>

@@ -37,11 +37,38 @@ namespace Project_Board.Services
         }
 
         //Create ok
-        public DataTable Create(BoardItem item)
+        public string Create(BoardItem item)
         {
             var dataTable = Adapter.Create(item);
 
-            return dataTable;
+            // dataTable -> List<BoardItem>
+            var data = new List<BoardItem>();
+            foreach (DataRow row in dataTable.Rows)
+            {
+                data.Add(new BoardItem(row));
+            }
+
+            string json = JsonConvert.SerializeObject(data);
+
+            return json;
+        }
+
+
+
+        public string Search(SearchCondition searchCondition)
+        {
+            var dataTable = Adapter.Search(searchCondition);
+
+            // dataTable -> List<BoardItem>
+            var data = new List<BoardItem>();
+            foreach (DataRow row in dataTable.Rows)
+            {
+                data.Add(new BoardItem(row));
+            }
+
+            string json = JsonConvert.SerializeObject(data);
+
+            return json;
         }
 
         //AllDelete  ok
@@ -72,30 +99,8 @@ namespace Project_Board.Services
             return dataTable;
         }
 
-        //Search
-        /*public DataTable Search(BoardItem item)
-        {
-            
-            var dataTable = Adapter.Search(item);
 
-            return dataTable;
-        }*/
 
-        public string Search(SearchCondition searchCondition)
-        {
-            var dataTable = Adapter.Search(searchCondition);
-
-            // dataTable -> List<BoardItem>
-            var data = new List<BoardItem>();
-            foreach (DataRow row in dataTable.Rows)
-            {
-                data.Add(new BoardItem(row));
-            }
-
-            string json = JsonConvert.SerializeObject(data);
-
-            return json;
-        }
 
         //public List<BoardItem> Search(SearchCondition searchCondition)
         //{

@@ -46,16 +46,21 @@ namespace Project_Board.Service.Adepter
             {
                 using (var command = Connection.CreateCommand())
                 {
+                    string title = item.Title;
+                    string text = item.Text;
+                    string writer = item.Writer;
+                    string udatedDate = item.UpdatedDate.ToString("MM/dd/yyyy");
+
                     Connection.Open();
                     var createQuary = command.CommandText;
                     // SQLの設定
-                    command.CommandText = "INSERT INTO PostBoard VALUES(@param1, @param2, @param3, @param4)";
+                    command.CommandText = "INSERT INTO PostBoard([Title],[Text],[Writer],[Update]) VALUES(@param1, @param2, @param3, @param4)";
                     
                     // SQLの実行
-                    command.Parameters.AddWithValue("@param1", item.Title);
-                    command.Parameters.AddWithValue("@param2", item.Writer);
-                    command.Parameters.AddWithValue("@param3", item.UpdatedDate);
-                    command.Parameters.AddWithValue("@param4", item.Text);
+                    command.Parameters.AddWithValue("@param1", title);
+                    command.Parameters.AddWithValue("@param2", text);
+                    command.Parameters.AddWithValue("@param3", writer);
+                    command.Parameters.AddWithValue("@param4", udatedDate);
 
                     //command.ExecuteNonQuery();
 
@@ -192,7 +197,7 @@ namespace Project_Board.Service.Adepter
 	                                            (@param1 = 0 OR Id = @param1) AND 
 	                                            (@param2 = '' OR Writer = @param2) AND 
 	                                            (@param3 = '' OR (Title LIKE N'%' + @param3 + N'%')) AND 
-	                                            ((@param4= '' OR @param5 = '') OR (Date  BETWEEN @param4 AND @param5))";
+	                                            ((@param4= '' OR @param5 = '') OR ([Update] BETWEEN @param4 AND @param5))";
 
                     command.Parameters.AddWithValue("@param1", id);
                     command.Parameters.AddWithValue("@param2", writer);

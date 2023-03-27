@@ -1,0 +1,40 @@
+﻿.titleH1 {
+    text-align: center;
+    margin: 90px 0
+}
+
+.text {
+    margin: 20px;
+    text-align: center;
+    font-size: 35px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.itemNameResult {
+    margin: 20px;
+    text-align: center;
+    font-size: 35px;
+    font-weight: 700;
+    white-space: nowrap;
+    color: #0000cd;
+    margin: auto auto auto 40%;
+}
+
+.itemPasswordResult {
+    margin: 20px;
+    text-align: center;
+    font-size: 35px;
+    font-weight: 700;
+    white-space: nowrap;
+    color: #0000cd;
+}
+
+.Passwordtext {
+    margin: 20px;
+    text-align: center;
+    font-size: 35px;
+    font-weight: 700;
+    white-space: nowrap;
+    margin: auto auto auto 25%;
+}

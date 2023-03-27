@@ -1,0 +1,32 @@
+﻿.titleH2 {
+    font-size: 50px;
+    font-weight: 500;
+    margin: 90px 0;
+    text-align: center;
+}
+
+.bigBox {
+    margin: 70px auto;
+    display: flex;
+}
+
+.box1 {
+    margin: auto 40px auto 350px;
+}
+
+.box2 {
+    margin: auto auto auto 40px;
+}
+
+.box1text {
+    text-align: right;
+    font-size: large;
+    font-weight: 900;
+    margin: 40px 0;
+}
+
+.box2text {
+    text-align: right;
+    margin: 32px 0;
+    width: 400px;
+}
