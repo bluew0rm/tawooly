@@ -46,10 +46,10 @@ function getTitle() {
         };
     }
 }
+
 function pagint() {
 
 }
-
 
 function searchJson2() {
 
@@ -103,7 +103,6 @@ function searchJson() {
     }
 
 }
-
 
 function createJson() {
     var Title = document.getElementById("createTitle");

@@ -15,7 +15,7 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
 
-<form class="formstyle" id="search_form">
+
     <h3 id="message" />
     <div class="inputDivStyle">
         <input id="searchId" type="text" class="searchText" placeholder="ID" />
@@ -27,40 +27,44 @@
     </div>
     <label class="open" for="pop-up">テキストを書き込む</label>
 
-    <table id="boardTable" class="boardTableStyle">
-        <thead>
-            <tr>
-                <th class="thId">
-                    ID
-                    <input id="itemId" class="selectBox" type="text" name="_id" />
-                </th>
-                <th class="thWriter">
-                    WRITER
-                </th>
-                <th class="thTitle">
-                    TITLE
-                </th>
-                <th class="thDate">
-                    UPDATE
-                </th>
-                <th class="thDelete">
-                    <button id="button" type="submit" onclick="deleteAlert(); Actions('https://localhost:44342/Board/AllDelete')">全削除</button>
-                </th>
-            </tr>
-        </thead>
-        <tbody id="tableBody">
-            @*<tr>
-                <td id="id"> </td>
-                <td id="writer"> </td>
-                <td id="title" class="selector" onclick="getAll(); Actions('https://localhost:44342/Board/Detail')"> </td>
-                <td id="date"> </td>
-                <td>
-                    <button type="submit" onclick="deleteAlert(); getId(); Actions('https://localhost:44342/Board/Delete')">delete</button>
-                </td>
-            </tr>*@
-        </tbody>
-    </table>
-</form>
+    <form class="formstyle" id="search_form">
+        <table id="boardTable" class="boardTableStyle">
+            <thead>
+                <tr>
+                    <th class="thId">
+                        ID
+                        <input id="itemId" @*class="selectBox"*@ type="text" name="_id" />
+                    </th>
+                    <th class="thWriter">
+                        WRITER
+                        <input id="itemWriter" @*class="selectBox"*@ type="text"/>
+                    </th>
+                    <th class="thTitle">
+                        TITLE
+                        <input id="itemTitle" @*class="selectBox"*@ type="text"/>
+                    </th>
+                    <th class="thDate">
+                        UPDATE
+                        <input id="itemDate" @*class="selectBox"*@ type="text"/>
+                    </th>
+                    <th class="thDelete">
+                        <button id="button" onclick="allDeleteJson();">全削除</button>
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                @*            <tr>
+                    <td id="id"> </td>
+                    <td id="writer"> </td>
+                    <td id="title" class="selector" onclick="getAll(); Actions('https://localhost:44342/Board/Detail')"> </td>
+                    <td id="date"> </td>
+                    <td>
+                        <button type="submit" onclick="deleteAlert(); getId(); Actions('https://localhost:44342/Board/Delete')">delete</button>
+                    </td>
+                </tr>*@
+            </tbody>
+        </table>
+    </form>
 
 
 
@@ -104,10 +108,9 @@
 
                 <div class="popupButtonDiv">
                     <a class="btn btn-warning" href="https://localhost:44342/Board/Create">戻る</a>
-                    <input type="button" class="btn btn-primary" onclick="createJson(); Actions('https://localhost:44342/Board/Create')" value="登録"/>
+                    <input type="button" class="btn btn-primary" onclick="createJson();" value="登録"/>
                 </div>
             </div>
-
         </form>
     </div>
 </div>

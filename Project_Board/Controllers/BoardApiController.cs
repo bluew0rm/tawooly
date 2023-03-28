@@ -14,14 +14,6 @@ namespace Project_Board.Controllers.APIController
         private BoardService _boardService;
         private BoardService service { get { if (_boardService == null) { _boardService = new BoardService(); } return _boardService; } }
 
-        /*[System.Web.Mvc.HttpPost]
-        //[System.Web.Mvc.ActionName("Datas")]
-        //Create POST api/<controller>
-        public DataTable Search([FromBody] BoardItem item)
-        {
-            var items = service.Search(item);
-
-            return items;
-        }*/
+        
     }
 }

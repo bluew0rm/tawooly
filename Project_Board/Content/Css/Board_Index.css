@@ -136,7 +136,7 @@ li {
 
 .selectBox {
     text-align: left;
-    width: 1px;
+    width: 300px;
     visibility: hidden;
 }
 
@@ -223,5 +223,19 @@ li {
 
 .popupButtonDiv {
     margin: 20px auto auto 340px;
+}
+
+.titleButton {
+    /*display: block;*/
+    width: 200px;
+    background: transparent;
+    border: 2px solid #FFF;
+    /*padding: 20px;
+    text-align: center;
+    text-decoration: none;*/
+    color: black;
+    font-size: 120%;
+    font-weight: bold;
+    /*font-weight :900;*/
 }
 

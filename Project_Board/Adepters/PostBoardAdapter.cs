@@ -101,6 +101,7 @@ namespace Project_Board.Service.Adepter
             DataTable table = new DataTable();
             try
             {
+
                 Connection.Open();
 
                 using (var command = Connection.CreateCommand())
@@ -120,11 +121,13 @@ namespace Project_Board.Service.Adepter
         }
 
         //Detail  ok
-        public DataTable GetDataById(string id)
+        public DataTable GetDataById(BoardItem item)
         {
             DataTable table = new DataTable();
             try
             {
+                int id = item.Id;
+
                 Connection.Open();
 
                 using (var command = Connection.CreateCommand())

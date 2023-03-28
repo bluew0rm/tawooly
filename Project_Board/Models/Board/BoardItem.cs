@@ -6,21 +6,12 @@ namespace Project_Board.Models
 
     public class BoardItem
     {
-        private DataRow row;
 
         public BoardItem() { }
         public BoardItem(DataTable dataTable)
         {
 
         }
-
-
-
-        //"Id": id.value,
-        //"Title": title.value,
-        //"Writer": writer.value,
-        //"FromDate": fromDate.value,
-        //"ToDate": toDate
 
         public BoardItem(int id, string title, string text, string writer, DateTime updatedDate)
         {

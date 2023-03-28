@@ -4,6 +4,10 @@ using Project_Board.Models.Search;
 using Project_Board.Service.Adepter;
 using System.Collections.Generic;
 using System.Data;
+using System.Net.Cache;
+using System.Web.Mvc;
+
+
 
 namespace Project_Board.Services
 {
@@ -48,8 +52,6 @@ namespace Project_Board.Services
             return json;
         }
 
-
-
         public string Search(SearchCondition searchCondition)
         {
             var dataTable = Adapter.Search(searchCondition);
@@ -75,41 +77,37 @@ namespace Project_Board.Services
         }
 
         //Delete ok
-        public DataTable DeleteById(string id)
+        public string DeleteById(string itemId)
         {
-            var dataTable = Adapter.Delete(id);
+            var dataTable = Adapter.Delete(itemId);
 
-            //var result = new BoardItem(dataTable);
+            // dataTable -> List<BoardItem>
+            var data = new List<BoardItem>();
+            foreach (DataRow row in dataTable.Rows)
+            {
+                data.Add(new BoardItem(row));
+            }
 
-            return dataTable;
+            string json = JsonConvert.SerializeObject(data);
+
+            return json;
         }
 
         //Detail  ok
-        public DataTable GetDetailById(string id)
+        public string GetDetailById(BoardItem item)
         {
-            var dataTable = Adapter.GetDataById(id);
+            var dataTable = Adapter.GetDataById(item);
 
-            //var result = new BoardItem(dataTable);
+            // dataTable -> List<BoardItem>
+            var data = new List<BoardItem>();
+            foreach (DataRow row in dataTable.Rows)
+            {
+                data.Add(new BoardItem(row));
+            }
 
-            return dataTable;
+            string json = JsonConvert.SerializeObject(data);
+
+            return json;
         }
-
-
-
-
-        //public List<BoardItem> Search(SearchCondition searchCondition)
-        //{
-
-        //    var dataTable = Adapter.Search(searchCondition);
-        //    var a = dataTable.Rows;
-        //    var result = new List<BoardItem>();
-        //    foreach(DataRow row in a)
-        //    {
-        //        result.Add(new BoardItem(row));
-        //    }
-
-
-        //    return result;
-        //}
     }
 }

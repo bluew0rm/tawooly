@@ -45,23 +45,14 @@
                     UPDATE
                 </th>
                 <th class="thDelete">
-                    <button id="button" type="submit" onclick="deleteAlert(); Actions('https://localhost:44342/Board/AllDelete')">全削除</button>
+                    <button id="button" type="submit">全削除</button>
                 </th>
             </tr>
         </thead>
 
         <tbody>
             <tr>
-                @foreach (var item in Model.Rows)
-                {
-                    <td>@item["Id"]</td>
-                    <td>@item["Writer"]</td>
-                    <td class="selector" onclick="getAll(); Actions('https://localhost:44342/Board/Detail')">@item["Title"]</td>
-                    <td>@item["Date"]</td>
-                    <td>
-                        <button type="submit" onclick="deleteAlert(); getId(); Actions('https://localhost:44342/Board/Delete')">delete</button>
-                    </td>
-                }
+                <td><a href="https://localhost:44342/Board">home</a></td>
             </tr>
         </tbody>
     </table>

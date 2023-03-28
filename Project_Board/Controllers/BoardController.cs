@@ -1,13 +1,9 @@
-﻿using Microsoft.Ajax.Utilities;
-using Project_Board.Controllers.APIController;
+﻿using Project_Board.Controllers.APIController;
 using Project_Board.Models;
 using Project_Board.Services;
 using System.Data;
-using System;
 using System.Web.Mvc;
-using System.Web.WebPages;
 using System.Web.Http;
-using Project_Board.Models.Paging;
 using Project_Board.Models.Search;
 
 namespace Project_Board.Controllers
@@ -28,40 +24,36 @@ namespace Project_Board.Controllers
         }
 
         //Create
+        [System.Web.Mvc.HttpPost]
         public string Create([FromBody] BoardItem item)
         {
             return service.Create(item); //string json
         }
 
-        //DeleteAll  ok 
+        //DeleteAll
         [System.Web.Mvc.HttpPost]
         public ActionResult DeleteAll()
         {
             service.DeleteAll();
-
-            return Redirect("Index");
+            return RedirectToAction("Index");
         }
 
         //Delete  ok
         [System.Web.Mvc.HttpPost]
         public ActionResult Delete()
         {
-            var id = Request.Form["_id"];
+            var itemId = Request.Form["_id"];
 
-            service.DeleteById(id);
+            service.DeleteById(itemId);
 
-            return Redirect("Index");
+            return RedirectToAction("Index");
         }
 
         //Detail  ok
         [System.Web.Mvc.HttpPost]
-        public ActionResult Detail()
+        public string Detail([FromBody] BoardItem item)
         {
-            var id = this.Request.Form["_id"];
-
-            var result = service.GetDetailById(id);
-
-            return View(result);
+            return service.GetDetailById(item); //string json
         }
 
         //Update  ok
@@ -74,6 +66,7 @@ namespace Project_Board.Controllers
         }
 
         //Search
+        [System.Web.Mvc.HttpPost]
         public string Search([FromBody] SearchCondition searchCondition)
         {
             return service.Search(searchCondition); //string json
