@@ -42,27 +42,29 @@ namespace Project_Board.Controllers
         [System.Web.Mvc.HttpPost]
         public ActionResult Delete()
         {
-            var itemId = Request.Form["_id"];
+            var itemId = Request.Form["id"];
 
             service.DeleteById(itemId);
 
             return RedirectToAction("Index");
         }
 
-        //Detail  ok
+        //Update  ok
         [System.Web.Mvc.HttpPost]
-        public string Detail([FromBody] BoardItem item)
+        public ActionResult Detail()
         {
-            return service.GetDetailById(item); //string json
+            var itemId = Request.Form["_id"];
+
+            var result = service.Detail(itemId);
+
+            return View(result);
         }
 
         //Update  ok
         [System.Web.Mvc.HttpPost]
-        public ActionResult Update(BoardItem item)
-        {
-            service.Update(item);
-
-            return View("Index");
+        public string Update([FromBody] BoardItem item)
+        {            
+            return service.Update(item); ;
         }
 
         //Search

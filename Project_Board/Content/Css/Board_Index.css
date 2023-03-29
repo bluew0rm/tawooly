@@ -35,6 +35,11 @@ th {
     width: 200px;
 }
 
+.textTh {
+    top: 500px;
+    text-align: center;
+}
+
 td {
     text-align: center;
     font-size: 17px;
@@ -48,6 +53,13 @@ td {
 .open {
     cursor: pointer; /* マウスオーバーでカーソルの形状を変えることで、クリックできる要素だとわかりやすいように */
     margin: 0 auto auto 86%;
+    color: #0000AA;
+    font-weight: 600;
+}
+
+.titleOpen {
+    cursor: pointer; /* マウスオーバーでカーソルの形状を変えることで、クリックできる要素だとわかりやすいように */
+    text-align:center;
     color: #0000AA;
     font-weight: 600;
 }

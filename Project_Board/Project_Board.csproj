@@ -212,7 +212,7 @@
     <Content Include="Views\Login\FindInputPw.cshtml" />
     <Content Include="Views\Login\SuccessFindId.cshtml" />
     <Content Include="Views\Login\SuccessFindPw.cshtml" />
-    <Content Include="Views\Board\aaa.cshtml" />
+    <Content Include="Views\Board\Detail.cshtml" />
     <Content Include="Views\Board\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>

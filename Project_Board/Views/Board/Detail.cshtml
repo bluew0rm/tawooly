@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "Home Page";
+}
+@*会員情報*@
+
+
+
+@*<h2>@ViewData["DB接続"]</h2>*@
+<h2>@ViewData["DB接続不可"]</h2>
+
+
+
+<h1 class="titleH1">詳細ページ</h1>
+<link rel="stylesheet" type="text/css" href="~/Content/Css/Board_Detail.css"/>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+
+<form method="post" action="https://localhost:44342/Board/Delete" onsubmit="deleteAlert();">
+
+    <div class="formDiv">
+
+        @foreach (var item in Model.Rows)
+        {
+            <input id="id" class="selectBox" type="text" name="id" value="@item["Id"]" />
+
+            <div class="inputDiv">
+                <p class="title">タイトル：</p>
+                <textarea id="title" class="titleinput">@item["Title"]</textarea>
+
+                <p class="writer">作者：</p>
+                <input id="writer" type="text" class="inputWriter" value="@item["Writer"]" />
+
+                <label id="date" type="text" class="inputDate">作成日：@item["Update"]</label>
+            </div>
+
+            <textarea id="text" class="textinput">@item["Text"]</textarea>
+
+            <div class="buttonDiv">
+                <input type="button" onclick="home()" value="戻る" />
+                <button type="submit">削除</button>
+                <input type="button" onclick="updateJson()" value="修正" />
+            </div>
+        }
+
+    </div>
+</form>
+
+<script src="~/Content/JavaScript/Board_Index.js"></script>

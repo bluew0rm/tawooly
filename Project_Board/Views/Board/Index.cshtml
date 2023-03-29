@@ -25,7 +25,7 @@
         <input id="searchToDate" type="date" class="searchText" />
         <input type="button" class="searchButton" onclick="searchJson2()" value="検索">
     </div>
-    <label class="open" for="pop-up">テキストを書き込む</label>
+    <label class="open" for="pop-up">テキスト登録</label>
 
     <form class="formstyle" id="search_form">
         <table id="boardTable" class="boardTableStyle">
@@ -52,21 +52,9 @@
                     </th>
                 </tr>
             </thead>
-            <tbody id="tableBody">
-                @*            <tr>
-                    <td id="id"> </td>
-                    <td id="writer"> </td>
-                    <td id="title" class="selector" onclick="getAll(); Actions('https://localhost:44342/Board/Detail')"> </td>
-                    <td id="date"> </td>
-                    <td>
-                        <button type="submit" onclick="deleteAlert(); getId(); Actions('https://localhost:44342/Board/Delete')">delete</button>
-                    </td>
-                </tr>*@
-            </tbody>
+            <tbody id="tableBody"></tbody>
         </table>
     </form>
-
-
 
 <div class="containerStyle" onclick="pagint()">
     <div>
@@ -108,8 +96,21 @@
 
                 <div class="popupButtonDiv">
                     <a class="btn btn-warning" href="https://localhost:44342/Board/Create">戻る</a>
-                    <input type="button" class="btn btn-primary" onclick="createJson();" value="登録"/>
+                    <input type="button" class="btn btn-primary" onclick="createJson()" value="登録"/>
                 </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<input type="checkbox" id="titlePop-up">
+<div class="overlay">
+    <div class="window">
+        <form class="form-horizontal" method="post" action="https://localhost:44342/Board/Create">
+            <label class="close" for="pop-up">×</label>
+
+            <div id="textpop-up" class="inputDiv">
             </div>
         </form>
     </div>

@@ -11,7 +11,7 @@ namespace Project_Board.Service.Adepter
     public class PostBoardAdapter : BoardAdapter
     {
 
-        //SelectAll ok
+        //SelectAll
         public DataTable GetDataByAll()
         {
             DataTable data = new DataTable();
@@ -38,7 +38,7 @@ namespace Project_Board.Service.Adepter
             return data;
         }
 
-        //Create ok
+        //Create
         public DataTable Create(BoardItem item)
         {
             DataTable table = new DataTable();
@@ -74,7 +74,7 @@ namespace Project_Board.Service.Adepter
             return table;
         }
 
-        //AllDelete  ok
+        //AllDelete
         public DataTable DeleteAll()
         {
             DataTable table = new DataTable();
@@ -95,7 +95,7 @@ namespace Project_Board.Service.Adepter
             return table;
         }
         
-        //Delete ok
+        //Delete
         public DataTable Delete(string id)
         {
             DataTable table = new DataTable();
@@ -120,7 +120,7 @@ namespace Project_Board.Service.Adepter
             return table;
         }
 
-        //Detail  ok
+        //Detail
         public DataTable GetDataById(BoardItem item)
         {
             DataTable table = new DataTable();
@@ -147,8 +147,8 @@ namespace Project_Board.Service.Adepter
             return table;
         }
 
-        //Update  ok
-        public DataTable Update(BoardItem item)
+        //Update
+        public DataTable Detail(string id)
         {
             DataTable table = new DataTable();
             try
@@ -157,14 +157,38 @@ namespace Project_Board.Service.Adepter
                 {
                     Connection.Open();
                     // SQLの設定
-                    command.CommandText = "UPDATE PostBoard SET [Title] = @param2, [Writer] = @param3, [Update] = @param4, [Text] = @param5 WHERE [Id] = @param1";
+                    command.CommandText = "SELECT * FROM PostBoard WHERE [Id] = @param1";
+
+                    // SQLの実行
+                    command.Parameters.AddWithValue("@param1", id);
+
+                    var adapter = new SqlDataAdapter(command);
+                    adapter.Fill(table);
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+            return table;
+        }
+
+        public DataTable Update(BoardItem item)
+        {
+            DataTable table = new DataTable();
+            try
+            {
+                using (var command = Connection.CreateCommand())
+                {
+                    string udatedDate = item.UpdatedDate.ToString("MM/dd/yyyy");
+                    Connection.Open();
+                    // SQLの設定
+                    command.CommandText = "UPDATE PostBoard SET [Title] = @param2, [Writer] = @param3,[Text] = @param4 WHERE [Id] = @param1";
 
                     // SQLの実行
                     command.Parameters.AddWithValue("@param1", item.Id);
                     command.Parameters.AddWithValue("@param2", item.Title);
                     command.Parameters.AddWithValue("@param3", item.Writer);
-                    command.Parameters.AddWithValue("@param4", item.UpdatedDate);
-                    command.Parameters.AddWithValue("@param5", item.Text);
+                    command.Parameters.AddWithValue("@param4", item.Text);
 
                     var adapter = new SqlDataAdapter(command);
                     adapter.Fill(table);
@@ -223,40 +247,5 @@ namespace Project_Board.Service.Adepter
                 return table;
             }
         }
-
-        /*public List<BoardItem> GetBoardItems(SearchBoardItem searchBoardItem)
-        {
-            var result = new List<BoardItem>();
-
-
-            return result;
-        }*/
-
-        /*public void GetWithPageInfo(Paging pageInfo)
-        {
-            DataTable data = new DataTable();
-            try
-            {
-
-                Connection.Open();
-                string queryStr = "SELECT * FROM PostBoard";
-
-                SqlCommand cmd = new SqlCommand(queryStr, Connection);
-
-                var adapter = new SqlDataAdapter(cmd);
-                adapter.Fill(data);
-
-                DataRow totalPage = data.Rows[0];
-            }
-            catch (Exception exception)
-            {
-                throw;
-            }
-            finally
-            {
-                // データベースの接続終了
-                Connection.Close();
-            }
-        }*/
     }
 }

@@ -17,7 +17,7 @@ namespace Project_Board.Services
 
         private PostBoardAdapter Adapter { get { if (_postBoardAdapter == null) { _postBoardAdapter = new PostBoardAdapter(); } return _postBoardAdapter; } }
 
-        //SelectAll ok
+        //SelectAll
         public DataTable GetAllData()
         {
             DataTable dataTable = Adapter.GetDataByAll();
@@ -25,22 +25,13 @@ namespace Project_Board.Services
             return dataTable;
         }
 
-        //Update  ok
-        public DataTable Update(BoardItem item)
-        {
-            var dataTable = Adapter.Update(item);
+        
 
-            //var result = new BoardItem(dataTable);
-
-            return dataTable;
-        }
-
-        //Create ok
+        //Create
         public string Create(BoardItem item)
         {
             var dataTable = Adapter.Create(item);
 
-            // dataTable -> List<BoardItem>
             var data = new List<BoardItem>();
             foreach (DataRow row in dataTable.Rows)
             {
@@ -68,7 +59,7 @@ namespace Project_Board.Services
             return json;
         }
 
-        //AllDelete  ok
+        //AllDelete
         public DataTable DeleteAll()
         {
             var dataTable = Adapter.DeleteAll();
@@ -76,7 +67,7 @@ namespace Project_Board.Services
             return dataTable;
         }
 
-        //Delete ok
+        //Delete
         public string DeleteById(string itemId)
         {
             var dataTable = Adapter.Delete(itemId);
@@ -93,8 +84,33 @@ namespace Project_Board.Services
             return json;
         }
 
-        //Detail  ok
-        public string GetDetailById(BoardItem item)
+        //Update
+        public DataTable Detail(string item)
+        {
+            var dataTable = Adapter.Detail(item);
+
+            return dataTable;
+        }
+
+        //Update
+        public string Update(BoardItem item)
+        {
+            var dataTable = Adapter.Update(item);
+
+            // dataTable -> List<BoardItem>
+            var data = new List<BoardItem>();
+            foreach (DataRow row in dataTable.Rows)
+            {
+                data.Add(new BoardItem(row));
+            }
+
+            string json = JsonConvert.SerializeObject(data);
+
+            return json;
+        }
+
+        //Detail
+        public string DetailById(BoardItem item)
         {
             var dataTable = Adapter.GetDataById(item);
 
