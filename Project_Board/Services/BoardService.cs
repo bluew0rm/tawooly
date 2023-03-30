@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Net.Cache;
 using System.Web.Mvc;
+/*using System.Delegate;*/
 
 
 
@@ -24,8 +25,52 @@ namespace Project_Board.Services
 
             return dataTable;
         }
-
         
+        public string GetFirstData()
+        {
+            var dataTable = Adapter.GetDataByFirst();
+
+            var data = new List<BoardItem>();
+            foreach (DataRow row in dataTable.Rows)
+            {
+                data.Add(new BoardItem(row));
+            }
+
+            string json = JsonConvert.SerializeObject(data);
+
+            return json;
+        }
+
+        public string GetSecondData()
+        {
+            var dataTable = Adapter.GetDataBySecond();
+
+            var data = new List<BoardItem>();
+            foreach (DataRow row in dataTable.Rows)
+            {
+                data.Add(new BoardItem(row));
+            }
+
+            string json = JsonConvert.SerializeObject(data);
+
+            return json;
+        }
+
+        public string GetThirdData()
+        {
+            var dataTable = Adapter.GetDataByThird();
+
+            var data = new List<BoardItem>();
+            foreach (DataRow row in dataTable.Rows)
+            {
+                data.Add(new BoardItem(row));
+            }
+
+            string json = JsonConvert.SerializeObject(data);
+
+            return json;
+        }
+
 
         //Create
         public string Create(BoardItem item)

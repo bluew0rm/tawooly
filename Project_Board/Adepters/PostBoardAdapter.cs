@@ -38,6 +38,102 @@ namespace Project_Board.Service.Adepter
             return data;
         }
 
+        public DataTable GetDataByFirst()
+        {
+            DataSet dataSet = new DataSet();
+            DataTable data = new DataTable();
+
+            try
+            {
+                using (var command = Connection.CreateCommand())
+                {
+                    int NumberOfRowsPerPage = 5;
+                    int PageNumber = 1;
+                    int OffsetRowCount = (PageNumber - 1) * NumberOfRowsPerPage;
+
+                    command.CommandText = "SELECT * FROM PostBoard ORDER BY Id OFFSET " + OffsetRowCount + " ROWS FETCH NEXT " + NumberOfRowsPerPage + " ROWS ONLY;";
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+
+                    adapter.Fill(data);
+                }
+
+            }
+            catch (Exception exception)
+            {
+                throw;
+            }
+            finally
+            {
+                // データベースの接続終了
+                Connection.Close();
+            }
+            return data;
+        }
+
+        public DataTable GetDataBySecond()
+        {
+            DataSet dataSet = new DataSet();
+            DataTable data = new DataTable();
+
+            try
+            {
+                using (var command = Connection.CreateCommand())
+                {
+                    int NumberOfRowsPerPage = 5;
+                    int PageNumber = 2;
+                    int OffsetRowCount = (PageNumber - 1) * NumberOfRowsPerPage;
+
+                    command.CommandText = "SELECT * FROM PostBoard ORDER BY Id OFFSET " + OffsetRowCount + " ROWS FETCH NEXT " + NumberOfRowsPerPage + " ROWS ONLY;";
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+
+                    adapter.Fill(data);
+                }
+
+            }
+            catch (Exception exception)
+            {
+                throw;
+            }
+            finally
+            {
+                // データベースの接続終了
+                Connection.Close();
+            }
+            return data;
+        }
+
+        public DataTable GetDataByThird()
+        {
+            DataSet dataSet = new DataSet();
+            DataTable data = new DataTable();
+
+            try
+            {
+                using (var command = Connection.CreateCommand())
+                {
+                    int NumberOfRowsPerPage = 5;
+                    int PageNumber = 3;
+                    int OffsetRowCount = (PageNumber - 1) * NumberOfRowsPerPage;
+
+                    command.CommandText = "SELECT * FROM PostBoard ORDER BY Id OFFSET " + OffsetRowCount + " ROWS FETCH NEXT " + NumberOfRowsPerPage + " ROWS ONLY;";
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+
+                    adapter.Fill(data);
+                }
+
+            }
+            catch (Exception exception)
+            {
+                throw;
+            }
+            finally
+            {
+                // データベースの接続終了
+                Connection.Close();
+            }
+            return data;
+        }
+
         //Create
         public DataTable Create(BoardItem item)
         {
@@ -55,7 +151,7 @@ namespace Project_Board.Service.Adepter
                     var createQuary = command.CommandText;
                     // SQLの設定
                     command.CommandText = "INSERT INTO PostBoard([Title],[Text],[Writer],[Update]) VALUES(@param1, @param2, @param3, @param4)";
-                    
+
                     // SQLの実行
                     command.Parameters.AddWithValue("@param1", title);
                     command.Parameters.AddWithValue("@param2", text);
@@ -94,7 +190,7 @@ namespace Project_Board.Service.Adepter
             }
             return table;
         }
-        
+
         //Delete
         public DataTable Delete(string id)
         {

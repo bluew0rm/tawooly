@@ -23,6 +23,21 @@ namespace Project_Board.Controllers
             return View(new DataTable());
         }
 
+        public string PageOne([FromBody] BoardItem item)
+        {
+            return service.GetFirstData();
+        }
+
+        public string PageTwo([FromBody] BoardItem item)
+        {
+            return service.GetSecondData();
+        }
+
+        public string PageThree([FromBody] BoardItem item)
+        {
+            return service.GetThirdData();
+        }
+
         //Create
         [System.Web.Mvc.HttpPost]
         public string Create([FromBody] BoardItem item)

@@ -23,57 +23,65 @@
         <input id="searchtitle" type="text" class="searchText" placeholder="タイトル" />
         <input id="searchFromDate" type="date" class="searchText" /> ～
         <input id="searchToDate" type="date" class="searchText" />
-        <input type="button" class="searchButton" onclick="searchJson2()" value="検索">
+        <input type="button" class="searchButton" onclick="searchJson()" value="検索">
     </div>
-    <label class="open" for="pop-up">テキスト登録</label>
-
+    <div>
+        <div>
+            <label class="open" for="pop-up">テキスト登録</label>
+        </div>
+        <button class="deleteAllButton" id="button" onclick="allDeleteJson();">全削除</button>
+    </div>
+    
     <form class="formstyle" id="search_form">
         <table id="boardTable" class="boardTableStyle">
             <thead>
                 <tr>
                     <th class="thId">
                         ID
-                        <input id="itemId" @*class="selectBox"*@ type="text" name="_id" />
+                        <input id="itemId" class="selectBox" type="text" name="_id" />
                     </th>
                     <th class="thWriter">
                         WRITER
-                        <input id="itemWriter" @*class="selectBox"*@ type="text"/>
+                        <input id="itemWriter" class="selectBox" type="text"/>
                     </th>
                     <th class="thTitle">
                         TITLE
-                        <input id="itemTitle" @*class="selectBox"*@ type="text"/>
+                        <input id="itemTitle" class="selectBox" type="text"/>
                     </th>
                     <th class="thDate">
                         UPDATE
-                        <input id="itemDate" @*class="selectBox"*@ type="text"/>
-                    </th>
-                    <th class="thDelete">
-                        <button id="button" onclick="allDeleteJson();">全削除</button>
+                        <input id="itemDate" class="selectBox" type="text"/>
                     </th>
                 </tr>
             </thead>
-            <tbody id="tableBody"></tbody>
+            <tbody id="tableBody">
+                @*@foreach (var item in Model.Rows)
+                {
+                    <tr>
+                        <td>
+                            @item["Id"]
+                        </td>
+                        <td>
+                            @item["Title"]
+                        </td>
+                        <td>
+                            @item["Writer"]
+                        </td>
+                        <td>
+                            @item["Update"]
+                        </td>
+                    </tr>
+                }*@
+                </tbody>
         </table>
     </form>
 
-<div class="containerStyle" onclick="pagint()">
+<div class="containerStyle">
     <div>
-        <span id="js-pagination-result-total"></span>件中
+        <span id="js-pagination-result-total"></span>現在のページ :
         <span id="js-pagination-result-range-text"></span>
     </div>
-    <div>
-        <button id="js-button-prev" class="pagingButton">
-            前へ
-        </button>
-        <button id="js-button-next" class="pagingButton">
-            次へ
-        </button>
-    </div>
-    <div>
-        <nav id="js-pagination-result-range" class="navStyle"></nav>
-
-        現在のページ : <span id="js-pagination-current"></span>
-    </div>
+    <div id="clickButton"></div>
 </div>
 
 
@@ -104,7 +112,7 @@
 </div>
 
 
-<input type="checkbox" id="titlePop-up">
+<input id="titlePop-up" type="checkbox" class="selectBox">
 <div class="overlay">
     <div class="window">
         <form class="form-horizontal" method="post" action="https://localhost:44342/Board/Create">

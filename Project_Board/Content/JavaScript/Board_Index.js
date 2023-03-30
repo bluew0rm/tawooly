@@ -35,7 +35,7 @@ function getitemAll() {
     }
 }
 
-function searchJson2() {
+function searchJson() {
 
     var id = document.getElementById("searchId");
     var writer = document.getElementById("searchwriter");
@@ -78,14 +78,7 @@ function searchJson2() {
                 //tdセルの追加
                 var tdId = document.createElement("td");
 
-                var button = document.createElement("button");
                 var detailButton = document.createElement("button");
-
-                button.innerHTML = "削除 ";
-                button.formMethod = "post";
-                button.type = "submit";
-                button.formAction = 'Board/Delete';
-                button.onclick = getitemId();
 
                 trId.appendChild(tdId);
                 var cellId = trId.insertCell(0);
@@ -95,14 +88,13 @@ function searchJson2() {
                 var cellDelete = trId.insertCell(4);
 
                 cellTitle.appendChild(detailButton);
-                cellDelete.appendChild(button);
 
                 //textContent
                 cellId.textContent = json[i].Id;
                 cellWriter.textContent = json[i].Writer;
 
                 detailButton.innerHTML = json[i].Title;
-                detailButton.className = 'titleOpen';
+                detailButton.className = 'titleButton';
                 detailButton.formMethod = "post";
                 detailButton.type = "submit";
                 detailButton.formAction = 'Board/Detail';
@@ -200,6 +192,294 @@ function updateJson() {
 
             $(location).attr("href", "https://localhost:44342/Board");
 
+        }, function (e) {
+            alert("error: " + e);
+        });
+}
+
+function clickButton1() {
+
+    var requestData = {
+
+        "Id": " ",
+        "Writer": " ",
+        "Title": " ",
+        "FromDate": " ",
+        "ToDate": " "
+    }
+
+    var boardUrl = 'Board/PageOne';
+    $.ajax(
+        {
+            url: boardUrl,
+            method: "POST",
+            data: requestData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        }).then(function (r) {
+
+            var json = JSON.parse(r); //文字列をJSONオブジェクトに変換
+
+            var tableBody = document.getElementById("tableBody");
+
+
+            $("#tableBody tr").remove();
+
+            for (var i = 0; i < json.length; i++) {
+
+                var trId = tableBody.insertRow(i);
+
+                //tdセルの追加
+                var tdId = document.createElement("td");
+
+                var detailButton = document.createElement("button");
+
+                trId.appendChild(tdId);
+                var cellId = trId.insertCell(0);
+                var cellWriter = trId.insertCell(1);
+                var cellTitle = trId.insertCell(2);
+                var cellDate = trId.insertCell(3);
+                var cellDelete = trId.insertCell(4);
+
+                cellTitle.appendChild(detailButton);
+
+                //textContent
+                cellId.textContent = json[i].Id;
+                cellWriter.textContent = json[i].Writer;
+
+                detailButton.innerHTML = json[i].Title;
+                detailButton.className = 'titleButton';
+                detailButton.formMethod = "post";
+                detailButton.type = "submit";
+                detailButton.formAction = 'Board/Detail';
+                detailButton.onclick = getitemId();
+
+
+
+                var allDate = new Date(json[i].UpdatedDate);
+                var year = allDate.getFullYear();
+                var month = allDate.getMonth() + 1;
+                var date = allDate.getDate();
+
+                var yyyy = year.toString();
+                var mm = ("00" + month).slice(-2);
+                var dd = ("00" + date).slice(-2);
+                var yyyymmdd = yyyy + "年" + mm + "月" + dd + "日";
+
+                cellDate.textContent = yyyymmdd;
+            }
+        }, function (e) {
+            alert("error: " + e);
+        });
+}
+
+function clickButton2() {
+
+    var requestData = {
+
+        "Id": " ",
+        "Writer": " ",
+        "Title": " ",
+        "FromDate": " ",
+        "ToDate": " "
+    }
+
+    var boardUrl = 'Board/PageTwo';
+    $.ajax(
+        {
+            url: boardUrl,
+            method: "POST",
+            data: requestData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        }).then(function (r) {
+
+            var json = JSON.parse(r); //文字列をJSONオブジェクトに変換
+
+            var tableBody = document.getElementById("tableBody");
+
+
+            $("#tableBody tr").remove();
+
+            for (var i = 0; i < json.length; i++) {
+
+                var trId = tableBody.insertRow(i);
+
+                //tdセルの追加
+                var tdId = document.createElement("td");
+
+                var detailButton = document.createElement("button");
+
+                trId.appendChild(tdId);
+                var cellId = trId.insertCell(0);
+                var cellWriter = trId.insertCell(1);
+                var cellTitle = trId.insertCell(2);
+                var cellDate = trId.insertCell(3);
+                var cellDelete = trId.insertCell(4);
+
+                cellTitle.appendChild(detailButton);
+
+                //textContent
+                cellId.textContent = json[i].Id;
+                cellWriter.textContent = json[i].Writer;
+
+                detailButton.innerHTML = json[i].Title;
+                detailButton.className = 'titleButton';
+                detailButton.formMethod = "post";
+                detailButton.type = "submit";
+                detailButton.formAction = 'Board/Detail';
+                detailButton.onclick = getitemId();
+
+
+
+                var allDate = new Date(json[i].UpdatedDate);
+                var year = allDate.getFullYear();
+                var month = allDate.getMonth() + 1;
+                var date = allDate.getDate();
+
+                var yyyy = year.toString();
+                var mm = ("00" + month).slice(-2);
+                var dd = ("00" + date).slice(-2);
+                var yyyymmdd = yyyy + "年" + mm + "月" + dd + "日";
+
+                cellDate.textContent = yyyymmdd;
+            }
+        }, function (e) {
+            alert("error: " + e);
+        });
+}
+
+function clickButton3() {
+
+    var requestData = {
+
+        "Id": " ",
+        "Writer": " ",
+        "Title": " ",
+        "FromDate": " ",
+        "ToDate": " "
+    }
+
+    var boardUrl = 'Board/PageThree';
+    $.ajax(
+        {
+            url: boardUrl,
+            method: "POST",
+            data: requestData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        }).then(function (r) {
+
+            var json = JSON.parse(r); //文字列をJSONオブジェクトに変換
+
+            var tableBody = document.getElementById("tableBody");
+
+
+            $("#tableBody tr").remove();
+
+            for (var i = 0; i < json.length; i++) {
+
+                var trId = tableBody.insertRow(i);
+
+                //tdセルの追加
+                var tdId = document.createElement("td");
+
+                var detailButton = document.createElement("button");
+
+                trId.appendChild(tdId);
+                var cellId = trId.insertCell(0);
+                var cellWriter = trId.insertCell(1);
+                var cellTitle = trId.insertCell(2);
+                var cellDate = trId.insertCell(3);
+                var cellDelete = trId.insertCell(4);
+
+                cellTitle.appendChild(detailButton);
+
+                //textContent
+                cellId.textContent = json[i].Id;
+                cellWriter.textContent = json[i].Writer;
+
+                detailButton.innerHTML = json[i].Title;
+                detailButton.className = 'titleButton';
+                detailButton.formMethod = "post";
+                detailButton.type = "submit";
+                detailButton.formAction = 'Board/Detail';
+                detailButton.onclick = getitemId();
+
+
+
+                var allDate = new Date(json[i].UpdatedDate);
+                var year = allDate.getFullYear();
+                var month = allDate.getMonth() + 1;
+                var date = allDate.getDate();
+
+                var yyyy = year.toString();
+                var mm = ("00" + month).slice(-2);
+                var dd = ("00" + date).slice(-2);
+                var yyyymmdd = yyyy + "年" + mm + "月" + dd + "日";
+
+                cellDate.textContent = yyyymmdd;
+            }
+        }, function (e) {
+            alert("error: " + e);
+        });
+}
+
+window.onload = function howRowsData() {
+
+    var requestData = {
+
+        "Id": " ",
+        "Writer": " ",
+        "Title": " ",
+        "FromDate": " ",
+        "ToDate": " "
+    }
+
+    var boardUrl = 'Board/Search';
+    $.ajax(
+        {
+            url: boardUrl,
+            method: "POST",
+            data: requestData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        }).then(function (r) {
+
+            var json = JSON.parse(r); //文字列をJSONオブジェクトに変換
+
+            $("#tableBody tr").remove();
+
+            var tableRows = json.length;
+
+            var allDataMultuplyBy2 = tableRows / 5;
+
+            var theRestData = tableRows % 2;
+
+            if (theRestData != 0) {
+                var NumberOfButton = Math.floor(allDataMultuplyBy2) + 1;
+
+                for (var i = 0; i < NumberOfButton; i++) {
+
+                    var clickButton = document.getElementById("clickButton");
+                    var nButton = document.createElement("button");
+
+                    var num = i + 1; 
+                    var onclik = "clickButton" + num;
+
+                    nButton.id = num;
+                    nButton.innerHTML = num;
+                    nButton.className = 'pagingButton';
+                    /*nButton.onclick = onclik;*/
+                    nButton.setAttribute('onclick', onclik+'()');
+
+                    clickButton.appendChild(nButton);
+                }
+            }
         }, function (e) {
             alert("error: " + e);
         });
