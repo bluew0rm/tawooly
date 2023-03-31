@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Project_Board.Models;
+using Project_Board.Models.Paging;
 using Project_Board.Models.Search;
 using Project_Board.Service.Adepter;
 using System.Collections.Generic;
@@ -26,51 +27,27 @@ namespace Project_Board.Services
             return dataTable;
         }
         
-        public string GetFirstData()
+        public string GetFirstData(PagingInfo page)
         {
-            var dataTable = Adapter.GetDataByFirst();
+            var dataTable = Adapter.GetData(page);
 
-            var data = new List<BoardItem>();
+            //PrintData
+            var printData = new List<BoardItem>();
             foreach (DataRow row in dataTable.Rows)
             {
-                data.Add(new BoardItem(row));
+                printData.Add(new BoardItem(row));
             }
 
-            string json = JsonConvert.SerializeObject(data);
+            var pageInfo = new PagingInfo();
+
+            pageInfo.TotalPages = printData.Count;
+
+            var allData = new PageAndPrintData(printData, pageInfo);
+
+            string json = JsonConvert.SerializeObject(allData);
 
             return json;
         }
-
-        public string GetSecondData()
-        {
-            var dataTable = Adapter.GetDataBySecond();
-
-            var data = new List<BoardItem>();
-            foreach (DataRow row in dataTable.Rows)
-            {
-                data.Add(new BoardItem(row));
-            }
-
-            string json = JsonConvert.SerializeObject(data);
-
-            return json;
-        }
-
-        public string GetThirdData()
-        {
-            var dataTable = Adapter.GetDataByThird();
-
-            var data = new List<BoardItem>();
-            foreach (DataRow row in dataTable.Rows)
-            {
-                data.Add(new BoardItem(row));
-            }
-
-            string json = JsonConvert.SerializeObject(data);
-
-            return json;
-        }
-
 
         //Create
         public string Create(BoardItem item)

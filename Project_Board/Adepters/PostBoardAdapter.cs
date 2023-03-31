@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using Project_Board.Adepters.Core;
 using Project_Board.Models.Search;
+using Project_Board.Models.Paging;
 
 namespace Project_Board.Service.Adepter
 {
@@ -38,17 +39,16 @@ namespace Project_Board.Service.Adepter
             return data;
         }
 
-        public DataTable GetDataByFirst()
+        public DataTable GetData(PagingInfo page)
         {
-            DataSet dataSet = new DataSet();
             DataTable data = new DataTable();
 
             try
             {
                 using (var command = Connection.CreateCommand())
                 {
-                    int NumberOfRowsPerPage = 5;
-                    int PageNumber = 1;
+                    int NumberOfRowsPerPage = page.PageCount;
+                    int PageNumber = page.PageIndex;
                     int OffsetRowCount = (PageNumber - 1) * NumberOfRowsPerPage;
 
                     command.CommandText = "SELECT * FROM PostBoard ORDER BY Id OFFSET " + OffsetRowCount + " ROWS FETCH NEXT " + NumberOfRowsPerPage + " ROWS ONLY;";
@@ -70,71 +70,6 @@ namespace Project_Board.Service.Adepter
             return data;
         }
 
-        public DataTable GetDataBySecond()
-        {
-            DataSet dataSet = new DataSet();
-            DataTable data = new DataTable();
-
-            try
-            {
-                using (var command = Connection.CreateCommand())
-                {
-                    int NumberOfRowsPerPage = 5;
-                    int PageNumber = 2;
-                    int OffsetRowCount = (PageNumber - 1) * NumberOfRowsPerPage;
-
-                    command.CommandText = "SELECT * FROM PostBoard ORDER BY Id OFFSET " + OffsetRowCount + " ROWS FETCH NEXT " + NumberOfRowsPerPage + " ROWS ONLY;";
-                    SqlDataAdapter adapter = new SqlDataAdapter(command);
-
-                    adapter.Fill(data);
-                }
-
-            }
-            catch (Exception exception)
-            {
-                throw;
-            }
-            finally
-            {
-                // データベースの接続終了
-                Connection.Close();
-            }
-            return data;
-        }
-
-        public DataTable GetDataByThird()
-        {
-            DataSet dataSet = new DataSet();
-            DataTable data = new DataTable();
-
-            try
-            {
-                using (var command = Connection.CreateCommand())
-                {
-                    int NumberOfRowsPerPage = 5;
-                    int PageNumber = 3;
-                    int OffsetRowCount = (PageNumber - 1) * NumberOfRowsPerPage;
-
-                    command.CommandText = "SELECT * FROM PostBoard ORDER BY Id OFFSET " + OffsetRowCount + " ROWS FETCH NEXT " + NumberOfRowsPerPage + " ROWS ONLY;";
-                    SqlDataAdapter adapter = new SqlDataAdapter(command);
-
-                    adapter.Fill(data);
-                }
-
-            }
-            catch (Exception exception)
-            {
-                throw;
-            }
-            finally
-            {
-                // データベースの接続終了
-                Connection.Close();
-            }
-            return data;
-        }
-
-        //Create
         public DataTable Create(BoardItem item)
         {
             DataTable table = new DataTable();

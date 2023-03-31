@@ -197,21 +197,20 @@ function updateJson() {
         });
 }
 
-function clickButton1() {
+function clickButton(value) {
+
 
     var requestData = {
 
-        "Id": " ",
-        "Writer": " ",
-        "Title": " ",
-        "FromDate": " ",
-        "ToDate": " "
+        "PageIndex": value,
+        "PageCount": 5,
+        "TotalPages": 0
     }
 
-    var boardUrl = 'Board/PageOne';
+    var boardUri = 'Board/Paging';
     $.ajax(
         {
-            url: boardUrl,
+            url: boardUri,
             method: "POST",
             data: requestData,
             headers: {
@@ -223,10 +222,9 @@ function clickButton1() {
 
             var tableBody = document.getElementById("tableBody");
 
-
             $("#tableBody tr").remove();
 
-            for (var i = 0; i < json.length; i++) {
+            for (var i = 0; i < json["PagingInfo"].TotalPages; i++) {
 
                 var trId = tableBody.insertRow(i);
 
@@ -240,15 +238,14 @@ function clickButton1() {
                 var cellWriter = trId.insertCell(1);
                 var cellTitle = trId.insertCell(2);
                 var cellDate = trId.insertCell(3);
-                var cellDelete = trId.insertCell(4);
 
                 cellTitle.appendChild(detailButton);
 
                 //textContent
-                cellId.textContent = json[i].Id;
-                cellWriter.textContent = json[i].Writer;
+                cellId.textContent = json["PrintItem"][i].Id;
+                cellWriter.textContent = json["PrintItem"][i].Writer;
 
-                detailButton.innerHTML = json[i].Title;
+                detailButton.innerHTML = json["PrintItem"][i].Title;
                 detailButton.className = 'titleButton';
                 detailButton.formMethod = "post";
                 detailButton.type = "submit";
@@ -257,161 +254,7 @@ function clickButton1() {
 
 
 
-                var allDate = new Date(json[i].UpdatedDate);
-                var year = allDate.getFullYear();
-                var month = allDate.getMonth() + 1;
-                var date = allDate.getDate();
-
-                var yyyy = year.toString();
-                var mm = ("00" + month).slice(-2);
-                var dd = ("00" + date).slice(-2);
-                var yyyymmdd = yyyy + "年" + mm + "月" + dd + "日";
-
-                cellDate.textContent = yyyymmdd;
-            }
-        }, function (e) {
-            alert("error: " + e);
-        });
-}
-
-function clickButton2() {
-
-    var requestData = {
-
-        "Id": " ",
-        "Writer": " ",
-        "Title": " ",
-        "FromDate": " ",
-        "ToDate": " "
-    }
-
-    var boardUrl = 'Board/PageTwo';
-    $.ajax(
-        {
-            url: boardUrl,
-            method: "POST",
-            data: requestData,
-            headers: {
-                'Accept': 'application/json'
-            }
-        }).then(function (r) {
-
-            var json = JSON.parse(r); //文字列をJSONオブジェクトに変換
-
-            var tableBody = document.getElementById("tableBody");
-
-
-            $("#tableBody tr").remove();
-
-            for (var i = 0; i < json.length; i++) {
-
-                var trId = tableBody.insertRow(i);
-
-                //tdセルの追加
-                var tdId = document.createElement("td");
-
-                var detailButton = document.createElement("button");
-
-                trId.appendChild(tdId);
-                var cellId = trId.insertCell(0);
-                var cellWriter = trId.insertCell(1);
-                var cellTitle = trId.insertCell(2);
-                var cellDate = trId.insertCell(3);
-                var cellDelete = trId.insertCell(4);
-
-                cellTitle.appendChild(detailButton);
-
-                //textContent
-                cellId.textContent = json[i].Id;
-                cellWriter.textContent = json[i].Writer;
-
-                detailButton.innerHTML = json[i].Title;
-                detailButton.className = 'titleButton';
-                detailButton.formMethod = "post";
-                detailButton.type = "submit";
-                detailButton.formAction = 'Board/Detail';
-                detailButton.onclick = getitemId();
-
-
-
-                var allDate = new Date(json[i].UpdatedDate);
-                var year = allDate.getFullYear();
-                var month = allDate.getMonth() + 1;
-                var date = allDate.getDate();
-
-                var yyyy = year.toString();
-                var mm = ("00" + month).slice(-2);
-                var dd = ("00" + date).slice(-2);
-                var yyyymmdd = yyyy + "年" + mm + "月" + dd + "日";
-
-                cellDate.textContent = yyyymmdd;
-            }
-        }, function (e) {
-            alert("error: " + e);
-        });
-}
-
-function clickButton3() {
-
-    var requestData = {
-
-        "Id": " ",
-        "Writer": " ",
-        "Title": " ",
-        "FromDate": " ",
-        "ToDate": " "
-    }
-
-    var boardUrl = 'Board/PageThree';
-    $.ajax(
-        {
-            url: boardUrl,
-            method: "POST",
-            data: requestData,
-            headers: {
-                'Accept': 'application/json'
-            }
-        }).then(function (r) {
-
-            var json = JSON.parse(r); //文字列をJSONオブジェクトに変換
-
-            var tableBody = document.getElementById("tableBody");
-
-
-            $("#tableBody tr").remove();
-
-            for (var i = 0; i < json.length; i++) {
-
-                var trId = tableBody.insertRow(i);
-
-                //tdセルの追加
-                var tdId = document.createElement("td");
-
-                var detailButton = document.createElement("button");
-
-                trId.appendChild(tdId);
-                var cellId = trId.insertCell(0);
-                var cellWriter = trId.insertCell(1);
-                var cellTitle = trId.insertCell(2);
-                var cellDate = trId.insertCell(3);
-                var cellDelete = trId.insertCell(4);
-
-                cellTitle.appendChild(detailButton);
-
-                //textContent
-                cellId.textContent = json[i].Id;
-                cellWriter.textContent = json[i].Writer;
-
-                detailButton.innerHTML = json[i].Title;
-                detailButton.className = 'titleButton';
-                detailButton.formMethod = "post";
-                detailButton.type = "submit";
-                detailButton.formAction = 'Board/Detail';
-                detailButton.onclick = getitemId();
-
-
-
-                var allDate = new Date(json[i].UpdatedDate);
+                var allDate = new Date(json["PrintItem"][i].UpdatedDate);
                 var year = allDate.getFullYear();
                 var month = allDate.getMonth() + 1;
                 var date = allDate.getDate();
@@ -435,8 +278,8 @@ window.onload = function howRowsData() {
         "Id": " ",
         "Writer": " ",
         "Title": " ",
-        "FromDate": " ",
-        "ToDate": " "
+        "UpdatedDate": " ",
+        "Text": " ",
     }
 
     var boardUrl = 'Board/Search';
@@ -458,7 +301,9 @@ window.onload = function howRowsData() {
 
             var allDataMultuplyBy2 = tableRows / 5;
 
-            var theRestData = tableRows % 2;
+            var theRestData = tableRows % 5;
+
+            var NumberOfButton = Math.floor(allDataMultuplyBy2) + 1;
 
             if (theRestData != 0) {
                 var NumberOfButton = Math.floor(allDataMultuplyBy2) + 1;
@@ -466,18 +311,47 @@ window.onload = function howRowsData() {
                 for (var i = 0; i < NumberOfButton; i++) {
 
                     var clickButton = document.getElementById("clickButton");
-                    var nButton = document.createElement("button");
+                    var nButton = document.createElement("input");
 
-                    var num = i + 1; 
+                    var num = i + 1;
+                    var onclik = "clickButton";
+
+                    nButton.id = num;
+                    nButton.value = num;
+                    nButton.type = "button";
+                    nButton.className = 'pagingButton';
+                    /*nButton.onclick = onclik;*/
+                    nButton.setAttribute('onclick', onclik + '(this.value)');
+
+                    clickButton.appendChild(nButton);
+                }
+            } else {
+                for (var i = 0; i < allDataMultuplyBy2; i++) {
+
+                    var clickButton = document.getElementById("clickButton");
+                    var clickButtonHiddenText = document.getElementById("clickButtonHiddenText");
+                    var nButton = document.createElement("input");
+                    /*var input = document.createElement("input");*/
+
+                    var num = i + 1;
                     var onclik = "clickButton" + num;
 
                     nButton.id = num;
-                    nButton.innerHTML = num;
+                    nButton.value = num;
+                    nButton.type = "button";
                     nButton.className = 'pagingButton';
                     /*nButton.onclick = onclik;*/
-                    nButton.setAttribute('onclick', onclik+'()');
+                    nButton.setAttribute('onclick', onclik + '()');
+                    /*nButton.formMethod = "post";
+                    nButton.type = "submit";
+                    nButton.formAction = 'Board/Paging';*/
+
+                    /*input.innerHTML = num;
+                    input.className = num;
+                    input.name = "number"+num;*/
 
                     clickButton.appendChild(nButton);
+                    /*clickButtonHiddenText.appendChild(input);*/
                 }
             }
         }, function (e) {

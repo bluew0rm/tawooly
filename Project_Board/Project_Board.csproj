@@ -146,7 +146,8 @@
     </Compile>
     <Compile Include="Models\Board\BoardItem.cs" />
     <Compile Include="Models\Login\Members.cs" />
-    <Compile Include="Models\Paging\Paging.cs" />
+    <Compile Include="Models\ReturnModels\PageAndPrintData.cs" />
+    <Compile Include="Models\Paging\PagingInfo.cs" />
     <Compile Include="Models\Search\Search.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Adepters\PostBoardAdapter.cs" />

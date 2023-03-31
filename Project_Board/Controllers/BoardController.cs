@@ -5,6 +5,7 @@ using System.Data;
 using System.Web.Mvc;
 using System.Web.Http;
 using Project_Board.Models.Search;
+using Project_Board.Models.Paging;
 
 namespace Project_Board.Controllers
 {
@@ -23,19 +24,11 @@ namespace Project_Board.Controllers
             return View(new DataTable());
         }
 
-        public string PageOne([FromBody] BoardItem item)
+        [System.Web.Mvc.HttpPost]
+        public string Paging([FromBody] PagingInfo page)
         {
-            return service.GetFirstData();
-        }
-
-        public string PageTwo([FromBody] BoardItem item)
-        {
-            return service.GetSecondData();
-        }
-
-        public string PageThree([FromBody] BoardItem item)
-        {
-            return service.GetThirdData();
+            var result = service.GetFirstData(page);
+            return result;
         }
 
         //Create
