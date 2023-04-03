@@ -42,7 +42,7 @@ namespace Project_Board.Services
 
             pageInfo.TotalPages = printData.Count;
 
-            var allData = new PageAndPrintData(printData, pageInfo);
+            var allData = new PageAndItemListData(printData, pageInfo);
 
             string json = JsonConvert.SerializeObject(allData);
 
@@ -65,22 +65,36 @@ namespace Project_Board.Services
             return json;
         }
 
-        public string Search(SearchCondition searchCondition)
+        public string Search(PageAndItemData pageAndItemData)
         {
-            var dataTable = Adapter.Search(searchCondition);
+            var dataTable = Adapter.Search(pageAndItemData);
+            var allDataTableRows = Adapter.SearchRows(pageAndItemData.SearchItem);
 
-            // dataTable -> List<BoardItem>
-            var data = new List<BoardItem>();
+            //PrintData
+            var printData = new List<BoardItem>();
             foreach (DataRow row in dataTable.Rows)
             {
-                data.Add(new BoardItem(row));
+                printData.Add(new BoardItem(row));
             }
 
-            string json = JsonConvert.SerializeObject(data);
+            //총 itemsRows
+            var dataRows = new List<BoardItem>();
+            foreach (DataRow row in allDataTableRows.Rows)
+            {
+                dataRows.Add(new BoardItem(row));
+            }
+
+            var pageInfo = new PagingInfo();
+
+            pageInfo.TotalPages = dataRows.Count;
+            pageInfo.PageCount = printData.Count;
+
+            var allData = new PageAndItemListData(printData, pageInfo);
+
+            string json = JsonConvert.SerializeObject(allData);
 
             return json;
         }
-
         //AllDelete
         public DataTable DeleteAll()
         {

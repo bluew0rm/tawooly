@@ -20,8 +20,7 @@ namespace Project_Board.Controllers
         //SelectAll ok
         public ActionResult Index()
         {
-            var result = service.GetAllData();
-            return View(new DataTable());
+            return View();
         }
 
         [System.Web.Mvc.HttpPost]
@@ -77,11 +76,10 @@ namespace Project_Board.Controllers
 
         //Search
         [System.Web.Mvc.HttpPost]
-        public string Search([FromBody] SearchCondition searchCondition)
+        public string Search([FromBody] SearchCondition searchCondition, PagingInfo pagingInfo)
         {
-            return service.Search(searchCondition); //string json
+            return service.Search(new PageAndItemData(searchCondition, pagingInfo)); //string json
         }
-
         /*[HttpPost]
         public ActionResult Pageing()
         {

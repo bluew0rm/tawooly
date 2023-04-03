@@ -35,7 +35,7 @@ function getitemAll() {
     }
 }
 
-function searchJson() {
+function searchJson(buttonValue) {
 
     var id = document.getElementById("searchId");
     var writer = document.getElementById("searchwriter");
@@ -44,19 +44,19 @@ function searchJson() {
     var toDate = document.getElementById("searchToDate");
 
     var requestData = {
-
-        "Id": id.value,
-        "Writer": writer.value,
-        "Title": title.value,
-        "FromDate": fromDate.value,
-        "ToDate": toDate.value
-
+        "SearchCondition.Id": id.value,
+        "SearchCondition.Writer": writer.value,
+        "SearchCondition.Title": title.value,
+        "SearchCondition.FromDate": fromDate.value,
+        "SearchCondition.ToDate": toDate.value,
+        "PagingInfo.PageIndex": buttonValue,
+        "PagingInfo.PageCount": 5,
+        "PagingInfo.TotalPages": 0
     }
-
-    var boardUrl = 'Board/Search';
+    var boardUri = 'Board/Search';
     $.ajax(
         {
-            url: boardUrl,
+            url: boardUri,
             method: "POST",
             data: requestData,
             headers: {
@@ -66,12 +66,14 @@ function searchJson() {
 
             var json = JSON.parse(r); //文字列をJSONオブジェクトに変換
 
-            var tableBody = document.getElementById("tableBody");
-            
-
             $("#tableBody tr").remove();
 
-            for (var i = 0; i < json.length; i++) {
+            var tableBody = document.getElementById("tableBody");
+            var totalTableRows = json["PagingInfo"].TotalPages;
+            var tableRows = json["PagingInfo"].PageCount;
+            
+
+            for (var i = 0; i < tableRows; i++) {
 
                 var trId = tableBody.insertRow(i);
 
@@ -85,15 +87,14 @@ function searchJson() {
                 var cellWriter = trId.insertCell(1);
                 var cellTitle = trId.insertCell(2);
                 var cellDate = trId.insertCell(3);
-                var cellDelete = trId.insertCell(4);
 
                 cellTitle.appendChild(detailButton);
 
                 //textContent
-                cellId.textContent = json[i].Id;
-                cellWriter.textContent = json[i].Writer;
+                cellId.textContent = json.ItemList[i].Id;
+                cellWriter.textContent = json.ItemList[i].Writer;
 
-                detailButton.innerHTML = json[i].Title;
+                detailButton.innerHTML = json.ItemList[i].Title;
                 detailButton.className = 'titleButton';
                 detailButton.formMethod = "post";
                 detailButton.type = "submit";
@@ -102,7 +103,7 @@ function searchJson() {
 
 
 
-                var allDate = new Date(json[i].UpdatedDate);
+                var allDate = new Date(json.ItemList[i].UpdatedDate);
                 var year = allDate.getFullYear();
                 var month = allDate.getMonth() + 1;
                 var date = allDate.getDate();
@@ -114,9 +115,61 @@ function searchJson() {
 
                 cellDate.textContent = yyyymmdd;
             }
+
+            /*$("#clickButton input").remove()*/
+            SearchRows(totalTableRows);
+
         }, function (e) {
             alert("error: " + e);
         });
+}
+
+function SearchRows(tableRows) {
+    $("#clickButton input").remove()
+
+    var allDataMultuplyBy2 = tableRows / 5;
+
+    var theRestData = tableRows % 5;
+
+    var NumberOfButton = Math.floor(allDataMultuplyBy2) + 1;
+
+    if (theRestData != 0) {
+        var NumberOfButton = Math.floor(allDataMultuplyBy2) + 1;
+
+        for (var i = 0; i < NumberOfButton; i++) {
+
+            var clickButton = document.getElementById("clickButton");
+            var nButton = document.createElement("input");
+
+            var num = i + 1;
+            var onclik = "searchJson";
+
+            nButton.id = num;
+            nButton.value = num;
+            nButton.type = "button";
+            nButton.className = 'pagingButton';
+            nButton.setAttribute('onclick', onclik + '(this.value)');
+
+            clickButton.appendChild(nButton);
+        }
+    } else {
+        for (var i = 0; i < allDataMultuplyBy2; i++) {
+
+            var clickButton = document.getElementById("clickButton");
+            var nButton = document.createElement("input");
+
+            var num = i + 1;
+            var onclik = "clickButton" + num;
+
+            nButton.id = num;
+            nButton.value = num;
+            nButton.type = "button";
+            nButton.className = 'pagingButton';
+            nButton.setAttribute('onclick', onclik + '(this.value)');
+
+            clickButton.appendChild(nButton);
+        }
+    }
 }
 
 function createJson() {
@@ -197,164 +250,3 @@ function updateJson() {
         });
 }
 
-function clickButton(value) {
-
-
-    var requestData = {
-
-        "PageIndex": value,
-        "PageCount": 5,
-        "TotalPages": 0
-    }
-
-    var boardUri = 'Board/Paging';
-    $.ajax(
-        {
-            url: boardUri,
-            method: "POST",
-            data: requestData,
-            headers: {
-                'Accept': 'application/json'
-            }
-        }).then(function (r) {
-
-            var json = JSON.parse(r); //文字列をJSONオブジェクトに変換
-
-            var tableBody = document.getElementById("tableBody");
-
-            $("#tableBody tr").remove();
-
-            for (var i = 0; i < json["PagingInfo"].TotalPages; i++) {
-
-                var trId = tableBody.insertRow(i);
-
-                //tdセルの追加
-                var tdId = document.createElement("td");
-
-                var detailButton = document.createElement("button");
-
-                trId.appendChild(tdId);
-                var cellId = trId.insertCell(0);
-                var cellWriter = trId.insertCell(1);
-                var cellTitle = trId.insertCell(2);
-                var cellDate = trId.insertCell(3);
-
-                cellTitle.appendChild(detailButton);
-
-                //textContent
-                cellId.textContent = json["PrintItem"][i].Id;
-                cellWriter.textContent = json["PrintItem"][i].Writer;
-
-                detailButton.innerHTML = json["PrintItem"][i].Title;
-                detailButton.className = 'titleButton';
-                detailButton.formMethod = "post";
-                detailButton.type = "submit";
-                detailButton.formAction = 'Board/Detail';
-                detailButton.onclick = getitemId();
-
-
-
-                var allDate = new Date(json["PrintItem"][i].UpdatedDate);
-                var year = allDate.getFullYear();
-                var month = allDate.getMonth() + 1;
-                var date = allDate.getDate();
-
-                var yyyy = year.toString();
-                var mm = ("00" + month).slice(-2);
-                var dd = ("00" + date).slice(-2);
-                var yyyymmdd = yyyy + "年" + mm + "月" + dd + "日";
-
-                cellDate.textContent = yyyymmdd;
-            }
-        }, function (e) {
-            alert("error: " + e);
-        });
-}
-
-window.onload = function howRowsData() {
-
-    var requestData = {
-
-        "Id": " ",
-        "Writer": " ",
-        "Title": " ",
-        "UpdatedDate": " ",
-        "Text": " ",
-    }
-
-    var boardUrl = 'Board/Search';
-    $.ajax(
-        {
-            url: boardUrl,
-            method: "POST",
-            data: requestData,
-            headers: {
-                'Accept': 'application/json'
-            }
-        }).then(function (r) {
-
-            var json = JSON.parse(r); //文字列をJSONオブジェクトに変換
-
-            $("#tableBody tr").remove();
-
-            var tableRows = json.length;
-
-            var allDataMultuplyBy2 = tableRows / 5;
-
-            var theRestData = tableRows % 5;
-
-            var NumberOfButton = Math.floor(allDataMultuplyBy2) + 1;
-
-            if (theRestData != 0) {
-                var NumberOfButton = Math.floor(allDataMultuplyBy2) + 1;
-
-                for (var i = 0; i < NumberOfButton; i++) {
-
-                    var clickButton = document.getElementById("clickButton");
-                    var nButton = document.createElement("input");
-
-                    var num = i + 1;
-                    var onclik = "clickButton";
-
-                    nButton.id = num;
-                    nButton.value = num;
-                    nButton.type = "button";
-                    nButton.className = 'pagingButton';
-                    /*nButton.onclick = onclik;*/
-                    nButton.setAttribute('onclick', onclik + '(this.value)');
-
-                    clickButton.appendChild(nButton);
-                }
-            } else {
-                for (var i = 0; i < allDataMultuplyBy2; i++) {
-
-                    var clickButton = document.getElementById("clickButton");
-                    var clickButtonHiddenText = document.getElementById("clickButtonHiddenText");
-                    var nButton = document.createElement("input");
-                    /*var input = document.createElement("input");*/
-
-                    var num = i + 1;
-                    var onclik = "clickButton" + num;
-
-                    nButton.id = num;
-                    nButton.value = num;
-                    nButton.type = "button";
-                    nButton.className = 'pagingButton';
-                    /*nButton.onclick = onclik;*/
-                    nButton.setAttribute('onclick', onclik + '()');
-                    /*nButton.formMethod = "post";
-                    nButton.type = "submit";
-                    nButton.formAction = 'Board/Paging';*/
-
-                    /*input.innerHTML = num;
-                    input.className = num;
-                    input.name = "number"+num;*/
-
-                    clickButton.appendChild(nButton);
-                    /*clickButtonHiddenText.appendChild(input);*/
-                }
-            }
-        }, function (e) {
-            alert("error: " + e);
-        });
-}

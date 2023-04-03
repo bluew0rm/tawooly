@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using Project_Board.Adepters.Core;
 using Project_Board.Models.Search;
 using Project_Board.Models.Paging;
+using System.Web.UI;
 
 namespace Project_Board.Service.Adepter
 {
@@ -233,7 +234,58 @@ namespace Project_Board.Service.Adepter
 
         //Search
         //public DataTable Search(BoardItem item)
-        public DataTable Search(SearchCondition searchCondition)
+        public DataTable Search(PageAndItemData pageAndItemData)
+        {
+            DataTable table = new DataTable();
+            using (var command = Connection.CreateCommand())
+            {
+                int id = pageAndItemData.SearchItem.Id;
+                string writer = pageAndItemData.SearchItem.Writer ?? "";
+                string title = pageAndItemData.SearchItem.Title ?? "";
+                DateTime formDate = pageAndItemData.SearchItem.FromDate == DateTime.MinValue ? Convert.ToDateTime("1/1/1753 12:00:00 PM") : pageAndItemData.SearchItem.FromDate;
+                DateTime toDate = pageAndItemData.SearchItem.ToDate == DateTime.MinValue ? DateTime.MaxValue : pageAndItemData.SearchItem.ToDate;
+
+                int NumberOfRowsPerPage = pageAndItemData.PagingInfo.PageCount;
+                int PageNumber = pageAndItemData.PagingInfo.PageIndex;
+                int OffsetRowCount = (PageNumber - 1) * NumberOfRowsPerPage;
+
+                try
+                {
+                    Connection.Open();
+                    command.CommandText = @"SELECT
+	                                            * 
+                                            FROM
+	                                            PostBoard
+                                            WHERE
+	                                            (@param1 = 0 OR Id = @param1) AND 
+	                                            (@param2 = '' OR Writer = @param2) AND 
+	                                            (@param3 = '' OR (Title LIKE N'%' + @param3 + N'%')) AND 
+	                                            ((@param4= '' OR @param5 = '') OR ([Update] BETWEEN @param4 AND @param5))
+                                            ORDER BY Id OFFSET " + OffsetRowCount + " ROWS FETCH NEXT " + NumberOfRowsPerPage + " ROWS ONLY;";
+
+                    command.Parameters.AddWithValue("@param1", id);
+                    command.Parameters.AddWithValue("@param2", writer);
+                    command.Parameters.AddWithValue("@param3", title);
+                    command.Parameters.AddWithValue("@param4", formDate);
+                    command.Parameters.AddWithValue("@param5", toDate);
+
+                    // SQLの実行
+                    var adapter = new SqlDataAdapter(command);
+                    adapter.Fill(table);
+
+                }
+                catch (Exception exception)
+                {
+                }
+                finally
+                {
+                    Connection.Close();
+                }
+                return table;
+            }
+        }
+
+        public DataTable SearchRows(SearchCondition searchCondition)
         {
             DataTable table = new DataTable();
             using (var command = Connection.CreateCommand())
